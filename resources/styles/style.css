@@ -1,0 +1,116 @@
+body {
+    background-color: #ddd;
+}
+.form-horizontal .control-label.label-mod {
+    text-align: left;
+}
+hr.style14 { 
+  border: 0; 
+  height: 1px; 
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+}
+.bx{
+    outline: 1px blue solid;
+}
+.flex-parent{
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+.btn-primary.badge{
+    
+}
+
+.flex-child{
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 0;
+}
+
+
+.negrita{
+    font-weight: bold;
+}
+.panel-index{
+    padding: 0 50px;
+}
+.panel-index p{
+    padding: 20px 0;
+}
+
+.footer{
+    background-color: #232323;
+}
+.footer p{
+    text-align: center; 
+    padding-top: 20px;
+    color:#919191;
+}
+.bg-white{
+    background-color: #fff;
+}
+#form-acceso{
+    min-height: 200px;
+}
+
+ /* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 50px;
+    min-height: 220px;
+    border: 1px solid #ccc;
+    border-top: none;
+} 
+.tabcontent.active{
+    display: block;
+}
+/*.tabcontent {
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s; 
+}
+
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}*/
