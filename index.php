@@ -61,7 +61,7 @@
             <div class="row bg-white">
                 <div class="text-center" id="form-acceso">
                     <div class="form-group form-inline">
-                        <label class="control-label">Clave de acceso:</label>
+                        <label class="control-label">Clave de acceso: </label>
                         <input type="text" class="form-control" id="txtAcceso" style="width: 200px;">
                         <button class="btn btn-default" id="btnAcceder">Acceder</button>
                     </div>
