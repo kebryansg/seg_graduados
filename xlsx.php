@@ -105,12 +105,28 @@ foreach ($list_encuestas as $encuesta) {
                         $valor = "";
                         $opcion_id = $pregunta["preg_resp"][0]["opcion"];
                         foreach ($pregunta["opciones"] as $opcion) {
-                            if($opcion["id"] === $opcion_id){
+                            if ($opcion["id"] === $opcion_id) {
                                 $valor = $opcion["enunciado"];
                                 break;
                             }
                         }
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col++, $fila, $valor);
+                    }
+                    break;
+                case "3":
+                    if (isset($pregunta["preg_resp"][0]["opcion"])) {
+                        $valor = array();
+                        $opcion_id = $pregunta["preg_resp"][0]["opcion"];
+                        $opciones = explode(",", $opcion_id);
+                        foreach ($opciones as $opcion_selec) {
+                            foreach ($pregunta["opciones"] as $opcion) {
+                                if ($opcion_selec === $opcion["id"]) {
+                                    array_push($valor, $opcion["enunciado"]);
+                                    break;
+                                }
+                            }
+                        }
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col++, $fila, implode(",", $valor));
                     }
                     break;
                 default :
