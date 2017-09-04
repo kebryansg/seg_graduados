@@ -14,7 +14,7 @@ class CategoriaDaoImp implements CategoriaDao
     {
         $conn = (new C_MySQL())->open();
         $list = [];
-        $sentencia = $conn->prepare("select * from categoria;");
+        $sentencia = $conn->prepare("select * from categoria order by order_;");
         $sentencia->execute();
         $resultado = $sentencia->get_result();
         while ($row = $resultado->fetch_assoc()) {
