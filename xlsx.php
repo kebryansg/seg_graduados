@@ -1,6 +1,4 @@
 <?php
-
-//include './mvc/controlador/entidades/Categoria.php';
 session_start();
 /**
  * PHPExcel

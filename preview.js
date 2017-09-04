@@ -1,6 +1,4 @@
 $(function () {
-    
-    
     $("#btnGenerar").click(function () {
         $.ajax({
             url: "servidor/sEvaluacion.php",
