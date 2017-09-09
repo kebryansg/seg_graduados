@@ -11,7 +11,7 @@
         </div>
         <div class="pull-right">
             <div class="form-inline">
-                <button class="btn btn-default" id="btnGenerar">Generar</button>
+                <button class="btn btn-default" id="btnGenerar">Generar Excel</button>
             </div>
         </div>
     </div>

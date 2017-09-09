@@ -93,7 +93,6 @@ $("#saveEvaluacion").click(function () {
                 break;
         }
     });
-    console.log(pregunta_t4);
 
     $.ajax({
         type: "POST",
@@ -108,7 +107,13 @@ $("#saveEvaluacion").click(function () {
             preguntas_tb: pregunta_tb,
             id_encuesta: $("div[data-id]").attr("data-id")
         },
+        beforeSend: function () {
+            waitingDialog.show('Este proceso podría tardar varios minutos', {
+                headerText: 'Enviando encuesta'
+            });
+        },
         success: function (response) {
+            waitingDialog.hide();
             if (response.status) {
                 $("#content").load("evaluacion/successEvaluacion.php");
             }
@@ -177,7 +182,7 @@ function load_preguntas_cat(id, panel) {
                              $(div_opcion).find("input").data("id", opcion.id);
                              $(div_opcion).find("label").append(" " + opcion.enunciado);
                              orden = par(index) ? 0 : 1;*/
-                             preguntas.push({div: $(div_tipoPregunta).find("select"), pregunta: pregunta});
+                            preguntas.push({div: $(div_tipoPregunta).find("select"), pregunta: pregunta});
                             $(div_tipoPregunta).find("select").append(option);
                             //$(div_opcion).appendTo($(div_tipoPregunta).find(".opcion_content > div").eq(orden));
                         });
@@ -211,7 +216,7 @@ function load_tabla(pregunta) {
                 tables.push({tb: "#tb_Actualidad", datos: JSON.parse(pregunta.preg_resp[0].opcion).tb_Actualidad});
                 break;
             default :
-                if(!$.isEmptyObject(pregunta.preg_resp[0].opcion)){
+                if (!$.isEmptyObject(pregunta.preg_resp[0].opcion)) {
                     tables.push({tb: _TipoTabla(pregunta.tipo), datos: JSON.parse(pregunta.preg_resp[0].opcion)});
                 }
                 break;

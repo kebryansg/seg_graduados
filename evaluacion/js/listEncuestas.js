@@ -20,8 +20,14 @@ $(function(){
             type: 'POST',
             data: {
                 op: "file"
-            }
-            , success: function (data) {
+            },
+            beforeSend: function(){
+                 waitingDialog.show('Este proceso podría tardar varios minutos',{
+                     headerText: 'Generando archivos'				                     
+                 });
+            },
+            success: function (data) {
+                waitingDialog.hide();
                 url = "xlsx.php";
                 window.open(url, '_blank');
             }

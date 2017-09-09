@@ -148,7 +148,7 @@ function editPregunta(id) {
 
 function asignarPregunta(pregunta) {
     $("#savePregunta").data("id", pregunta.id);
-    $("#savePregunta").html("Modificar");
+    $("#savePregunta").html("Actualizar");
     $("#txtEnunciado").val(pregunta.enunciado);
     $("#cboCategoria").selectpicker("val", pregunta.id_categoria);
     $("#cboTipoPregunta").selectpicker("val", pregunta.tipo);
