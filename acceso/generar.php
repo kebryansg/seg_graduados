@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="lead">
-                        Ingresar la cedula para generar el codigo que servira de acceso a la encuesta.
+                        Ingresar la cédula para generar el código que servirá de acceso a la encuesta.
                     </div>
                     
                 </div>
@@ -17,7 +17,7 @@
                     <div class="col-md-5">
                         <div class="form-inline">
                             <div class="form-group ">
-                                <label class="control-label ">Cedula:</label>
+                                <label class="control-label ">Cédula:</label>
                                 <input type="text" class="form-control" id="txt_Clave" maxlength="10">
                                 <button class="btn btn-success" id="btn_GenerarClave">Generar</button>
                             </div>
@@ -28,7 +28,7 @@
                     <div class="col-md-8">
                         <div class="panel panel-success">
                             <div class="panel-body">
-                                <span class="h4">El codigo de <strong>Acceso</strong> es: <i id="cod-access" class="negrita"></i></span>
+                                <span class="h4">El código de <strong>Acceso</strong> es: <i id="cod-access" class="negrita"></i></span>
                             </div>
                             
                         </div>

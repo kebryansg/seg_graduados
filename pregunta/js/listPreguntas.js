@@ -1,43 +1,17 @@
-paginacion_listPreguntas = ("#pag_tb_listPreguntas");
-function loadPaginacionlistPreguntas(total) {
-    $(paginacion_listPreguntas + " li a").not("[aria-label]").closest("li").remove();
-    li = '';
-    for (var c = 0; c < total; c++) {
-        li += ('<li ' + ((c === 0) ? 'class="active"' : '') + ' ><a href="#">' + (c + 1) + '</a></li>');
-    }
-    $(paginacion_listPreguntas + " li").first().after(li);
-}
-$("#orderPregunta").click(function(){
+$("#orderPregunta").click(function () {
     $("#content").load('pregunta/orderPregunta.php');
 });
+default_pregunta = {
+    initiateStartPageClick: false,
+    totalPages: 1,
+    visiblePages: 5,
+    first: "&larrb;",
+    prev: "&laquo;",
+    next: "&raquo;",
+    last: "&rarrb;"
+};
 
-$("#content").on("click", paginacion_listPreguntas + " li a[aria-label]", function (e) {
-    e.preventDefault();
-    li_old = $(paginacion_listPreguntas + " li[class='active']");
-    li = undefined;
-    switch ($(this).attr("aria-label")) {
-        case "Anterior":
-            li = $(li_old).prev();
-            break;
-        case "Siguiente":
-            li = $(li_old).next();
-            break;
-    }
-    if ($(li).find("a[aria-label]").length === 0) {
-        $(li).toggleClass("active");
-        $(li_old).toggleClass("active");
-        load_Preguntas(false, $(li).find("a").html());
-    }
-});
-$("#content").on("click", paginacion_listPreguntas + " li:not([class='active']) a:not([aria-label])", function (e) {
-    e.preventDefault();
-    li = $(this).closest("li");
-    $(paginacion_listPreguntas + " li[class='active']").toggleClass("active");
-    $(li).toggleClass("active");
-    load_Preguntas(false, $(this).html());
-});
-
-function load_Preguntas(bandera, pag) {
+function load_Preguntas(pag) {
     var top = $("#cboTop").val();
     $.ajax({
         type: "POST",
@@ -51,20 +25,26 @@ function load_Preguntas(bandera, pag) {
             categoria: $("#cboCategoria").val()
         },
         success: function (response) {
-            if (bandera)
-                loadPaginacionlistPreguntas(response.count);
             $("#tb_listPreguntas").bootstrapTable("load", response.load);
-            $('#tb_listPreguntas').bootstrapTable('resetView');
+            $("#pagination-demo").twbsPagination('destroy');
+
+            $("#pagination-demo").twbsPagination($.extend({}, default_pregunta, {
+                startPage: pag,
+                totalPages: response.count,
+                onPageClick: function (event, page) {
+                    load_Preguntas(page);
+                }
+            }));
         }
     });
 }
 
 $("#cboCategoria").change(function () {
-    load_Preguntas(true, 1);
+    load_Preguntas(1);
 });
 
 $("#cboTop").change(function () {
-    load_Preguntas(true, 1);
+    load_Preguntas(1);
 });
 
 $("#newPregunta").click(function (e) {
@@ -87,19 +67,16 @@ $("#tb_listPreguntas").on("click", 'button[name="deletePregunta"]', function () 
                 id: id
             },
             function (data) {
-                load_Preguntas(true, 1);
+                load_Preguntas(1);
             }
     );
 });
 
 $(function () {
-
     $("#tb_listPreguntas").bootstrapTable();
     $(".selectpicker").selectpicker("refresh");
     load_Categoria();
-    load_Preguntas(true, 1);
-
-
+    load_Preguntas(1);
     //setData();
 });
 

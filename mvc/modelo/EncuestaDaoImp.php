@@ -46,7 +46,7 @@ class EncuestaDaoImp {
     public static function list_Preguntas($id_encuesta) {
         $conn = (new C_MySQL())->open();
         $list = array();
-        $sql = "select * from preguntas where id in (select preguntas_id from preguntas_respuestas where encuesta_id = $id_encuesta) order by categoria_id, order_by asc;";
+        $sql = "select p.* from preguntas_respuestas p_r inner join  preguntas p on p.id = p_r.preguntas_id inner join categoria cat on cat.id = p.categoria_id where p_r.encuesta_id = $id_encuesta order by cat.order_;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
                 array_push($list, $row);

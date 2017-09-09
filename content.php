@@ -16,6 +16,7 @@
         <script src="resources/bootstrap/boostrap-select/bootstrap-select.min.js"></script>
         <script src="resources/bootstrap/table/bootstrap-table.min.js"></script>
         <script src="resources/bootstrap/table/locale/bootstrap-table-es-ES.min.js" type="text/javascript"></script>
+        <script src="resources/bootstrap/pagination/jquery.twbsPagination.min.js" type="text/javascript"></script>
         <script src="resources/styles/style.js"></script>
         <title>Seguimientos a graduados</title>
 

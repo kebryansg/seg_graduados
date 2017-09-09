@@ -34,7 +34,7 @@ switch ($op) {
                 "enunciado" : "' . $pregunta->getEnunciado() . '",
                 "tipo" : "' . $pregunta->getTipo() . '",
                 "categoria" : "' . $pregunta->getCategoria()->getDescripcion() . '",
-                "accion": "<button dat-id=\"' . $pregunta->getId() . '\" name=\"editPregunta\" class=\"btn btn-primary\" ><i class=\"glyphicon glyphicon-edit\"></i></button>  <button dat-id=\"' . $pregunta->getId() . '\" name=\"deletePregunta\" class=\"btn btn-danger\" ><i class=\"glyphicon glyphicon-trash\"></i></button>"
+                "accion": "<button data-toggle=\"tooltip\" title=\"Editar Pregunta\" dat-id=\"' . $pregunta->getId() . '\" name=\"editPregunta\" class=\"btn btn-primary\" ><i class=\"glyphicon glyphicon-edit\"></i></button>  <button dat-id=\"' . $pregunta->getId() . '\" name=\"deletePregunta\" data-toggle=\"tooltip\" title=\"Eliminar Pregunta\" class=\"btn btn-danger\" ><i class=\"glyphicon glyphicon-trash\"></i></button>"
             }';
             array_push($list_resultado, $resultado);
         }
@@ -42,7 +42,7 @@ switch ($op) {
         break;
     case "load_categoria":
         $list = (new CategoriaDaoImp())->listCategoria();
-        $resultado = "<option value='0'>Seleccione</option>";
+        $resultado = "<option value='0'>Seleccione Categoria</option>";
         foreach ($list as $categoria) {
             $resultado .= "<option value='" . $categoria->getId() . "'>" . $categoria->getDescripcion() . "</option>";
         }

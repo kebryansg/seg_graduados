@@ -166,11 +166,11 @@
                         </tr>
                         <tr>
                             <th data-field="conocimiento" >Conocimientos de informatica</th>
-                            <th data-field="1" data-formatter="cbk_tbG" >1</th>
-                            <th data-field="2" data-formatter="cbk_tbG">2</th>
-                            <th data-field="3" data-formatter="cbk_tbG">3</th>
-                            <th data-field="4" data-formatter="cbk_tbG">4</th>
-                            <th data-field="5" data-formatter="cbk_tbG">5</th>
+                            <th data-field="op1" data-formatter="cbk_tbG" >1</th>
+                            <th data-field="op2" data-formatter="cbk_tbG">2</th>
+                            <th data-field="op3" data-formatter="cbk_tbG">3</th>
+                            <th data-field="op4" data-formatter="cbk_tbG">4</th>
+                            <th data-field="op5" data-formatter="cbk_tbG">5</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -226,11 +226,11 @@
                         <tr>
                             <th data-field="title">Conocimientos de informatica</th>
 
-                            <th data-field="1" data-formatter="cbk_tbA" >1</th>
-                            <th data-field="2" data-formatter="cbk_tbA">2</th>
-                            <th data-field="3" data-formatter="cbk_tbA">3</th>
-                            <th data-field="4" data-formatter="cbk_tbA">4</th>
-                            <th data-field="5" data-formatter="cbk_tbA">5</th>
+                            <th data-field="op1" data-formatter="cbk_tbA" >1</th>
+                            <th data-field="op2" data-formatter="cbk_tbA">2</th>
+                            <th data-field="op3" data-formatter="cbk_tbA">3</th>
+                            <th data-field="op4" data-formatter="cbk_tbA">4</th>
+                            <th data-field="op5" data-formatter="cbk_tbA">5</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -339,7 +339,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <input type="text" class="form-control" data-field="fi_año"   placeholder="Año">
+                            <input type="text" class="form-control" data-field="fi_ano"   placeholder="Año">
                         </div>      
 
                     </div>
@@ -350,7 +350,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <input type="text" class="form-control" data-field="ff_año"  placeholder="Año">
+                            <input type="text" class="form-control" data-field="ff_ano"  placeholder="Año">
                         </div>      
                     </div>
                     <div class="form-group">
@@ -374,9 +374,9 @@
                     </tr>
                     <tr>
                         <th data-field="fi_mes">Mes</th>
-                        <th data-field="fi_año">Año</th>
+                        <th data-field="fi_ano">Año</th>
                         <th data-field="ff_mes">Mes</th>
-                        <th data-field="ff_año">Año</th>
+                        <th data-field="ff_ano">Año</th>
                     </tr>
                 </thead>
             </table>
@@ -412,7 +412,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Años en que trabajó(Desde - Hasta):</label>
-                        <input type="text" class="form-control" data-field="años_trabajo">
+                        <input type="text" class="form-control" data-field="anos_trabajo">
                     </div>
                     <div class="form-group">
                         <label class="control-label">Nivel jerárquico de su puesto:</label>
@@ -423,7 +423,7 @@
                     <div class="form-group">
                         <label class="control-label">Naturaleza de la empresa (pública, privada):</label>
                         <select class="form-control" data-field="naturaleza_empresa">
-                            <option value="Pública">Pública</option>
+                            <option value="Pública">Publica</option>
                             <option value="Privada">Privada</option>
                         </select>
                     </div>
@@ -440,7 +440,7 @@
                         <th data-field="cargo" >Cargo</th>
                         <th data-field="lugar" >Lugar</th>
                         <th data-field="tiempo_trabajo" >Tiempo de trabajo</th>
-                        <th data-field="años_trabajo" >Años en que trabajó</th>
+                        <th data-field="anos_trabajo" >Años en que trabajó</th>
                         <th data-field="nivel_jerarquico" >Nivel jerárquico de su puesto</th>
                         <th data-field="naturaleza_empresa" >Naturaleza de la empresa</th>
                         <th data-field="porcentaje_relacion" >Porcentaje de relación del Cargo con su Título</th>
@@ -526,6 +526,7 @@
             </table>
         </div>
     </div>
+    
     <div id="ptb_facilidad_condicion">
         <div class="pregunta_content">
             <label for="" class="enunciado_pregunta control-label"></label>
@@ -534,7 +535,7 @@
                     <tr>
                         <th data-field="enunciado">Facilidades y Condiciones de Estudio</th>
                         <th data-formatter="cbk_tbFC" data-field="mb">MB</th>
-                        <th data-formatter="cbk_tbFC" data-field="m">M</th>
+                        <th data-formatter="cbk_tbFC" data-field="b">B</th>
                         <th data-formatter="cbk_tbFC" data-field="r">R</th>
                         <th data-formatter="cbk_tbFC" data-field="m">M</th>
                         <th data-formatter="cbk_tbFC" data-field="d">D</th>

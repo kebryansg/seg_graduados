@@ -211,7 +211,9 @@ function load_tabla(pregunta) {
                 tables.push({tb: "#tb_Actualidad", datos: JSON.parse(pregunta.preg_resp[0].opcion).tb_Actualidad});
                 break;
             default :
-                tables.push({tb: _TipoTabla(pregunta.tipo), datos: JSON.parse(pregunta.preg_resp[0].opcion)});
+                if(!$.isEmptyObject(pregunta.preg_resp[0].opcion)){
+                    tables.push({tb: _TipoTabla(pregunta.tipo), datos: JSON.parse(pregunta.preg_resp[0].opcion)});
+                }
                 break;
         }
     }

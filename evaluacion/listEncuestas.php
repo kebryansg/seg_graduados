@@ -24,7 +24,7 @@
                     <th data-field="fecha">Fecha</th>
                     <th data-field="cedula">Cédula</th>
                     <th data-field="acceso">Acceso</th>
-                    <th data-field="accion">Acción</th>
+                    <!--<th data-field="accion">Acción</th>-->
                 </tr>
 
             </thead>
@@ -32,18 +32,7 @@
     </div>
     <div class="row">
         <div class="pull-right">
-            <ul class="pagination" id="pag_tb_listEncuestas">
-                <li>
-                    <a href="#" aria-label="Anterior">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" aria-label="Siguiente">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
+            <ul id="pagination-demo" class="pagination"></ul>
         </div>
     </div>
 </div>

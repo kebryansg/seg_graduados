@@ -1,5 +1,4 @@
 $(function () {
-
     $("#cboCategoria").change(function () {
         load_Preguntas_cat($(this).val());
     });
