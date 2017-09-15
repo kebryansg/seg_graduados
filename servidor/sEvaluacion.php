@@ -39,9 +39,10 @@ switch ($op) {
         foreach ($list->getList() as $value) {
             $resultado = '{ "id" : ' . $value->getId() . ' , '
                     . '"fecha" : "' . $value->getFecha() . '" , '
-                    . '"acceso" : "' . $value->getAcceso() . '" , '
-                    . '"cedula" : "' . $value->getCedula() . '" }';
-                    //. '"accion" : "<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" class=\"btn btn-success\"><i class=\"glyphicon glyphicon-edit\"></i></button>  <button dat-id=\"' . $value->getId() . '\" name=\"report_Encuesta\" class=\"btn btn-success\">R. Excel</button>" }'; //<i class=\"glyphicon glyphicon-align-justify\"></i>
+                    . '"nombre" : "' . $value->getNombre() . '" , '
+                    . '"accion" : "<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" class=\"btn btn-success\">Editar</button> '
+                    . '<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" class=\"btn btn-success\">Eliminar</button> '
+                                    . '<button dat-id=\"' . $value->getId() . '\" name=\"report_Encuesta\" class=\"btn btn-success\">Duplicar</button>" }'; //<i class=\"glyphicon glyphicon-align-justify\"></i>
             array_push($list_result, $resultado);
         }
         $resultado = '{ "total" : ' . ceil($list->getTotal() / $top) . ' , "load" : [' . join($list_result, ",") . '] }';

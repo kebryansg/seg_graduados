@@ -25,15 +25,14 @@ class EncuestaDaoImp {
         $list_count = new list_count();
         $list = array();
         $total = -1;
-        $sql = "select (select count(*) from encuesta) as total, e.* from encuesta e limit $top offset $limit;";
+        $sql = "select * from encuestas limit $top offset $limit;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
-                $list_count->setTotal($row["total"]);
+                $list_count->setTotal(5);
                 $encuesta = new Encuesta();
                 $encuesta->setId($row["id"]);
                 $encuesta->setFecha($row["fecha"]);
-                $encuesta->setAcceso($row["acceso_clave"]);
-                $encuesta->setCedula($row["cedula_clave"]);
+                $encuesta->setNombre($row["nombre"]);
                 array_push($list, $encuesta);
             }
             $resultado->close();

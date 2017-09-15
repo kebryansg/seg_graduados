@@ -21,10 +21,9 @@
             <thead>
                 <tr>
                     <th data-field="id">Código</th>
+                    <th data-field="nombre">Nombre</th>
                     <th data-field="fecha">Fecha</th>
-                    <th data-field="cedula">Cédula</th>
-                    <th data-field="acceso">Acceso</th>
-                    <!--<th data-field="accion">Acción</th>-->
+                    <th class="col-md-3" data-field="accion">Acción</th>
                 </tr>
 
             </thead>
