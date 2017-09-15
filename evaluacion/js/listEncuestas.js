@@ -52,6 +52,7 @@ function load_Encuestas( pag) {
             pag: ((pag - 1) * top)
         },
         success: function (response) {
+            console.log(response.load);
             $(table).bootstrapTable("load", (response.load));
             //$(table).bootstrapTable('resetView');
             $("#pagination-demo").twbsPagination('destroy');

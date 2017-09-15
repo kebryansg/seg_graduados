@@ -3,29 +3,21 @@
 class Encuesta{
     private $id;
     private $fecha;
-    private $acceso;
-    private $cedula;
-    function getAcceso() {
-        return $this->acceso;
-    }
+    private $nombre;
 
-    function getCedula() {
-        return $this->cedula;
-    }
-
-    function setAcceso($acceso) {
-        $this->acceso = $acceso;
-    }
-
-    function setCedula($cedula) {
-        $this->cedula = $cedula;
-    }
-
-    
     function __construct() {
         $this->id = 0;
     }
-    function getId() {
+    
+    function getNombre() {
+        return $this->nombre;
+    }
+
+    function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
+
+        function getId() {
         return $this->id;
     }
 

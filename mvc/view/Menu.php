@@ -30,7 +30,7 @@ if (isset($_SESSION["rol"])) {
                                     <a class="menu_admin" href="evaluacion/listEncuestas.php">Encuestas</a>
                                 </li>
                                 <li>
-                                    <a class="menu_admin" href="acceso/generar.php">Generar Accesos</a>
+                                    <a class="menu_admin" href="acceso/generar.php">Graduados</a>
                                 </li>
                                 <li>
                                     <a href="cerrar_session.php">Salir</a>
