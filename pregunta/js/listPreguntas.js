@@ -1,6 +1,10 @@
+idEncuesta = 0;
 $("#orderPregunta").click(function () {
     $("#content").load('pregunta/orderPregunta.php');
 });
+function getEncuesta_id(id){
+    idEncuesta = id;
+}
 default_pregunta = {
     initiateStartPageClick: false,
     totalPages: 1,
@@ -21,6 +25,7 @@ function load_Preguntas(pag) {
         data: {
             op: "list",
             top: top,
+            idEncuesta: idEncuesta,
             pag: ((pag - 1) * top),
             categoria: $("#cboCategoria").val()
         },
@@ -76,7 +81,7 @@ $(function () {
     $("#tb_listPreguntas").bootstrapTable();
     $(".selectpicker").selectpicker("refresh");
     load_Categoria();
-    load_Preguntas(1);
+    //load_Preguntas(1);
     //setData();
 });
 

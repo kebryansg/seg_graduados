@@ -9,34 +9,74 @@ default_encuesta = {
     next: "&raquo;",
     last: "&rarrb;"
 };
-$(function(){
+$(function () {
     $(".selectpicker").selectpicker();
     $("table").bootstrapTable();
     load_cboEncuestas();
+    
     load_Encuestas(1);
     
-    
-    $(table).on("click","button[name='edit_encuesta']",function(){
+    $(table).on("click", "button[name='edit_encuesta']", function () {
         id = $(this).attr("dat-id");
         $("#modal_editEncuesta h4.modal-title").html("Modificar Encuesta");
         $("#modal_editEncuesta .modal-footer button").html("Modificar");
-        row = $(table).bootstrapTable('getRowByUniqueId',id);
+        $("#modal_editEncuesta .modal-footer button").data("id", id);
+        row = $(table).bootstrapTable('getRowByUniqueId', id);
         $("#edit_nombre").val(row.nombre);
     });
-    
-    $(table).on("click","button[name='dupl_Encuesta']",function(){
+
+    $(table).on("click", "button[name='del_encuesta']", function () {
         id = $(this).attr("dat-id");
-        row = $(table).bootstrapTable('getRowByUniqueId',id);
+        $.ajax({
+            url: "servidor/sEvaluacion.php",
+            type: 'POST',
+            data: {
+                op: "delete",
+                id: id
+            },
+            success: function (data) {
+                alert(data);
+            }
+        });
+    });
+    $(table).on('dbl-click-row.bs.table', function (e, row, $element) {
+        id = row.id;
+        $("#content").load("pregunta/listPreguntas.php",function(){
+            getEncuesta_id(id);
+            load_Preguntas(1);
+        });
+    });
+
+    $(table).on("click", "button[name='dupl_Encuesta']", function () {
+        id = $(this).attr("dat-id");
+        row = $(table).bootstrapTable('getRowByUniqueId', id);
         $("#dupli_nombre").val(row.nombre);
     });
-    $("#newEncuesta").click(function(){
+    $("#newEncuesta").click(function () {
         $("#modal_editEncuesta h4.modal-title").html("Nueva Encuesta");
+        $("#modal_editEncuesta .modal-footer button").data("id", 0);
         $("#modal_editEncuesta .modal-footer button").html("Guardar");
         $("#edit_nombre").val("");
     });
-    
-    
-    
+    $('#modal_editEncuesta').on('hide.bs.modal', function (e) {
+        if ($.isEmptyObject($("#edit_nombre").val())) {
+            e.preventDefault();
+        } else {
+            $.ajax({
+                url: "servidor/sEvaluacion.php",
+                type: 'POST',
+                data: {
+                    op: "saveEncuesta",
+                    id: $("#modal_editEncuesta .modal-footer button").data("id"),
+                    nombre: $("#edit_nombre").val()
+                },
+                success: function (data) {
+                    alert(data);
+                }
+            });
+        }
+    });
+
     $("#btnGenerar").click(function () {
         $.ajax({
             url: "servidor/sEvaluacion.php",
@@ -44,10 +84,10 @@ $(function(){
             data: {
                 op: "file"
             },
-            beforeSend: function(){
-                 waitingDialog.show('Este proceso podría tardar varios minutos',{
-                     headerText: 'Generando archivos'				                     
-                 });
+            beforeSend: function () {
+                waitingDialog.show('Este proceso podría tardar varios minutos', {
+                    headerText: 'Generando archivos'
+                });
             },
             success: function (data) {
                 waitingDialog.hide();
@@ -56,11 +96,11 @@ $(function(){
             }
         });
     });
-    
-    
+
+
 });
 
-function load_cboEncuestas(){
+function load_cboEncuestas() {
     $.ajax({
         type: "POST",
         url: "servidor/sEvaluacion.php",
@@ -75,7 +115,7 @@ function load_cboEncuestas(){
     });
 }
 
-function load_Encuestas( pag) {
+function load_Encuestas(pag) {
     var top = $("#cboTop").val();
     $.ajax({
         type: "POST",

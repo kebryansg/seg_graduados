@@ -12,6 +12,13 @@ $op = $_POST["op"];
 $resultado = "";
 $list_result = [];
 switch ($op) {
+    case "saveEncuesta": 
+        $encuesta = new Encuesta();
+        $encuesta->setId($_POST["id"]);
+        $encuesta->setNombre($_POST["nombre"]);
+        EncuestaDaoImp::_save($encuesta);
+        $resultado = "ok";
+        break;
     case "file":
         $list_encuesta = EncuestaDaoImp::list_file();
         foreach ($list_encuesta as $encuesta) {
@@ -139,6 +146,10 @@ switch ($op) {
             array_push($list_result, $pregunta);
         }
         $resultado = json_encode($list_result);
+        break;
+    case "delete": 
+        EncuestaDaoImp::_delete($_POST["id"]);
+        $resultado = "ok";
         break;
 }
 echo $resultado;

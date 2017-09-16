@@ -42,11 +42,11 @@
         </div>
     </div>
     <div class="row">
-        <div id="modal_editEncuesta" class="modal fade" role="dialog">
+        <div id="modal_editEncuesta" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
                         <h4 class="modal-title">Modificar Encuesta</h4>
                     </div>
                     <div class="modal-body">
@@ -65,11 +65,11 @@
                 </div>
             </div>
         </div>
-        <div id="modal_duplEncuesta" class="modal fade" role="dialog">
+        <div id="modal_duplEncuesta" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
                         <h4 class="modal-title">Duplicar Encuesta</h4>
                     </div>
                     <div class="modal-body">

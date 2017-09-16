@@ -20,6 +20,36 @@ class EncuestaDaoImp {
         return $list;
     }
 
+    public static function _delete($id) {
+        $conn = (new C_MySQL())->open();
+        $sql = "select count(*) total from encuesta_titulo where Encuestas_id = $id;";
+        $total = 0;
+        if ($resultado = $conn->query($sql)) {
+            while ($row = $resultado->fetch_assoc()) {
+                $total = $row["total"];
+            }
+            $resultado->free();
+            //$resultado->close();
+        }
+        if($total == 0){
+            $sql = "update encuestas set estado = '0' where id = $id;";
+            $conn->query($sql);
+        }
+        $conn->close();
+    }
+
+    public static function _save($encuesta) {
+        $conn = (new C_MySQL())->open();
+        $sql = "";
+        if ($encuesta->getId() == 0) {
+            $sql = "insert into encuestas(nombre,fecha,estado) values('" . $encuesta->getNombre() . "',curdate(),'1');";
+        } else {
+            $sql = "update encuestas set nombre = '" . $encuesta->getNombre() . "', fecha = curdate() where id = " . $encuesta->getId() . " ";
+        }
+        $conn->query($sql);
+        $conn->close();
+    }
+
     public static function _list($top, $limit) {
         $conn = (new C_MySQL())->open();
         $list_count = new list_count();

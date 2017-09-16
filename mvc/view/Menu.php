@@ -23,9 +23,9 @@ if (isset($_SESSION["rol"])) {
                                         <li><a href="#">One more separated link</a></li>
                                     </ul>
                                 </li>-->
-                                <li>
+                                <!--<li>
                                     <a class="menu_admin" href="pregunta/listPreguntas.php">Preguntas</a>
-                                </li>
+                                </li>-->
                                 <li>
                                     <a class="menu_admin" href="evaluacion/listEncuestas.php">Encuestas</a>
                                 </li>

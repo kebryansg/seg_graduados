@@ -27,7 +27,8 @@ switch ($op) {
         $top = $_POST["top"];
         $pag = $_POST["pag"];
         $id_categoria = $_POST["categoria"];
-        $list = PreguntasDaoImp::list_filter($top, $pag, $id_categoria);
+        $id_encuesta = $_POST["idEncuesta"];
+        $list = PreguntasDaoImp::list_filter($top, $pag, $id_categoria, $id_encuesta);
         foreach ($list->getList() as $pregunta) {
             $resultado = '{
                 "id" : "' . $pregunta->getId() . '",
@@ -87,8 +88,8 @@ switch ($op) {
         }
         $resultado = "[" . join($list_resultado, ",") . "]";
         break;
-    case "save_order": 
-        if(isset($_POST["preguntas"])){
+    case "save_order":
+        if (isset($_POST["preguntas"])) {
             $preguntas = $_POST["preguntas"];
             foreach ($preguntas as $value) {
                 PreguntasDaoImp::order_save($value);

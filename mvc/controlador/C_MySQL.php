@@ -18,4 +18,15 @@ final class C_MySQL {
         $this->mysqli->set_charset("utf8");
         return $this->mysqli;
     }
+    public static function row_count($conn){
+        $total = -1;
+        $sql = "select FOUND_ROWS() as total;";
+        if($result = $conn->query($sql)) {
+            while ($row = $result->fetch_assoc()) {
+                $total = $row["total"];
+            }
+            $result->free();
+        }
+        return $total;
+    }
 }

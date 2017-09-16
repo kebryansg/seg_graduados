@@ -70,24 +70,15 @@ class PreguntasDaoImp implements PreguntasDao {
         return $list;
     }
 
-    public static function list_filter($top, $limit, $categoria_id) {
+    public static function list_filter($top, $limit, $categoria_id, $encuesta_id) {
         $conn = (new C_MySQL())->open();
         $list_count = new list_count();
         $list = array();
-        $sql_1 = "preguntas p inner join categoria cat on cat.id = p.categoria_id and ($categoria_id = 0 or $categoria_id = cat.id) where p.estado = '1'";
-        //$sql = "declare total int; set total = (select count(*) from ". $sql_1 ." );";
-        $sql = "select (select count(*) from " . $sql_1 . " ) total, p.* , cat.descripcion from " . $sql_1 . " limit $top offset $limit;";
-        //declare total int;set total = (select count(*) from 
-        //preguntas p inner join categoria cat on cat.id = p.categoria_id and (id_categoria = 0 or id_categoria = cat.id)
-        //where p.estado = '1');
-//        select total total, p.* , cat.descripcion from 
-//        preguntas p inner join categoria cat on cat.id = p.categoria_id and (id_categoria = 0 or id_categoria = cat.id)
-//        where p.estado = '1'
-//        limit top offset limite;
-        //$sql = ("call list_Preguntas(" . $top . "," . $limit . "," . $categoria_id . ");");
+        $sql_1 = ($categoria_id == 0) ? "" : " and $categoria_id = cat.id ";
+        $sql = "select SQL_CALC_FOUND_ROWS  p.* , cat.descripcion from preguntas p inner join categoria cat on cat.id = p.categoria_id  $sql_1  where p.estado = '1' and Encuestas_id = $encuesta_id limit $top offset $limit;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
-                $list_count->setTotal($row["total"]);
+
                 $pregunta = new Preguntas();
                 $pregunta->setId($row["id"]);
                 $pregunta->setEnunciado($row["enunciado"]);
@@ -98,6 +89,7 @@ class PreguntasDaoImp implements PreguntasDao {
             $resultado->close();
         }
         $list_count->setList($list);
+        $list_count->setTotal(C_MySQL::row_count($conn));
         $conn->close();
         return $list_count;
     }
