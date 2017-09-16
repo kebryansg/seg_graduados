@@ -4,11 +4,20 @@ class Encuesta{
     private $id;
     private $fecha;
     private $nombre;
+    private $cant_preg;
     
     function __construct() {
         $this->id = 0;
     }
-    function getNombre() {
+    function getCant_preg() {
+        return $this->cant_preg;
+    }
+
+    function setCant_preg($cant_preg) {
+        $this->cant_preg = $cant_preg;
+    }
+
+        function getNombre() {
         return $this->nombre;
     }
 

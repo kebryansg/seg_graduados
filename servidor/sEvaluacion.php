@@ -35,17 +35,24 @@ switch ($op) {
     case "list":
         $top = $_POST["top"];
         $pag = $_POST["pag"];
-        $list = EncuestaDaoImp::_list($top, $pag);
+        $list = EncuestaDaoImp::_list($top, $pag); //$top
         foreach ($list->getList() as $value) {
             $resultado = '{ "id" : ' . $value->getId() . ' , '
                     . '"nombre" : "' . $value->getNombre() . '" , '
                     . '"fecha" : "' . $value->getFecha() . '" ,'
-                    . '"accion" : "<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" class=\"btn btn-success\">Editar</button> '
-                                . '<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" class=\"btn btn-success\">Eliminar</button> '
-                                . '<button dat-id=\"' . $value->getId() . '\" name=\"report_Encuesta\" class=\"btn btn-success\">Duplicar</button>" }'; //<i class=\"glyphicon glyphicon-align-justify\"></i>
+                    . '"cant" : "' . $value->getCant_preg() . '" ,'
+                    . '"accion" : "<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" data-toggle=\"modal\" data-target=\"#modal_editEncuesta\" class=\"btn btn-success\">Editar</button> '
+                    . '<button dat-id=\"' . $value->getId() . '\" name=\"del_encuesta\" class=\"btn btn-success\">Eliminar</button> '
+                    . '<button dat-id=\"' . $value->getId() . '\" name=\"dupl_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_duplEncuesta\" class=\"btn btn-success\">Duplicar</button>" }';
             array_push($list_result, $resultado);
         }
         $resultado = '{ "total" : ' . ceil($list->getTotal() / $top) . ' , "load" : [' . join($list_result, ",") . '] }';
+        break;
+    case "list_cbo":
+        $list = EncuestaDaoImp::_list(0, $pag);
+        foreach ($list->getList() as $value) {
+            $resultado .= '<option value="'.$value->getId().'">' . $value->getNombre() . '</option>';
+        }
         break;
     case "save":
         $encuesta = new Encuesta();

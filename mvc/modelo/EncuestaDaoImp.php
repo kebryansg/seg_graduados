@@ -24,8 +24,8 @@ class EncuestaDaoImp {
         $conn = (new C_MySQL())->open();
         $list_count = new list_count();
         $list = array();
-        $total = -1;
-        $sql = "select SQL_CALC_FOUND_ROWS * from encuestas limit $top offset $limit;";
+        $pag = ($top > 0 ) ? "limit $top offset $limit" : "";
+        $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta $pag;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
                 $list_count->setTotal(5);
@@ -33,6 +33,7 @@ class EncuestaDaoImp {
                 $encuesta->setId($row["id"]);
                 $encuesta->setFecha($row["fecha"]);
                 $encuesta->setNombre($row["nombre"]);
+                $encuesta->setCant_preg($row["total_preguntas"]);
                 array_push($list, $encuesta);
             }
             $resultado->close();
