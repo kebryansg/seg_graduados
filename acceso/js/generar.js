@@ -1,3 +1,4 @@
+$("#tb_detallesEncuestas").bootstrapTable();
 $("#btn_GenerarClave").click(function () {
     $.ajax({
         url: "servidor/sAcesso.php",

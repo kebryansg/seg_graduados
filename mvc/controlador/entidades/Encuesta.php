@@ -4,11 +4,10 @@ class Encuesta{
     private $id;
     private $fecha;
     private $nombre;
-
+    
     function __construct() {
         $this->id = 0;
     }
-    
     function getNombre() {
         return $this->nombre;
     }
@@ -17,7 +16,7 @@ class Encuesta{
         $this->nombre = $nombre;
     }
 
-        function getId() {
+    function getId() {
         return $this->id;
     }
 

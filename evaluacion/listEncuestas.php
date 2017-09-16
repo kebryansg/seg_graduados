@@ -11,6 +11,11 @@
         </div>
         <div class="pull-right">
             <div class="form-inline">
+                <select class="selectpicker" data-width="120px" id="cboFiltro">
+                    <option value="0">Todas</option>
+                    <option value="1">Facultad</option>
+                    <option value="2">Carrera</option>
+                </select>
                 <button class="btn btn-default" id="btnGenerar">Generar Excel</button>
             </div>
         </div>
