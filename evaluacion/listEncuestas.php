@@ -60,7 +60,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Modificar</button>
+                        <button id="btn_canEncuesta" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        <button id="btn_newEncuesta" type="button" class="btn btn-success" data-dismiss="modal">Modificar</button>
                     </div>
                 </div>
             </div>
@@ -88,6 +89,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-success" data-dismiss="modal">Duplicar</button>
                     </div>
                 </div>
@@ -95,5 +97,4 @@
         </div>
     </div>
 </div>
-
 <script src="evaluacion/js/listEncuestas.js" type="text/javascript" charset="utf-8" async defer></script>

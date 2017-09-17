@@ -49,6 +49,12 @@ class EncuestaDaoImp {
         $conn->query($sql);
         $conn->close();
     }
+    public static function _duplicar($id_destino,$id_origen){
+        $conn = (new C_MySQL())->open();
+        $sql = "";
+        $conn->query($sql);
+        $conn->close();
+    }
 
     public static function _list($top, $limit) {
         $conn = (new C_MySQL())->open();
@@ -58,7 +64,6 @@ class EncuestaDaoImp {
         $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta $pag;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
-                $list_count->setTotal(5);
                 $encuesta = new Encuesta();
                 $encuesta->setId($row["id"]);
                 $encuesta->setFecha($row["fecha"]);
@@ -69,6 +74,7 @@ class EncuestaDaoImp {
             $resultado->close();
         }
         $list_count->setList($list);
+        $list_count->setTotal(C_MySQL::row_count($conn));
         $conn->close();
         return $list_count;
     }

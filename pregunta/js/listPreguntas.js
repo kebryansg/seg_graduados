@@ -1,10 +1,11 @@
 idEncuesta = 0;
-$("#orderPregunta").click(function () {
-    $("#content").load('pregunta/orderPregunta.php');
-});
 function getEncuesta_id(id){
     idEncuesta = id;
 }
+$("#orderPregunta").click(function () {
+    $("#content").load('pregunta/orderPregunta.php');
+});
+
 default_pregunta = {
     initiateStartPageClick: false,
     totalPages: 1,
@@ -54,7 +55,10 @@ $("#cboTop").change(function () {
 
 $("#newPregunta").click(function (e) {
     e.preventDefault();
-    $("#content").load("pregunta/newPregunta.php");
+    id = (idEncuesta);
+    $("#content").load("pregunta/newPregunta.php",function(){
+        NewEncuesta_id(id);
+    });
 });
 
 $("#tb_listPreguntas").on("click", 'button[name="editPregunta"]', function () {

@@ -1,5 +1,6 @@
 table = "#tb_listEncuestas";
 paginacion = ("#pag_tb_listEncuestas");
+ban_new = true;
 default_encuesta = {
     initiateStartPageClick: false,
     totalPages: 1,
@@ -13,14 +14,14 @@ $(function () {
     $(".selectpicker").selectpicker();
     $("table").bootstrapTable();
     load_cboEncuestas();
-    
+
     load_Encuestas(1);
-    
+
     $(table).on("click", "button[name='edit_encuesta']", function () {
         id = $(this).attr("dat-id");
         $("#modal_editEncuesta h4.modal-title").html("Modificar Encuesta");
-        $("#modal_editEncuesta .modal-footer button").html("Modificar");
-        $("#modal_editEncuesta .modal-footer button").data("id", id);
+        $("#modal_editEncuesta .modal-footer button.btn-success").html("Modificar");
+        $("#modal_editEncuesta .modal-footer button.btn-success").data("id", id);
         row = $(table).bootstrapTable('getRowByUniqueId', id);
         $("#edit_nombre").val(row.nombre);
     });
@@ -41,7 +42,7 @@ $(function () {
     });
     $(table).on('dbl-click-row.bs.table', function (e, row, $element) {
         id = row.id;
-        $("#content").load("pregunta/listPreguntas.php",function(){
+        $("#content").load("pregunta/listPreguntas.php", function () {
             getEncuesta_id(id);
             load_Preguntas(1);
         });
@@ -54,24 +55,27 @@ $(function () {
     });
     $("#newEncuesta").click(function () {
         $("#modal_editEncuesta h4.modal-title").html("Nueva Encuesta");
-        $("#modal_editEncuesta .modal-footer button").data("id", 0);
-        $("#modal_editEncuesta .modal-footer button").html("Guardar");
+        $("#modal_editEncuesta .modal-footer button.btn-success").data("id", 0);
+        $("#modal_editEncuesta .modal-footer button.btn-success").html("Guardar");
         $("#edit_nombre").val("");
     });
-    $('#modal_editEncuesta').on('hide.bs.modal', function (e) {
-        if ($.isEmptyObject($("#edit_nombre").val())) {
-            e.preventDefault();
-        } else {
+    $("#btn_canEncuesta").click(function () {
+        $('#modal_editEncuesta').modal("toggle");
+        $("#edit_nombre").val("");
+    });
+    $("#btn_newEncuesta").click(function () {
+        if (!$.isEmptyObject($("#edit_nombre").val())) {
             $.ajax({
                 url: "servidor/sEvaluacion.php",
                 type: 'POST',
+                async: false,
                 data: {
                     op: "saveEncuesta",
-                    id: $("#modal_editEncuesta .modal-footer button").data("id"),
+                    id: $(this).data("id"),
                     nombre: $("#edit_nombre").val()
                 },
                 success: function (data) {
-                    alert(data);
+                    $('#modal_editEncuesta').modal("toggle");
                 }
             });
         }
@@ -96,7 +100,6 @@ $(function () {
             }
         });
     });
-
 
 });
 
@@ -128,7 +131,7 @@ function load_Encuestas(pag) {
             pag: ((pag - 1) * top)
         },
         success: function (response) {
-            console.log(response.load);
+            console.log(response.count);
             $(table).bootstrapTable("load", (response.load));
             //$(table).bootstrapTable('resetView');
             $("#pagination-demo").twbsPagination('destroy');

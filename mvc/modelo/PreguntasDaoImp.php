@@ -32,7 +32,7 @@ class PreguntasDaoImp implements PreguntasDao {
         $conn = (new C_MySQL())->open();
         $sql = "";
         if ($pregunta->getId() == "0") {
-            $sql = "insert into preguntas(enunciado,tipo,categoria_id,estado) values('" . ($pregunta->getEnunciado()) . "'," . ($pregunta->getTipo()) . "," . ($pregunta->getCategoria()->getId()) . ",'1');";
+            $sql = "insert into preguntas(enunciado,tipo,categoria_id,estado,Encuestas_id,estado_excel) values('" . ($pregunta->getEnunciado()) . "'," . ($pregunta->getTipo()) . "," . ($pregunta->getCategoria()->getId()) . ",'1',". ($pregunta->getEncuesta()) .",'1');";
         } else {
             $sql = "update preguntas set enunciado = '" . $pregunta->getEnunciado() . "', tipo = " . $pregunta->getTipo() . ", categoria_id = " . $pregunta->getCategoria()->getId() . " where id = " . $pregunta->getId();
         }

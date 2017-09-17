@@ -12,6 +12,11 @@ $op = $_POST["op"];
 $resultado = "";
 $list_result = [];
 switch ($op) {
+    case "duplicar": 
+        $idEncuesta_origen = $_POST["id_origen"];
+        $idEncuesta_destino = $_POST["id_destino"];
+        //EncuestaDaoImp::
+        break;
     case "saveEncuesta": 
         $encuesta = new Encuesta();
         $encuesta->setId($_POST["id"]);
@@ -53,7 +58,7 @@ switch ($op) {
                     . '<button dat-id=\"' . $value->getId() . '\" name=\"dupl_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_duplEncuesta\" class=\"btn btn-success\">Duplicar</button>" }';
             array_push($list_result, $resultado);
         }
-        $resultado = '{ "total" : ' . ceil($list->getTotal() / $top) . ' , "load" : [' . join($list_result, ",") . '] }';
+        $resultado = '{ "count" : ' . ceil($list->getTotal() / $top) . ' , "load" : [' . join($list_result, ",") . '] }';
         break;
     case "list_cbo":
         $list = EncuestaDaoImp::_list(0, $pag);

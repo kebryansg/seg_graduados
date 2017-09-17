@@ -6,11 +6,20 @@ class Preguntas {
     private $enunciado;
     private $tipo;
     private $categoria;
+    private $encuesta;
 
     function __construct() {
         $this->id = 0;
     }
+    function getEncuesta() {
+        return $this->encuesta;
+    }
 
+    function setEncuesta($encuesta) {
+        $this->encuesta = $encuesta;
+    }
+
+    
     function getId() {
         return $this->id;
     }

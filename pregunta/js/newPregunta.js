@@ -1,3 +1,7 @@
+idEncuesta = 0;
+function NewEncuesta_id(id) {
+    idEncuesta = id;
+}
 $(".selectpicker").selectpicker();
 $("#div_tipoPreguntas > div").hide();
 $(function () {
@@ -7,7 +11,6 @@ $(function () {
 
 function cboTipoPregunta(val) {
     limpiarOpciones();
-
     $("#" + val).show();
 }
 
@@ -26,11 +29,16 @@ function savePregunta() {
                 enunciado: $("#txtEnunciado").val(),
                 tipo: $("#cboTipoPregunta").val(),
                 categoria: $("#cboCategoria").val(),
+                encuesta: idEncuesta,
                 opciones: getOpciones($("#cboTipoPregunta").val()),
                 opciones_del: $("#content_" + _TipoPregunta($("#cboTipoPregunta").val())).data("opcion_del")
             },
             success: function (data) {
-                $("#content").load("pregunta/listPreguntas.php");
+                id = idEncuesta;
+                $("#content").load("pregunta/listPreguntas.php", function () {
+                    getEncuesta_id(id);
+                    load_Preguntas(1);
+                });
             }
         });
     } else {
@@ -43,7 +51,11 @@ $("#savePregunta").click(function () {
 });
 
 $("#cancelPregunta").click(function () {
-    $("#content").load("pregunta/listPreguntas.php");
+    id = idEncuesta;
+    $("#content").load("pregunta/listPreguntas.php", function () {
+        getEncuesta_id(id);
+        load_Preguntas(1);
+    });
 });
 
 $("#btnAgregar_IMultiple").click(function () {
