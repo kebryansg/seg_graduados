@@ -52,12 +52,30 @@ $(function () {
         id = $(this).attr("dat-id");
         row = $(table).bootstrapTable('getRowByUniqueId', id);
         $("#dupli_nombre").val(row.nombre);
+        $("#btn_newDuplicar").data("encuesta", id);
     });
     $("#newEncuesta").click(function () {
         $("#modal_editEncuesta h4.modal-title").html("Nueva Encuesta");
         $("#modal_editEncuesta .modal-footer button.btn-success").data("id", 0);
         $("#modal_editEncuesta .modal-footer button.btn-success").html("Guardar");
         $("#edit_nombre").val("");
+    });
+    $("#btn_newDuplicar").click(function () {
+        if (!$.isEmptyObject($("#cboEncuestas").selectpicker("val"))) {
+            $.ajax({
+                url: "servidor/sEvaluacion.php",
+                type: 'POST',
+                async: false,
+                data: {
+                    op: "duplicar",
+                    id_origen: $("#cboEncuestas").selectpicker("val"),
+                    id_destino: $(this).data("encuesta")
+                },
+                success: function (data) {
+                    $('#modal_duplEncuesta').modal("toggle");
+                }
+            });
+        }
     });
     $("#btn_canEncuesta").click(function () {
         $('#modal_editEncuesta').modal("toggle");

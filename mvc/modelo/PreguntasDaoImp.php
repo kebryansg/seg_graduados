@@ -28,11 +28,11 @@ class PreguntasDaoImp implements PreguntasDao {
         return $pregunta;
     }
 
-    public function save($pregunta) {
+    public static function save($pregunta) {
         $conn = (new C_MySQL())->open();
         $sql = "";
         if ($pregunta->getId() == "0") {
-            $sql = "insert into preguntas(enunciado,tipo,categoria_id,estado,Encuestas_id,estado_excel) values('" . ($pregunta->getEnunciado()) . "'," . ($pregunta->getTipo()) . "," . ($pregunta->getCategoria()->getId()) . ",'1',". ($pregunta->getEncuesta()) .",'1');";
+            $sql = "insert into preguntas(enunciado,tipo,categoria_id,estado,Encuestas_id,estado_excel,order_by) values('" . ($pregunta->getEnunciado()) . "'," . ($pregunta->getTipo()) . "," . ($pregunta->getCategoria()->getId()) . ",'" . ($pregunta->getEstado()) . "'," . ($pregunta->getEncuesta()) . ",'" . ($pregunta->getEstado_excel()) . "'," . ($pregunta->getOrder_by()) . ");";
         } else {
             $sql = "update preguntas set enunciado = '" . $pregunta->getEnunciado() . "', tipo = " . $pregunta->getTipo() . ", categoria_id = " . $pregunta->getCategoria()->getId() . " where id = " . $pregunta->getId();
         }
@@ -49,6 +49,40 @@ class PreguntasDaoImp implements PreguntasDao {
         $sql = "update preguntas set order_by = " . $pregunta['order'] . " where id = " . $pregunta["id"];
         $conn->query($sql);
         $conn->close();
+    }
+
+    public static function _listDuplicar($id_origen, $id_destino) {
+        $conn = (new C_MySQL())->open();
+        $sql = "select * from preguntas where Encuestas_id = $id_origen;";
+        if ($resultado = $conn->query($sql)) {
+            while ($row = $resultado->fetch_assoc()) {
+                $id_pregunta = $row["id"];
+                $pregunta = new Preguntas();
+                $pregunta->setEnunciado($row["enunciado"]);
+                $pregunta->setTipo($row["tipo"]);
+                $pregunta->setCategoria(new Categoria($row["categoria_id"], ""));
+                $pregunta->setEstado($row["estado"]);
+                $pregunta->setOrder_by($row["order_by"]);
+                $pregunta->setEncuesta($id_destino);
+                $pregunta->setEstado_excel($row["estado_excel"]);
+                PreguntasDaoImp::save($pregunta);
+                $sql2 = "select * from opciones where preguntas_id = $id_pregunta;";
+                if ($resultado2 = $conn->query($sql2)) {
+                    while ($row2 = $resultado2->fetch_assoc()) {
+                        $opcion = new Opcion();
+                        $opcion->setEnunciado($row2["enunciado"]);
+                        $opcion->setPreguntas_id($pregunta->getId());
+                        OpcionesDaoImp::save($opcion);
+                    }
+                    $resultado2->free();
+                    $resultado2->close();
+                }
+            }
+            $resultado->free();
+            $resultado->close();
+        }
+        $conn->close();
+        return $list;
     }
 
     public static function list_($categoria_id) {

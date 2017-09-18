@@ -4,9 +4,9 @@ include_once '../mvc/modelo/OpcionesDao.php';
 
 class OpcionesDaoImp implements OpcionesDao {
 
-    public function save($opcion) {
+    public static function save($opcion) {
         $conn = (new C_MySQL())->open();
-        if ($opcion->getId() === "0") {
+        if ($opcion->getId() == "0") {
             $sql = "insert into opciones(enunciado,preguntas_id) values('" . ($opcion->getEnunciado()) . "'," . ($opcion->getPreguntas_id()) . ");";
         } else {
             $sql = "update opciones set enunciado = '".$opcion->getEnunciado()."', preguntas_id = " . ($opcion->getPreguntas_id()) . " where id = ".$opcion->getId()." ;";

@@ -49,12 +49,6 @@ class EncuestaDaoImp {
         $conn->query($sql);
         $conn->close();
     }
-    public static function _duplicar($id_destino,$id_origen){
-        $conn = (new C_MySQL())->open();
-        $sql = "";
-        $conn->query($sql);
-        $conn->close();
-    }
 
     public static function _list($top, $limit) {
         $conn = (new C_MySQL())->open();

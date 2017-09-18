@@ -55,7 +55,7 @@ switch ($op) {
         $pregunta->setTipo($_POST["tipo"]);
         $pregunta->setCategoria(new Categoria($_POST["categoria"], ''));
         $pregunta->setEncuesta($_POST["encuesta"]);
-        (new PreguntasDaoImp())->save($pregunta);
+        PreguntasDaoImp::save($pregunta);
         if ($pregunta->getId() !== "0") {
             if (isset($_POST['opciones'])) {
                 $opciones = $_POST['opciones'];
@@ -64,7 +64,7 @@ switch ($op) {
                     $opcion->setId($value["id"]);
                     $opcion->setEnunciado($value["value"]);
                     $opcion->setPreguntas_id($pregunta->getId());
-                    (new OpcionesDaoImp())->save($opcion);
+                    OpcionesDaoImp::save($opcion);
                 }
             }
             if (isset($_POST["opciones_del"])) {

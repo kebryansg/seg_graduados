@@ -13,9 +13,9 @@ $resultado = "";
 $list_result = [];
 switch ($op) {
     case "duplicar": 
-        $idEncuesta_origen = $_POST["id_origen"];
-        $idEncuesta_destino = $_POST["id_destino"];
-        //EncuestaDaoImp::
+        $id_origen = $_POST["id_origen"];
+        $id_destino = $_POST["id_destino"];
+        PreguntasDaoImp::_listDuplicar($id_origen, $id_destino);
         break;
     case "saveEncuesta": 
         $encuesta = new Encuesta();
