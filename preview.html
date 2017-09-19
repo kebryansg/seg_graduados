@@ -1,23 +1,38 @@
-<script src="resources/bootstrap/pagination/jquery.twbsPagination.min.js" type="text/javascript"></script>
-<script src="preview.js" type="text/javascript"></script>
-<div class="row">
-    <div class="col-md-12">
-        <table data-toggle="table" data-width="300" id="tb_listPreguntas" data-unique-id="id">
-            <thead>
-                <tr>
-                    <th  data-field="id">ID</th>
-                    <th class="col-md-5" data-field="enunciado">Enunciado</th>
-                    <th data-field="tipo">Tipo</th>
-                    <th class="col-md-4" data-field="categoria">Categoria</th>
-                    <th data-field="accion">Acción</th>
-                </tr>
-            </thead>
-        </table>
-        <div class="clearfix"></div>
-        <div class="pull-right">
-            <ul id="" class="pagination"></ul>
+<html>
+    <head>
+        <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="resources/bootstrap/table/bootstrap-table.min.css" rel="stylesheet">
+
+        <script src="resources/bootstrap/js/jquery.min.js"></script>
+        <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+        <script src="resources/bootstrap/table/bootstrap-table.min.js"></script>
+        <script src="preview.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="control-label">Agregar</label>
+                    <input type="text" class="form-control" id="col_add">
+                    <button id="btn_add" class="btn btn-success">Agregar</button>
+                </div>
+            </div>
+
         </div>
-    </div>
-
-</div>
-
+        <div class="row">
+            <div class="col-md-8">
+                <table data-toggle="table" data-width="300" id="tb_listPreguntas">
+                    <thead>
+                        <tr>
+                            <!--<th  data-field="id">Cod</th>
+                            <th class="col-md-5" data-field="enunciado">Enunciado</th>
+                            <th data-field="tipo">Tipo</th>
+                            <th class="col-md-4" data-field="categoria">Categoria</th>
+                            <th data-field="accion">Accion</th>-->
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

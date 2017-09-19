@@ -1,38 +1,28 @@
+columns = [];
 $(function () {
     $("#tb_listPreguntas").bootstrapTable();
-    
-    $(".pagination").twbsPagination({
-        initiateStartPageClick: false,
-        totalPages: 35,
-        visiblePages: 7,
-        onPageClick: function (event, page) {
-            //load_Preguntas(false, page);
-            //$('#page-content').text('Page ' + page);
-        }
+
+    $("#btn_add").click(function () {
+        valor = $("#col_add").val();
+        columns.push({
+            field: valor,
+            title: valor,
+            sortable: false
+        });
+        $("#tb_listPreguntas").bootstrapTable('refreshOptions', {
+            columns: columns
+        });
+        //console.log(($("#tb_listPreguntas").bootstrapTable("getOptions").columns[0]));
     });
-    load_Preguntas(false, 1);
 
 });
-function load_Preguntas(bandera, pag) {
-    //var top = $("#cboTop").val();
-    top = 10;
-    $.ajax({
-        type: "POST",
-        dataType: 'json',
-        url: "servidor/sPreguntas.php",
-        async: false,
-        data: {
-            op: "list",
-            top: top,
-            pag: ((pag - 1) * top),
-            categoria: 0//$("#cboCategoria").val()
-        },
-        success: function (response) {
-            alert();
-            /*if (bandera)
-                loadPaginacionlistPreguntas(response.count);*/
-            $("#tb_listPreguntas").bootstrapTable("load", response.load);
-            $('#tb_listPreguntas').bootstrapTable('resetView');
-        }
-    });
+
+function generateColumns() {
+    return "{" +
+            "field: 'p1'," +
+            "title: 'Final Buy (inc GST)'," +
+            "align: 'center'," +
+            "valign: 'middle'," +
+            "width: '20%'" +
+            "}";
 }
