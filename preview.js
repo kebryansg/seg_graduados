@@ -1,18 +1,26 @@
 columns = [];
+data = {};
+
 $(function () {
     $("#tb_listPreguntas").bootstrapTable();
 
     $("#btn_add").click(function () {
         valor = $("#col_add").val();
+        $.extend(data, JSON.parse('{"' + valor + '" : 2}'));
+        datos = [];
+        datos.push(data);
         columns.push({
             field: valor,
             title: valor,
-            sortable: false
+            sortable: false,
+            editable: true
         });
+        console.log(columns);
         $("#tb_listPreguntas").bootstrapTable('refreshOptions', {
-            columns: columns
+            columns: columns,
+            data: datos
         });
-        //console.log(($("#tb_listPreguntas").bootstrapTable("getOptions").columns[0]));
+        //$("#tb_listPreguntas").bootstrapTable("load",datos);
     });
 
 });
