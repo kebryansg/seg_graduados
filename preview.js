@@ -3,7 +3,20 @@ data = {};
 
 $(function () {
     $("#tb_listPreguntas").bootstrapTable();
-
+    $("#btn_new_row").click(function () {
+        str_row = [];
+        console.log(columns);
+        $.each(columns, function (index, value) {
+            str_row.push('"'+ value.field +'" : "1"');
+        });
+        console.log('{ ' + str_row.join() + ' }');
+        $("#tb_listPreguntas").bootstrapTable('insertRow', {
+            index: 1,
+            row: JSON.parse('{ ' + str_row.join() + ' }')
+        });
+        //alert("click");
+        //console.log(JSON.stringify($("#tb_listPreguntas").bootstrapTable('getData')));
+    });
 
     $("#btn_add").click(function () {
         valor = $("#col_add").val();
