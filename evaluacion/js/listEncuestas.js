@@ -27,7 +27,19 @@ $(function () {
 
     });
     $(table).on("click", "button[name='del_encuesta']", function () {
-
+        id = $(this).attr("dat-id");
+        $.ajax({
+            url: "servidor/sEvaluacion.php",
+            type: 'POST',
+            async: false,
+            data: {
+                op: "delete",
+                id: id
+            },
+            success: function (data) {
+                load_Encuestas(1);
+            }
+        });
     });
     $(table).on("click", "button[name='list_pregunt_Encuesta']", function () {
         id = $(this).attr("dat-id");
