@@ -35,8 +35,9 @@ switch ($op) {
                 "enunciado" : "' . $pregunta->getEnunciado() . '",
                 "tipo" : "' . $pregunta->getTipo() . '",
                 "categoria" : "' . $pregunta->getCategoria()->getDescripcion() . '",
-                "accion": "<button data-toggle=\"tooltip\" title=\"Editar Pregunta\" dat-id=\"' . $pregunta->getId() . '\" name=\"editPregunta\" class=\"btn btn-primary\" ><i class=\"glyphicon glyphicon-edit\"></i></button>  <button dat-id=\"' . $pregunta->getId() . '\" name=\"deletePregunta\" data-toggle=\"tooltip\" title=\"Eliminar Pregunta\" class=\"btn btn-danger\" ><i class=\"glyphicon glyphicon-trash\"></i></button>"
-            }';
+                "accion": "<button data-toggle=\"tooltip\" title=\"Editar Pregunta\" dat-id=\"' . $pregunta->getId() . '\" name=\"editPregunta\" class=\"btn btn-primary\" ><i class=\"glyphicon glyphicon-edit\"></i></button> '
+                    . ' <button dat-id=\"' . $pregunta->getId() . '\" name=\"deletePregunta\" data-toggle=\"tooltip\" title=\"Eliminar Pregunta\" class=\"btn btn-danger\" ><i class=\"glyphicon glyphicon-trash\"></i></button> '
+                    . ' <button dat-id=\"' . $pregunta->getId() . '\" name=\"estado_excel\" data-toggle=\"tooltip\" title=\"Permitir excel\" class=\"btn btn-default\" ><i class=\"glyphicon glyphicon-align-justify\"></i></button>"}';
             array_push($list_resultado, $resultado);
         }
         $resultado = '{ "count": ' . ceil($list->getTotal() / $top) . ' , "load": [' . join($list_resultado, ",") . ']}';

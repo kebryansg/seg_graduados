@@ -112,7 +112,7 @@ function getOpciones(tipoPregunta) {
         case "5":
             bandera = $.isEmptyObject($("#tb_listPreguntas").data("id"));
             if (bandera) {
-                etiquetas.push({id: 0, value: JSON.stringify(columns) });
+                etiquetas.push({id: 0, value: JSON.stringify(columns)});
             } else {
                 etiquetas.push({id: $("#tb_listPreguntas").data("id"), value: JSON.stringify(columns)});
             }
@@ -176,16 +176,24 @@ function asignarPregunta(pregunta) {
     cboTipoPregunta(_TipoPregunta(pregunta.tipo));
 }
 function generarOpciones(opciones) {
-    contenedor = "#content_" + _TipoPregunta($("#cboTipoPregunta").val());
-    opcion_html = "#op" + _TipoPregunta($("#cboTipoPregunta").val());
+    if (_TipoPregunta($("#cboTipoPregunta").val()) !== "5") {
+        contenedor = "#content_" + _TipoPregunta($("#cboTipoPregunta").val());
+        opcion_html = "#op" + _TipoPregunta($("#cboTipoPregunta").val());
 
-    $(opciones).each(function (index, opcion) {
-        div_clone = $(opcion_html + " > div").clone();
-        $(div_clone).find("button").data("id", opcion.id);
-        $(div_clone).find("input[type='text']").val(opcion.enunciado);
-        $(div_clone).find("input[type='text']").data("id", opcion.id);
-        $(div_clone).appendTo(contenedor);
-    });
+        $(opciones).each(function (index, opcion) {
+            div_clone = $(opcion_html + " > div").clone();
+            $(div_clone).find("button").data("id", opcion.id);
+            $(div_clone).find("input[type='text']").val(opcion.enunciado);
+            $(div_clone).find("input[type='text']").data("id", opcion.id);
+            $(div_clone).appendTo(contenedor);
+        });
+    }else{
+        columns = JSON.parse(opciones);
+        $("#table table").bootstrapTable("refreshOptions",{
+            columns: columns
+        });
+    }
+
 }
 
 function _TipoPregunta(index) {

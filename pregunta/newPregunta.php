@@ -103,16 +103,17 @@
                 </div>
             </div>
             <br>
-            <!--<div class="row">
+            <div class="row">
                 <div class="col-md-12">
                     <div class="pull-right">
-                        <button id="btn_new_row" class="btn btn-success"> <i class="glyphicon glyphicon-adjust"></i> </button>
-                        <button id="btn_data" class="btn btn-success"> Datos</button>
+                        <button id="btn_new_row" class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> Agregar Fila</button>
+                        <!--<button id="btn_data" class="btn btn-success"> Datos</button>-->
 
                     </div>
                 </div>
             </div>
-            <br>-->
+            <br>
+            
             <div class="row">
                 <div class="col-md-12">
                     <table data-toggle="table" data-width="300" id="tb_listPreguntas">
