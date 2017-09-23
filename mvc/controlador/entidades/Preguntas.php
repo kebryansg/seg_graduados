@@ -15,6 +15,7 @@ class Preguntas {
         $this->id = 0;
         $this->estado_excel = '1';
         $this->estado = '1';
+        $this->order_by = 0;
     }
     
     function getOrder_by() {

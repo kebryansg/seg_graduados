@@ -23,6 +23,7 @@
                 <option value="2" div_content="IMultiple">Ingreso Multiple</option>
                 <option value="3" div_content="SMultiple">Seleccion Multiple</option>
                 <option value="4" div_content="SUnica">Seleccion Unica</option>
+                <option value="5" div_content="table">Tabla</option>
             </select>
         </div>
     </div>
@@ -62,6 +63,69 @@
 
             </div>
         </div>
+        <div id="table">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-inline">
+                        <label for="" class="control-label">Nombre columna:</label>
+                        <input type="text" class="form-control" id="col_add">
+                        <select name="" class="form-control selectpicker" data-width="120" id="cboTipo">
+                            <option value="input">Ingreso</option>
+                            <option value="select">Combo</option>
+                            <option value="check">Checkbox</option>
+                        </select>
+                        <!--<input type="text" >-->
+                        <button id="btn_add" class="btn btn-success">Agregar</button>
+                        <!--<button id="btn_colm" class="btn btn-success">Columnas</button>-->
+                    </div>
+                </div>
+                <div id="op_select" class="hidden">
+                    <div class="col-md-6">
+                        <div class="form-inline">
+                            <input type="text" class="form-control">
+                            <button class="btn btn-success" id="btn_add_op"><i class="glyphicon glyphicon-arrow-right"></i></button>
+                            <button class="btn btn-danger" id="btn_remove_op"><i class="glyphicon glyphicon-trash"></i></button>
+                            <select name=""  class="form-control selectpicker" data-width="200" ></select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-inline">
+                        <label for="" class="control-label">Eliminar columna:</label>
+                        <select class="selectpicker form-control" data-width="220" id="cboColumnas" title="Eliminar"></select>
+                        <button id="btn_remove_column" class="btn btn-danger">Eliminar</button>
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <!--<div class="row">
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <button id="btn_new_row" class="btn btn-success"> <i class="glyphicon glyphicon-adjust"></i> </button>
+                        <button id="btn_data" class="btn btn-success"> Datos</button>
+
+                    </div>
+                </div>
+            </div>
+            <br>-->
+            <div class="row">
+                <div class="col-md-12">
+                    <table data-toggle="table" data-width="300" id="tb_listPreguntas">
+                        <thead>
+                            <tr>
+                                <!--<th data-field="h1">h1</th>
+                                <th data-field="h2">h2</th>-->
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="hidden" >
         <div id="opIMultiple">
@@ -93,5 +157,5 @@
         </div>
     </div>
 </div>
-
+<script src="pregunta/js/create_table.js" type="text/javascript" charset="utf-8" async defer></script>
 <script src="pregunta/js/newPregunta.js" type="text/javascript" charset="utf-8" async defer></script>

@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="panel panel-body col-md-12" id="content">
                     <?php
-                    $url_body = "evaluacion/listEncuestas.php";
+                    $url_body = "preview.html";
                         if(isset($url_body)){
                             include_once $url_body;
                         }

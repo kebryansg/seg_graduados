@@ -55,7 +55,8 @@ switch ($op) {
                     . '"cant" : "' . $value->getCant_preg() . '" ,'
                     . '"accion" : "<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" data-toggle=\"modal\" data-target=\"#modal_editEncuesta\" class=\"btn btn-success\">Editar</button> '
                     . '<button dat-id=\"' . $value->getId() . '\" name=\"del_encuesta\" class=\"btn btn-success\">Eliminar</button> '
-                    . '<button dat-id=\"' . $value->getId() . '\" name=\"dupl_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_duplEncuesta\" class=\"btn btn-success\">Duplicar</button>" }';
+                    . '<button dat-id=\"' . $value->getId() . '\" name=\"dupl_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_duplEncuesta\" class=\"btn btn-success\">Duplicar</button> '
+                    . '<button dat-id=\"' . $value->getId() . '\" name=\"list_pregunt_Encuesta\" class=\"btn btn-success\">Preguntas</button>" }';
             array_push($list_result, $resultado);
         }
         $resultado = '{ "count" : ' . ceil($list->getTotal() / $top) . ' , "load" : [' . join($list_result, ",") . '] }';

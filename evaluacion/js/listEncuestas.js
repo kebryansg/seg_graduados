@@ -24,24 +24,13 @@ $(function () {
         $("#modal_editEncuesta .modal-footer button.btn-success").data("id", id);
         row = $(table).bootstrapTable('getRowByUniqueId', id);
         $("#edit_nombre").val(row.nombre);
-    });
 
-    $(table).on("click", "button[name='del_encuesta']", function () {
-        id = $(this).attr("dat-id");
-        $.ajax({
-            url: "servidor/sEvaluacion.php",
-            type: 'POST',
-            data: {
-                op: "delete",
-                id: id
-            },
-            success: function (data) {
-                alert(data);
-            }
-        });
     });
-    $(table).on('dbl-click-row.bs.table', function (e, row, $element) {
-        id = row.id;
+    $(table).on("click", "button[name='del_encuesta']", function () {
+
+    });
+    $(table).on("click", "button[name='list_pregunt_Encuesta']", function () {
+        id = $(this).attr("dat-id");
         $("#content").load("pregunta/listPreguntas.php", function () {
             getEncuesta_id(id);
             load_Preguntas(1);
@@ -73,6 +62,7 @@ $(function () {
                 },
                 success: function (data) {
                     $('#modal_duplEncuesta').modal("toggle");
+                    load_Encuestas(1);
                 }
             });
         }
@@ -94,6 +84,7 @@ $(function () {
                 },
                 success: function (data) {
                     $('#modal_editEncuesta').modal("toggle");
+                    load_Encuestas(1);
                 }
             });
         }

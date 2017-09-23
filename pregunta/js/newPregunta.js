@@ -109,6 +109,15 @@ function loadCategoria() {
 function getOpciones(tipoPregunta) {
     etiquetas = [];
     switch (tipoPregunta) {
+        case "5":
+            bandera = $.isEmptyObject($("#tb_listPreguntas").data("id"));
+            if (bandera) {
+                etiquetas.push({id: 0, value: JSON.stringify(columns) });
+            } else {
+                etiquetas.push({id: $("#tb_listPreguntas").data("id"), value: JSON.stringify(columns)});
+            }
+            console.log(JSON.stringify(columns));
+            break;
         case "2":
             $("#content_IMultiple input").each(function (index, item) {
                 if (!$.isEmptyObject($(item).val()))
@@ -192,6 +201,9 @@ function _TipoPregunta(index) {
             break;
         case "4":
             return "SUnica";
+            break;
+        case "5":
+            return "table";
             break;
     }
 }

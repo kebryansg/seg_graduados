@@ -27,7 +27,7 @@
             <thead>
                 <tr>
                     <th class="col-md-1" data-field="id">Código</th>
-                    <th data-field="nombre">Encuestas</th>
+                    <th class="col-md-2" data-field="nombre">Encuestas</th>
                     <th class="col-md-1" data-field="fecha">F. Creación - Modificación</th>
                     <th class="col-md-1" data-field="cant">Cant. Preguntas</th>
                     <th class="col-md-3" data-field="accion">Acción</th>
