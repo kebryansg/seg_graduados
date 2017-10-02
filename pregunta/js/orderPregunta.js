@@ -1,3 +1,7 @@
+idEncuesta = 0;
+function order_Encuesta_id(id){
+    idEncuesta = id;
+}
 $(function () {
     $("#cboCategoria").change(function () {
         load_Preguntas_cat($(this).val());
@@ -67,6 +71,7 @@ function load_Preguntas_cat(id_cat) {
         dataType: "json",
         data: {
             op: "list_preguntas",
+            encuesta: idEncuesta,
             categoria: id_cat
         },
         success: function (data) {

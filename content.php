@@ -9,6 +9,7 @@
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="resources/bootstrap/boostrap-select/bootstrap-select.min.css" rel="stylesheet">
         <link href="resources/bootstrap/table/bootstrap-table.min.css" rel="stylesheet">
+        <link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="resources/styles/style.css" rel="stylesheet">
         <link href="resources/styles/menu.css" rel="stylesheet">
         <script src="resources/bootstrap/js/jquery.min.js"></script>

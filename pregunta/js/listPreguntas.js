@@ -3,7 +3,10 @@ function getEncuesta_id(id){
     idEncuesta = id;
 }
 $("#orderPregunta").click(function () {
-    $("#content").load('pregunta/orderPregunta.php');
+    id = idEncuesta;
+    $("#content").load('pregunta/orderPregunta.php',function(){
+        order_Encuesta_id(id);
+    });
 });
 
 default_pregunta = {
@@ -63,8 +66,10 @@ $("#newPregunta").click(function (e) {
 
 $("#tb_listPreguntas").on("click", 'button[name="editPregunta"]', function () {
     id = ($(this).attr("dat-id"));
+    id_e = idEncuesta;
     $("#content").load("pregunta/newPregunta.php", function () {
         editPregunta(id);
+        NewEncuesta_id(id_e);
     });
 });
 

@@ -53,10 +53,10 @@ switch ($op) {
                     . '"nombre" : "' . $value->getNombre() . '" , '
                     . '"fecha" : "' . $value->getFecha() . '" ,'
                     . '"cant" : "' . $value->getCant_preg() . '" ,'
-                    . '"accion" : "<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" data-toggle=\"modal\" data-target=\"#modal_editEncuesta\" class=\"btn btn-success\">Editar</button> '
-                    . '<button dat-id=\"' . $value->getId() . '\" name=\"del_encuesta\" class=\"btn btn-success\">Eliminar</button> '
-                    . '<button dat-id=\"' . $value->getId() . '\" name=\"dupl_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_duplEncuesta\" class=\"btn btn-success\">Duplicar</button> '
-                    . '<button dat-id=\"' . $value->getId() . '\" name=\"list_pregunt_Encuesta\" class=\"btn btn-success\">Preguntas</button>" }';
+                    . '"accion" : "<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" data-toggle=\"modal\" data-target=\"#modal_editEncuesta\" class=\"btn btn-success btn-sm\" data-toggle=\"tooltip\" title=\"Editar encuesta\"><i class=\"fa fa-edit\"></i></button> '
+                    . '<button dat-id=\"' . $value->getId() . '\" name=\"del_encuesta\" class=\"btn btn-danger btn-sm\" data-toggle=\"tooltip\" title=\"Eliminar encuesta\"><i class=\"fa fa-trash\"></i></button> '
+                    . '<button dat-id=\"' . $value->getId() . '\" name=\"dupl_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_duplEncuesta\" class=\"btn btn-primary btn-sm\" data-toggle=\"tooltip\" title=\"Duplicar\"><i class=\"fa fa-files-o\"></i></button> '
+                    . '<button dat-id=\"' . $value->getId() . '\" name=\"list_pregunt_Encuesta\" class=\"btn btn-info btn-sm\" data-toggle=\"tooltip\" title=\"Listado de Preguntas\"><i class=\"fa fa-align-justify\"></i></button>" }';
             array_push($list_result, $resultado);
         }
         $resultado = '{ "count" : ' . ceil($list->getTotal() / $top) . ' , "load" : [' . join($list_result, ",") . '] }';

@@ -9,6 +9,6 @@ interface PreguntasDao
     public static function _listDuplicar($id_origen, $id_destino);
     public static function edit($id);
     public function delete($id);
-    public static function list_($categoria_id);
+    public static function list_($categoria_id,$encuesta_id);
     public static function list_filter($top, $limit, $categoria_id,$encuesta_id);
 }

@@ -110,13 +110,14 @@ function getOpciones(tipoPregunta) {
     etiquetas = [];
     switch (tipoPregunta) {
         case "5":
-            bandera = $.isEmptyObject($("#tb_listPreguntas").data("id"));
+            //alert($("#table table").attr("data-id"));
+            bandera = $.isEmptyObject($("#table").data("id"));
             if (bandera) {
                 etiquetas.push({id: 0, value: JSON.stringify(columns)});
             } else {
-                etiquetas.push({id: $("#tb_listPreguntas").data("id"), value: JSON.stringify(columns)});
+                etiquetas.push({id: $("#table").data("id"), value: JSON.stringify(columns)});
             }
-            console.log(JSON.stringify(columns));
+            //console.log(JSON.stringify(columns));
             break;
         case "2":
             $("#content_IMultiple input").each(function (index, item) {
@@ -160,7 +161,6 @@ function editPregunta(id) {
             id: id
         },
         success: function (data) {
-            console.log(data);
             asignarPregunta(data.pregunta);
             generarOpciones(data.opciones);
         }
@@ -176,10 +176,9 @@ function asignarPregunta(pregunta) {
     cboTipoPregunta(_TipoPregunta(pregunta.tipo));
 }
 function generarOpciones(opciones) {
-    if (_TipoPregunta($("#cboTipoPregunta").val()) !== "5") {
+    if (_TipoPregunta($("#cboTipoPregunta").val()) !== "table") {
         contenedor = "#content_" + _TipoPregunta($("#cboTipoPregunta").val());
         opcion_html = "#op" + _TipoPregunta($("#cboTipoPregunta").val());
-
         $(opciones).each(function (index, opcion) {
             div_clone = $(opcion_html + " > div").clone();
             $(div_clone).find("button").data("id", opcion.id);
@@ -187,9 +186,15 @@ function generarOpciones(opciones) {
             $(div_clone).find("input[type='text']").data("id", opcion.id);
             $(div_clone).appendTo(contenedor);
         });
-    }else{
-        columns = JSON.parse(opciones);
-        $("#table table").bootstrapTable("refreshOptions",{
+    } else {
+        columns = JSON.parse(opciones[0].enunciado);
+        $("#table").data("id", opciones[0].id);
+        $(columns).each(function (i, v) {
+            $("#cboColumnas").append('<option value="' + i + '">' + v.field + '</option>');
+        });
+        $("#cboColumnas").selectpicker("refresh");
+
+        $("#table table").bootstrapTable("refreshOptions", {
             columns: columns
         });
     }

@@ -3,7 +3,7 @@ $("#btn_GenerarClave").click(function () {
     $.ajax({
         url: "servidor/sAcesso.php",
         data: {
-            op: "gen",
+            op: "getEstudiante",
             clave: $("#txt_Clave").val()
         },
         type: "POST",

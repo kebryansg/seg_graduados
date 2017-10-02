@@ -80,7 +80,7 @@ switch ($op) {
         }
         break;
     case "list_preguntas":
-        $list_preguntas = PreguntasDaoImp::list_($_POST["categoria"]);
+        $list_preguntas = PreguntasDaoImp::list_($_POST["categoria"],$_POST["encuesta"]);
         foreach ($list_preguntas as $pregunta) {
             $resultado = '{
                 "id" : "' . $pregunta["id"] . '",

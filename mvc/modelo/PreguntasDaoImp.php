@@ -85,10 +85,10 @@ class PreguntasDaoImp implements PreguntasDao {
         return $list;
     }
 
-    public static function list_($categoria_id) {
+    public static function list_($categoria_id,$encuesta_id) {
         $conn = (new C_MySQL())->open();
         $list = array();
-        $sql = ("select * from preguntas where (estado = '1' or estado = '2') and categoria_id = " . $categoria_id . " order by order_by");
+        $sql = ("select * from preguntas where (estado = '1' or estado = '2') and categoria_id = " . $categoria_id . " and Encuestas_id = $encuesta_id order by order_by");
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
                 /* $pregunta = new Preguntas();
