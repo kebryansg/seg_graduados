@@ -56,6 +56,13 @@
                                     <label for="" class="control-label">Nombre: </label>
                                     <input type="text" id="edit_nombre" class="form-control">
                                 </div>
+                                <!--<div class="form-group">
+                                    <label for="" class="control-label">Encuesta predeterminada: </label>
+                                    <select name="" id="" class="form-control selectpicker">
+                                        <option value="1">No</option>
+                                        <option value="2">Si</option>
+                                    </select>
+                                </div>-->
                             </div>
                         </div>
                     </div>

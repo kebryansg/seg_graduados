@@ -16,46 +16,56 @@
                             </div>
                         </div>
                     </div>
-                    <div class="clearfix"></div>
-                    <br>
-                    <div class="col-md-5">
-                        <span class="h4">Resultados para <i id="cod-busqueda" class="negrita">1206249391</i></span>
-                        <hr>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="h4 negrita">Cédula: &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                            <span class="h4">1206249391</span>
-                        </div>
-                        <div class="form-group">
-                            <label class="h4 negrita">Nombre: &nbsp;&nbsp;&nbsp;</label>
-                            <span class="h4">Kevin suarez guzman</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
 
-                    </div>
+
+
 
                 </div>
-                <div class="row">
-                    <h4 class="text-center negrita">Detalles de accesos generados sobre encuestas</h4>
-                    <div class="clearfix"></div>
-                    <div class="col-md-12">
-                        <table id="tb_detallesEncuestas">
-                            <thead>
-                                <tr>
-                                    <th class="col-md-1" data-field="id">Cod.</th>
-                                    <th class="col-md-1" data-field="facultad">Facultad</th>
-                                    <th data-field="carrera">Carrera</th>
-                                    <th data-field="clave">Clave - Acceso</th>
-                                    <th class="col-md-2" data-field="encuesta">Encuesta</th>
-                                    <th data-field="accion">Acción</th>
-                                </tr>
-                            </thead>
-                        </table>
+                <br>
+                <div id="info-result" class="hidden">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <span class="h4">Resultados para <i id="cod-busqueda" class="negrita"></i></span>
+                            <hr>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="h4 negrita">Cédula: &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <span class="h4" id="info_cedula"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="h4 negrita">Nombre: &nbsp;&nbsp;&nbsp;</label>
+                                <span class="h4" id="info_nombre"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4 class="text-center negrita">Detalles de accesos generados sobre encuestas</h4>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <table id="tb_detallesEncuestas" data-unique-id="num">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-1" data-field="num">Cod.</th>
+                                        <th class="col-md-1" data-field="Cod">Cod.</th>
+                                        <th data-field="titulo">titulo</th>
+                                        <th data-field="encuesta">encuesta</th>
+                                        <th class="col-md-2" data-field="facultad">Facultad</th>
+                                        <th class="col-md-2" data-field="carrera">Carrera</th>
+                                        <th data-field="acceso">Clave - Acceso</th>
+                                        <th class="col-md-2" data-field="nom_encuesta">Encuesta</th>
+                                        <th data-align="center" data-field="accion">Acción</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
 
             </div>
         </div>
