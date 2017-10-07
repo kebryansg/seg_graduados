@@ -5,7 +5,6 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="resources/bootstrap/boostrap-select/bootstrap-select.min.css" rel="stylesheet">
         <link href="resources/bootstrap/table/bootstrap-table.min.css" rel="stylesheet">
@@ -36,7 +35,7 @@
             <div class="row">
                 <div class="panel panel-body col-md-12" id="content">
                     <?php
-                    $url_body = "preview.html";
+                    //$url_body = "preview.html";
                         if(isset($url_body)){
                             include_once $url_body;
                         }
@@ -47,8 +46,6 @@
 
             </div>
         </div>
-        
-
         <script type="text/javascript">
                 //$("#content").load("pregunta/listPreguntas.php");
                 //$("#content").load("preview.html");

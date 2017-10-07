@@ -33,7 +33,7 @@ class EstudianteDaoImp {
         $data = NULL;
         $a_titulo = [];
         $a_encuestas = [];
-        $a_encuestas_in = [];
+        //$a_encuestas_in = [];
         $a_encuestas_titulo_in = [];
         $a_encuestas_titulo = [];
         $cont = 1;
@@ -60,13 +60,13 @@ class EstudianteDaoImp {
                 $row["num"] = $cont;
                 array_push($a_encuestas_titulo, $row);
                 array_push($a_encuestas_titulo_in, $row["titulo"] . ':' . $row["encuesta"]);
-                array_push($a_encuestas_in, $row["encuesta"]);
+                //array_push($a_encuestas_in, $row["encuesta"]);
                 $cont++;
             }
             $resultado->free();
         }
 
-        $sql = "select e.id cod,e.nombre from encuestas e where e.estado = '1' and e.id not in(" . implode(',', $a_encuestas_in) . ");";
+        $sql = "select e.id cod,e.nombre from encuestas e where e.estado = '1';";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
                 array_push($a_encuestas, $row);

@@ -1,7 +1,41 @@
 var tables = [];
 var preguntas = [];
-load_categorias();
-load_data();
+
+$(window).load(function () {
+    //alert($("#saveEvaluacion").attr("data-id"));
+    //alert($("#saveEvaluacion").attr("data-encuesta"));
+    load_categorias();
+    load_data();
+    $("select").selectpicker();
+    $(tables).each(function (i, tb) {
+        $("#content_evaluacion").find(tb.tb).bootstrapTable("load", tb.datos);
+    });
+    
+    $(".btn-add-table").click(function(){
+        table = $(this).closest(".pregunta_content").find("table");
+        columns = $(this).closest(".pregunta_content").data("columns");
+        str_row = [];
+        $.each(columns, function (index, value) {
+            switch (value.tipo) {
+                case "check":
+                    str_row.push('"' + value.field + '" : false');
+                    break;
+                case "input":
+                    str_row.push('"' + value.field + '" : ""');
+                    break;
+            }
+
+        });
+        total = $(table).bootstrapTable('getData').length;
+        $(table).bootstrapTable('insertRow', {
+            index: total,
+            row: JSON.parse('{ ' + str_row.join() + ' }')
+        });
+    });
+    
+});
+
+
 
 
 function input_txt(value) {
@@ -25,11 +59,7 @@ function cbk_tbFC(value, row, index) {
     return '<input type="radio" name="tbFC' + index + '" ' + checked + ' />';
 }
 
-$(window).load(function () {
-    $(tables).each(function (i, tb) {
-        $("#content_evaluacion").find(tb.tb).bootstrapTable("load", tb.datos);
-    });
-});
+
 
 $("#saveEvaluacion").click(function () {
     pregunta_t1 = [];
@@ -128,7 +158,7 @@ function load_preguntas_cat(id, panel) {
         data: {
             op: "load_preguntas",
             id: id,
-            id_encuesta: $("div[data-id]").attr("data-id")
+            id_encuesta: $("#saveEvaluacion").attr("data-encuesta")
         },
         async: false,
         dataType: "json",
@@ -149,6 +179,7 @@ function load_preguntas_cat(id, panel) {
                         preguntas.push({div: div_tipoPregunta, pregunta: pregunta});
                         break;
                     case "2":
+
                         $(pregunta.opciones).each(function (index, opcion) {
                             div_opcion = $("#op_pIMultiple").find(".form-horizontal").clone();
                             $(div_opcion).data("id", opcion.id);
@@ -171,20 +202,36 @@ function load_preguntas_cat(id, panel) {
                         });
                         break;
                     case "4":
+                        //console.log(pregunta.opciones);
+                        result = "";
                         $(pregunta.opciones).each(function (index, opcion) {
                             //div_opcion = $("#op_pSUnica").clone();
-                            option = document.createElement("option");
-                            option.value = opcion.id;
-                            option.textContent = opcion.enunciado;
+                            result += '<option value="' + opcion.id + '">' + opcion.enunciado + '</option>';
+                            /*option = document.createElement("option");
+                             option.value = opcion.id;
+                             option.textContent = opcion.enunciado;*/
 
                             /*$(div_opcion).removeAttr("id");
                              $(div_opcion).find("input").attr("name", "rdb" + pregunta.id);
                              $(div_opcion).find("input").data("id", opcion.id);
                              $(div_opcion).find("label").append(" " + opcion.enunciado);
                              orden = par(index) ? 0 : 1;*/
-                            preguntas.push({div: $(div_tipoPregunta).find("select"), pregunta: pregunta});
-                            $(div_tipoPregunta).find("select").append(option);
+
                             //$(div_opcion).appendTo($(div_tipoPregunta).find(".opcion_content > div").eq(orden));
+                        });
+                        preguntas.push({div: $(div_tipoPregunta).find("select"), pregunta: pregunta});
+                        $(div_tipoPregunta).find("select").html(result);
+                        break;
+                    case "5":
+                        //console.log(pregunta);
+                        columns = JSON.parse(pregunta.opciones[0].enunciado);
+                        //console.log(columns);
+                        $(div_tipoPregunta).data("columns",columns);
+                        console.log($(div_tipoPregunta).data("columns"));
+                        //data("columns")
+                        $(div_tipoPregunta).find("table").bootstrapTable();
+                        $(div_tipoPregunta).find("table").bootstrapTable('refreshOptions', {
+                            columns: columns
                         });
                         break;
                     default :
@@ -269,29 +316,32 @@ function _TipoPregunta(tipo) {
         case "4":
             return "#pSUnica";
         case "5":
-            return "#tb_horas_semana";
+            return "#pTabla";
             break;
-        case "6":
-            return "#tb_mes_actividad";
-            break;
-        case "7":
-            return "#tb_conocimiento_informatico";
-            break;
-        case "8":
-            return "#ptb_experiencia_laboral";
-            break;
-        case "9":
-            return "#ptb_estudios_formación_adicional";
-            break;
-        case "10":
-            return "#ptb_idioma_egresar";
-            break;
-        case "11":
-            return "#ptb_idioma_actualmente";
-            break;
-        case "12":
-            return "#ptb_facilidad_condicion";
-            break;
+            /*case "5":
+             return "#tb_horas_semana";
+             break;
+             case "6":
+             return "#tb_mes_actividad";
+             break;
+             case "7":
+             return "#tb_conocimiento_informatico";
+             break;
+             case "8":
+             return "#ptb_experiencia_laboral";
+             break;
+             case "9":
+             return "#ptb_estudios_formación_adicional";
+             break;
+             case "10":
+             return "#ptb_idioma_egresar";
+             break;
+             case "11":
+             return "#ptb_idioma_actualmente";
+             break;
+             case "12":
+             return "#ptb_facilidad_condicion";
+             break;*/
     }
 }
 
@@ -327,6 +377,7 @@ function load_categorias() {
         url: "servidor/sEvaluacion.php",
         data: {
             op: "load_categoria"
+                    //id_encuesta: $("#saveEvaluacion").attr("data-encuesta")
         },
         async: false,
         dataType: "json",

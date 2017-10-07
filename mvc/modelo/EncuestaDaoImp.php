@@ -106,13 +106,16 @@ class EncuestaDaoImp {
     public static function validarAcceso($datos) {
         $conn = (new C_MySQL())->open();
         $response = [];
-        $response["status"] = true;
-        $sql = "select * from encuesta where cedula_clave = '" . $datos["cedula"] . "' or acceso_clave = '" . $datos["clave"] . "' ;";
+        $response["status"] = FALSE;
+        $sql = "select e_t.* , estado from encuesta_titulo e_t inner join encuestas e on e.id = e_t.Encuestas_id where e_t.acceso = '$datos';";
         if ($result = $conn->query($sql)) {
             $row_cnt = $result->num_rows;
-            if ($row_cnt > 0) {
-                $response["status"] = false;
-                $response["id_encuesta"] = $result->fetch_assoc()["id"];
+            if ($row_cnt == 1) {
+                $row = $result->fetch_assoc();
+                $response["status"] = true;
+                $response["id"] = $row["id"];
+                $response["encuesta"] = $row["Encuestas_id"];
+                $response["estado"] = $row["estado"];
             }
             $result->close();
         }

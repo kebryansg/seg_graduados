@@ -18,13 +18,11 @@ switch ($op) {
                     $response["status"] = "no";
                     break;
                 default:
-                    $datos = array("cedula" => "", "clave" => $acceso);
-                    $response_encuesta = EncuestaDaoImp::validarAcceso($datos);
-                    if(!$response_encuesta["status"]){
-                        $_SESSION["id_encuesta"] = $response_encuesta["id_encuesta"];
+                    $response_encuesta = EncuestaDaoImp::validarAcceso($acceso);
+                    if ($response_encuesta["status"]) {
+                        $_SESSION["data_encuesta"] = $response_encuesta;
                         $_SESSION["rol"] = "eval";
-                    }
-                    else{
+                    } else {
                         $response["status"] = "no";
                     }
                     break;

@@ -139,7 +139,7 @@ switch ($op) {
         $resultado = "[" . join($list_result, ",") . "]";
         break;
     case "load_preguntas":
-        $list_preguntas = PreguntasDaoImp::list_($_POST["id"]);
+        $list_preguntas = PreguntasDaoImp::list_($_POST["id"],$_POST["id_encuesta"]);
         foreach ($list_preguntas as $value) {
             $pregunta = $value;
             $list_opciones = OpcionesDaoImp::list_($value["id"]);
