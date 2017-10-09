@@ -4,9 +4,9 @@ include_once '../mvc/controlador/entidades/Preguntas_Respuestas.php';
 
 class Preguntas_RespuestasDaoImp {
 
-    public static function _listPregunta($encuesta_id, $pregunta_id) {
+    public static function _listPregunta($encuesta_titulo_id, $pregunta_id) {
         $conn = (new C_MySQL())->open();
-        $sql = "select p_r.* from preguntas_respuestas p_r where  p_r.encuesta_id = $encuesta_id and p_r.preguntas_id = $pregunta_id ;";
+        $sql = "select p_r.* from preguntas_respuestas p_r where p_r.encuesta_titulo_id = $encuesta_titulo_id and p_r.pregunta_id = $pregunta_id ;";
         $list = array();
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
@@ -20,7 +20,7 @@ class Preguntas_RespuestasDaoImp {
 
     public static function delete($encuesta_id) {
         $conn = (new C_MySQL())->open();
-        $sql = "delete from preguntas_respuestas where encuesta_id = '$encuesta_id';";
+        $sql = "delete from preguntas_respuestas where encuesta_titulo_id = '$encuesta_id';";
         if ($conn->query($sql)) {
             
         }
@@ -32,7 +32,7 @@ class Preguntas_RespuestasDaoImp {
         $sql = "";
         //$preguntas_respuestas = new Preguntas_Respuestas();
         if ($preguntas_respuestas->getId() == 0) {
-            $sql = "insert into preguntas_respuestas(opcion,encuesta_id,preguntas_id) values('" . $preguntas_respuestas->getOpcion() . "'," . $preguntas_respuestas->getEncuesta_id() . "," . $preguntas_respuestas->getPreguntas_id() . ");";
+            $sql = "insert into preguntas_respuestas(opcion,encuesta_titulo_id,pregunta_id) values('" . $preguntas_respuestas->getOpcion() . "'," . $preguntas_respuestas->getEncuesta_id() . "," . $preguntas_respuestas->getPreguntas_id() . ");";
         } else {
             //$sql = "update preguntas set enunciado = '". $pregunta->getEnunciado() ."', tipo = ". $pregunta->getTipo() .", categoria_id = ". $pregunta->getCategoria()->getId() ." where id = ". $pregunta->getId();
         }

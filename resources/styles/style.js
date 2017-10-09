@@ -83,16 +83,19 @@ function input_format(value) {
 
 window.input_action = {
     'blur .txt': function (e, value, row, index) {
-        $("#tb_listPreguntas").bootstrapTable('updateCell', {index: index, field: $(e.target).attr('data-field'), value: $(e.target).val(), reinit: false});
+        table = $(this).closest("table");
+        $(table).bootstrapTable('updateCell', {index: index, field: $(e.target).attr('data-field'), value: $(e.target).val(), reinit: false});
     }
 };
 window.cbo_action = {
     'blur .cbo': function (e, value, row, index) {
-        $("#tb_listPreguntas").bootstrapTable('updateCell', {index: index, field: $(e.target).attr('data-field'), value: $(e.target).val(), reinit: false});
+        table = $(this).closest("table");
+        $(table).bootstrapTable('updateCell', {index: index, field: $(e.target).attr('data-field'), value: $(e.target).val(), reinit: false});
     }
 };
 window.cbk_action = {
     'change .cbk': function (e, value, row, index) {
-        $("#tb_listPreguntas").bootstrapTable('updateCell', {index: index, field: $(e.target).attr('data-field'), value: $(this).prop('checked'), reinit: false});
+        table = $(this).closest("table");
+        $(table).bootstrapTable('updateCell', {index: index, field: $(e.target).attr('data-field'), value: $(this).prop('checked'), reinit: false});
     }
 };

@@ -10,8 +10,8 @@ $(window).load(function () {
     $(tables).each(function (i, tb) {
         $("#content_evaluacion").find(tb.tb).bootstrapTable("load", tb.datos);
     });
-    
-    $(".btn-add-table").click(function(){
+
+    $(".btn-add-table").click(function () {
         table = $(this).closest(".pregunta_content").find("table");
         columns = $(this).closest(".pregunta_content").data("columns");
         str_row = [];
@@ -32,7 +32,7 @@ $(window).load(function () {
             row: JSON.parse('{ ' + str_row.join() + ' }')
         });
     });
-    
+
 });
 
 
@@ -59,14 +59,12 @@ function cbk_tbFC(value, row, index) {
     return '<input type="radio" name="tbFC' + index + '" ' + checked + ' />';
 }
 
-
-
-$("#saveEvaluacion").click(function () {
+function saveE(id_enc_tit) {
     pregunta_t1 = [];
     pregunta_t2 = [];
     pregunta_t3 = [];
     pregunta_t4 = [];
-    pregunta_tb = [];
+    pregunta_t5 = [];
     pregunta_especial = [];
     $("#content_evaluacion .pregunta_content").each(function (index, div_pregunta) {
         tipo = $(div_pregunta).data("tipo");
@@ -89,38 +87,15 @@ $("#saveEvaluacion").click(function () {
                 pregunta_t3.push({"id": id, "opciones": opciones.join()});
                 break;
             case "4":
-                /*$(div_pregunta).find("input:checked").each(function (i, input_opcion) {
-                 opciones.push($(input_opcion).data("id"));
-                 });*/
                 val = $(div_pregunta).find("select").val();
                 pregunta_t4.push({"id": id, "opciones": val});
                 break;
             case "5":
-                pregunta_tb.push(('{ "id_pregunta" : ' + id + ' , "tb" : ' + tb_txt_json($(div_pregunta).find("#tb_Actividad_Horas")) + ' }'));
+                data = $(div_pregunta).find("table").bootstrapTable('getData');
+                //console.log(JSON.stringify(data));
+                pregunta_t5.push({"id": id, "opciones": JSON.stringify(data)});
                 break;
-            case "6":
-                pregunta_tb.push(('{ "id_pregunta" : ' + id + ' , "tb" : ' + tb_txt_json($(div_pregunta).find("#tb_Actividad_Mes")) + ' }'));
-                break;
-            case "7":
-                pregunta_tb.push(('{ "id_pregunta" : ' + id + ' , "tb" : {"tb_Graduacion" : ' + tb_rdb_json($(div_pregunta).find("#tb_Graduacion")) + ' , "tb_Actualidad" : ' + tb_rdb_json($(div_pregunta).find("#tb_Actualidad")) + ' }}'));
-                break;
-            case "8":
-                dat_boostrap = $(div_pregunta).find("#tb_experiencia_laboral").bootstrapTable("getData");
-                pregunta_tb.push(('{ "id_pregunta" : ' + id + ' , "tb" : ' + JSON.stringify(dat_boostrap) + ' }'));
-                break;
-            case "9":
-                dat_boostrap = $(div_pregunta).find("#tb_estudios_formación_adicional").bootstrapTable("getData");
-                pregunta_tb.push(('{ "id_pregunta" : ' + id + ' , "tb" : ' + JSON.stringify(dat_boostrap) + ' }'));
-                break;
-            case "10":
-                pregunta_tb.push(('{ "id_pregunta" : ' + id + ' , "tb" : ' + tb_cbk_json($(div_pregunta).find("#tb_idioma_egresar")) + ' }'));
-                break;
-            case "11":
-                pregunta_tb.push(('{ "id_pregunta" : ' + id + ' , "tb" : ' + tb_cbk_json($(div_pregunta).find("#tb_idioma_actualmente")) + ' }'));
-                break;
-            case "12":
-                pregunta_tb.push(('{ "id_pregunta" : ' + id + ' , "tb" : ' + tb_rdb_json($(div_pregunta).find("#tb_facilidad_condicion")) + ' }'));
-                break;
+
         }
     });
 
@@ -134,8 +109,8 @@ $("#saveEvaluacion").click(function () {
             preguntas_t2: pregunta_t2,
             preguntas_t3: pregunta_t3,
             preguntas_t4: pregunta_t4,
-            preguntas_tb: pregunta_tb,
-            id_encuesta: $("div[data-id]").attr("data-id")
+            preguntas_t5: pregunta_t5,
+            id_enc_tit: id_enc_tit
         },
         beforeSend: function () {
             waitingDialog.show('Este proceso podría tardar varios minutos', {
@@ -149,16 +124,21 @@ $("#saveEvaluacion").click(function () {
             }
         }
     });
+}
+
+$("#saveEvaluacion").click(function () {
+    saveE($(this).attr("data-id"));
 });
 
 function load_preguntas_cat(id, panel) {
+    //alert($("#saveEvaluacion").attr("data-encuesta"));
     $.ajax({
         type: "POST",
         url: "servidor/sEvaluacion.php",
         data: {
             op: "load_preguntas",
             id: id,
-            id_encuesta: $("#saveEvaluacion").attr("data-encuesta")
+            id_encuesta: $("#saveEvaluacion").attr("data-id")
         },
         async: false,
         dataType: "json",
@@ -202,7 +182,6 @@ function load_preguntas_cat(id, panel) {
                         });
                         break;
                     case "4":
-                        //console.log(pregunta.opciones);
                         result = "";
                         $(pregunta.opciones).each(function (index, opcion) {
                             //div_opcion = $("#op_pSUnica").clone();
@@ -223,16 +202,14 @@ function load_preguntas_cat(id, panel) {
                         $(div_tipoPregunta).find("select").html(result);
                         break;
                     case "5":
-                        //console.log(pregunta);
                         columns = JSON.parse(pregunta.opciones[0].enunciado);
-                        //console.log(columns);
-                        $(div_tipoPregunta).data("columns",columns);
-                        console.log($(div_tipoPregunta).data("columns"));
-                        //data("columns")
+                        $(div_tipoPregunta).data("columns", columns);
                         $(div_tipoPregunta).find("table").bootstrapTable();
                         $(div_tipoPregunta).find("table").bootstrapTable('refreshOptions', {
                             columns: columns
                         });
+                        //console.log(pregunta);
+                        preguntas.push({div: $(div_tipoPregunta).find("table"), pregunta: pregunta});
                         break;
                     default :
                         bandera = true;
@@ -275,6 +252,11 @@ function load_tabla(pregunta) {
 function load_respuestas_preguntas(div_pregunta, pregunta) {
     if (!$.isEmptyObject(pregunta.preg_resp)) {
         switch (pregunta.tipo) {
+            case "5": 
+                //console.log(JSON.parse(pregunta.preg_resp[0].opcion));
+                //alert($(div_pregunta).html());
+                $(div_pregunta).bootstrapTable("load",JSON.parse(pregunta.preg_resp[0].opcion));
+                break;
             case "4":
                 id = pregunta.preg_resp[0].opcion;
                 $(div_pregunta).selectpicker("val", id);
@@ -376,8 +358,8 @@ function load_categorias() {
         type: "POST",
         url: "servidor/sEvaluacion.php",
         data: {
-            op: "load_categoria"
-                    //id_encuesta: $("#saveEvaluacion").attr("data-encuesta")
+            op: "load_categoria",
+            id_encuesta_titulo: $("#saveEvaluacion").attr("data-id")
         },
         async: false,
         dataType: "json",

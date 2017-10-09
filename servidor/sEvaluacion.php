@@ -1,5 +1,6 @@
 <?php
 
+include_once '../mvc/controlador/entidades/Encuesta_titulo.php';
 include_once "../mvc/modelo/CategoriaDaoImp.php";
 include_once '../mvc/modelo/PreguntasDaoImp.php';
 include_once '../mvc/modelo/OpcionesDaoImp.php';
@@ -12,12 +13,12 @@ $op = $_POST["op"];
 $resultado = "";
 $list_result = [];
 switch ($op) {
-    case "duplicar": 
+    case "duplicar":
         $id_origen = $_POST["id_origen"];
         $id_destino = $_POST["id_destino"];
         PreguntasDaoImp::_listDuplicar($id_origen, $id_destino);
         break;
-    case "saveEncuesta": 
+    case "saveEncuesta":
         $encuesta = new Encuesta();
         $encuesta->setId($_POST["id"]);
         $encuesta->setNombre($_POST["nombre"]);
@@ -64,26 +65,28 @@ switch ($op) {
     case "list_cbo":
         $list = EncuestaDaoImp::_list(0, $pag);
         foreach ($list->getList() as $value) {
-            $resultado .= '<option value="'.$value->getId().'">' . $value->getNombre() . '</option>';
+            $resultado .= '<option value="' . $value->getId() . '">' . $value->getNombre() . '</option>';
         }
         break;
     case "save":
-        $encuesta = new Encuesta();
-        $encuesta->setId($_POST["id_encuesta"]);
-        EncuestaDaoImp::save_evaluacion($encuesta);
+        //$encuesta = new Encuesta();
+        $encuesta = new Encuesta_titulo();
+        $encuesta->setId($_POST["id_enc_tit"]);
+        //EncuestaDaoImp::save_evaluacion($encuesta);
         Preguntas_RespuestasDaoImp::delete($encuesta->getId());
         $preguntas_t1 = $_POST["preguntas_t1"];
         $preguntas_t2 = $_POST["preguntas_t2"];
         $preguntas_t3 = $_POST["preguntas_t3"];
         $preguntas_t4 = $_POST["preguntas_t4"];
-        $preguntas_tb = $_POST["preguntas_tb"];
+        $preguntas_t5 = $_POST["preguntas_t5"];
         if (true) {
-            foreach ($preguntas_tb as $tbs) {
-                $dt = json_decode($tbs);
+            foreach ($preguntas_t5 as $pregunta) {
+                //$dt = json_decode($tbs);
                 $preguntas_respuestas = new Preguntas_Respuestas();
                 $preguntas_respuestas->setEncuesta_id($encuesta->getId());
-                $preguntas_respuestas->setPreguntas_id($dt->id_pregunta);
-                $preguntas_respuestas->setOpcion(json_encode($dt->tb, TRUE));
+                $preguntas_respuestas->setPreguntas_id($pregunta["id"]);
+                //$preguntas_respuestas->setOpcion(json_encode($dt->tb, TRUE));
+                $preguntas_respuestas->setOpcion($pregunta["opciones"]);
                 Preguntas_RespuestasDaoImp::save($preguntas_respuestas);
             }
             foreach ($preguntas_t3 as $pregunta) {
@@ -128,7 +131,7 @@ switch ($op) {
         $resultado = '{"status":true}';
         break;
     case 'load_categoria':
-        $list_Categoria = CategoriaDaoImp::listCategoria();
+        $list_Categoria = CategoriaDaoImp::_listCategoria($_POST["id_encuesta_titulo"]);
         foreach ($list_Categoria as $categoria) {
             $resultado = '{
                 "id" : "' . $categoria->getId() . '",
@@ -139,7 +142,7 @@ switch ($op) {
         $resultado = "[" . join($list_result, ",") . "]";
         break;
     case "load_preguntas":
-        $list_preguntas = PreguntasDaoImp::list_($_POST["id"],$_POST["id_encuesta"]);
+        $list_preguntas = PreguntasDaoImp::list_($_POST["id"], $_POST["id_encuesta"]);
         foreach ($list_preguntas as $value) {
             $pregunta = $value;
             $list_opciones = OpcionesDaoImp::list_($value["id"]);
@@ -153,7 +156,7 @@ switch ($op) {
         }
         $resultado = json_encode($list_result);
         break;
-    case "delete": 
+    case "delete":
         EncuestaDaoImp::_delete($_POST["id"]);
         $resultado = "ok";
         break;
