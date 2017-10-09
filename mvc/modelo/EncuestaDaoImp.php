@@ -107,7 +107,7 @@ class EncuestaDaoImp {
         $conn = (new C_MySQL())->open();
         $response = [];
         $response["status"] = FALSE;
-        $sql = "select e_t.* , estado from encuesta_titulo e_t inner join encuestas e on e.id = e_t.Encuestas_id where e_t.acceso = '$datos';";
+        $sql = "select e_t.* , e.estado encuesta_estado from encuesta_titulo e_t inner join encuestas e on e.id = e_t.Encuestas_id where e_t.acceso = '$datos';";
         if ($result = $conn->query($sql)) {
             $row_cnt = $result->num_rows;
             if ($row_cnt == 1) {
@@ -115,6 +115,7 @@ class EncuestaDaoImp {
                 $response["status"] = true;
                 $response["id"] = $row["id"];
                 $response["encuesta"] = $row["Encuestas_id"];
+                $response["encuesta_estado"] = $row["encuesta_estado"];
                 $response["estado"] = $row["estado"];
             }
             $result->close();

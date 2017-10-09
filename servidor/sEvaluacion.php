@@ -7,6 +7,7 @@ include_once '../mvc/modelo/OpcionesDaoImp.php';
 include_once '../mvc/modelo/EncuestaDaoImp.php';
 include_once '../mvc/modelo/RespuestasDaoImp.php';
 include_once '../mvc/modelo/Preguntas_RespuestasDaoImp.php';
+include_once '../mvc/modelo/Encuesta_TituloDaoImp.php';
 
 session_start();
 $op = $_POST["op"];
@@ -69,23 +70,21 @@ switch ($op) {
         }
         break;
     case "save":
-        //$encuesta = new Encuesta();
         $encuesta = new Encuesta_titulo();
         $encuesta->setId($_POST["id_enc_tit"]);
-        //EncuestaDaoImp::save_evaluacion($encuesta);
+        $encuesta->setEstado($_POST["estado"]);
+        Encuesta_TituloDaoImp::_update($encuesta);
         Preguntas_RespuestasDaoImp::delete($encuesta->getId());
-        $preguntas_t1 = $_POST["preguntas_t1"];
-        $preguntas_t2 = $_POST["preguntas_t2"];
-        $preguntas_t3 = $_POST["preguntas_t3"];
-        $preguntas_t4 = $_POST["preguntas_t4"];
-        $preguntas_t5 = $_POST["preguntas_t5"];
+        $preguntas_t1 = isset($_POST["preguntas_t1"]) ? $_POST["preguntas_t1"] : array();
+        $preguntas_t2 = isset($_POST["preguntas_t2"]) ? $_POST["preguntas_t2"] : array();
+        $preguntas_t3 = isset($_POST["preguntas_t3"]) ? $_POST["preguntas_t3"] : array();
+        $preguntas_t4 = isset($_POST["preguntas_t4"]) ? $_POST["preguntas_t4"] : array();
+        $preguntas_t5 = isset($_POST["preguntas_t5"]) ? $_POST["preguntas_t5"] : array();
         if (true) {
             foreach ($preguntas_t5 as $pregunta) {
-                //$dt = json_decode($tbs);
                 $preguntas_respuestas = new Preguntas_Respuestas();
                 $preguntas_respuestas->setEncuesta_id($encuesta->getId());
                 $preguntas_respuestas->setPreguntas_id($pregunta["id"]);
-                //$preguntas_respuestas->setOpcion(json_encode($dt->tb, TRUE));
                 $preguntas_respuestas->setOpcion($pregunta["opciones"]);
                 Preguntas_RespuestasDaoImp::save($preguntas_respuestas);
             }

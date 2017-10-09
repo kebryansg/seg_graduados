@@ -7,11 +7,20 @@ class Encuesta_titulo {
     private $fecha;
     private $encuesta_id;
     private $titulo_id;
+    private $estado;
 
     function __construct() {
         $this->id = 0;
     }
+    function getEstado() {
+        return $this->estado;
+    }
 
+    function setEstado($estado) {
+        $this->estado = $estado;
+    }
+
+    
     function getId() {
         return $this->id;
     }

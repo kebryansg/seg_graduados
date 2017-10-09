@@ -1,16 +1,12 @@
-var tables = [];
+//var tables = [];
 var preguntas = [];
 
 $(window).load(function () {
-    //alert($("#saveEvaluacion").attr("data-id"));
-    //alert($("#saveEvaluacion").attr("data-encuesta"));
     load_categorias();
+    $("table").bootstrapTable("hideColumn", "id");
     load_data();
     $("select").selectpicker();
-    $(tables).each(function (i, tb) {
-        $("#content_evaluacion").find(tb.tb).bootstrapTable("load", tb.datos);
-    });
-
+    
     $(".btn-add-table").click(function () {
         table = $(this).closest(".pregunta_content").find("table");
         columns = $(this).closest(".pregunta_content").data("columns");
@@ -24,7 +20,6 @@ $(window).load(function () {
                     str_row.push('"' + value.field + '" : ""');
                     break;
             }
-
         });
         total = $(table).bootstrapTable('getData').length;
         $(table).bootstrapTable('insertRow', {
@@ -32,7 +27,17 @@ $(window).load(function () {
             row: JSON.parse('{ ' + str_row.join() + ' }')
         });
     });
-
+    $(".btn-remove-table").click(function () {
+        table = $(this).closest(".pregunta_content").find("table");
+        var ids = $.map($(table).bootstrapTable('getSelections'), function (row) {
+            //console.log(row);
+            return row.id;
+        });
+        $(table).bootstrapTable('remove', {
+            field: 'state',
+            values: true
+        });
+    });
 });
 
 
@@ -59,7 +64,7 @@ function cbk_tbFC(value, row, index) {
     return '<input type="radio" name="tbFC' + index + '" ' + checked + ' />';
 }
 
-function saveE(id_enc_tit) {
+function saveE(id_enc_tit, estado) {
     pregunta_t1 = [];
     pregunta_t2 = [];
     pregunta_t3 = [];
@@ -110,7 +115,8 @@ function saveE(id_enc_tit) {
             preguntas_t3: pregunta_t3,
             preguntas_t4: pregunta_t4,
             preguntas_t5: pregunta_t5,
-            id_enc_tit: id_enc_tit
+            id_enc_tit: id_enc_tit,
+            estado: estado
         },
         beforeSend: function () {
             waitingDialog.show('Este proceso podría tardar varios minutos', {
@@ -127,7 +133,12 @@ function saveE(id_enc_tit) {
 }
 
 $("#saveEvaluacion").click(function () {
-    saveE($(this).attr("data-id"));
+    estado = '2';
+    saveE($(this).attr("data-id"), estado);
+});
+$("#submitEval").click(function () {
+    estado = '1';
+    saveE($(this).attr("data-id"), estado);
 });
 
 function load_preguntas_cat(id, panel) {
@@ -155,7 +166,6 @@ function load_preguntas_cat(id, panel) {
                 $(div_tipoPregunta).find(".enunciado_pregunta").html(pregunta.enunciado);
                 switch (pregunta.tipo) {
                     case "1":
-                        //load_respuestas_preguntas(div_tipoPregunta, pregunta);
                         preguntas.push({div: div_tipoPregunta, pregunta: pregunta});
                         break;
                     case "2":
@@ -164,7 +174,6 @@ function load_preguntas_cat(id, panel) {
                             div_opcion = $("#op_pIMultiple").find(".form-horizontal").clone();
                             $(div_opcion).data("id", opcion.id);
                             $(div_opcion).find("label").html(opcion.enunciado);
-                            //load_respuestas_preguntas(div_opcion, pregunta);
                             preguntas.push({div: div_opcion, pregunta: pregunta});
                             $(div_opcion).appendTo($(div_tipoPregunta).find(".opcion_content"));
                         });
@@ -177,48 +186,42 @@ function load_preguntas_cat(id, panel) {
                             $(div_opcion).find("label").append(opcion.enunciado);
                             orden = par(index) ? 0 : 1;
                             preguntas.push({div: div_opcion, pregunta: pregunta});
-                            //load_respuestas_preguntas(div_opcion, pregunta);
                             $(div_opcion).appendTo($(div_tipoPregunta).find(".opcion_content > div").eq(orden));
                         });
                         break;
                     case "4":
                         result = "";
                         $(pregunta.opciones).each(function (index, opcion) {
-                            //div_opcion = $("#op_pSUnica").clone();
                             result += '<option value="' + opcion.id + '">' + opcion.enunciado + '</option>';
-                            /*option = document.createElement("option");
-                             option.value = opcion.id;
-                             option.textContent = opcion.enunciado;*/
-
-                            /*$(div_opcion).removeAttr("id");
-                             $(div_opcion).find("input").attr("name", "rdb" + pregunta.id);
-                             $(div_opcion).find("input").data("id", opcion.id);
-                             $(div_opcion).find("label").append(" " + opcion.enunciado);
-                             orden = par(index) ? 0 : 1;*/
-
-                            //$(div_opcion).appendTo($(div_tipoPregunta).find(".opcion_content > div").eq(orden));
                         });
                         preguntas.push({div: $(div_tipoPregunta).find("select"), pregunta: pregunta});
                         $(div_tipoPregunta).find("select").html(result);
                         break;
                     case "5":
                         columns = JSON.parse(pregunta.opciones[0].enunciado);
+                        columns.unshift({
+                            field: "state",
+                            checkbox: true
+                        }, {
+                            field: "id",
+                            title: "id",
+                            formatter: "row_count"
+                        });
+
                         $(div_tipoPregunta).data("columns", columns);
                         $(div_tipoPregunta).find("table").bootstrapTable();
                         $(div_tipoPregunta).find("table").bootstrapTable('refreshOptions', {
                             columns: columns
                         });
-                        //console.log(pregunta);
                         preguntas.push({div: $(div_tipoPregunta).find("table"), pregunta: pregunta});
                         break;
                     default :
                         bandera = true;
                         break;
                 }
-                if (bandera)
-                    load_tabla(pregunta);
+                /*if (bandera)
+                 load_tabla(pregunta);*/
                 $(div_tipoPregunta).appendTo(panel);
-
                 $(div_tipoPregunta).after('<hr class="style14">');
             });
         }
@@ -252,10 +255,9 @@ function load_tabla(pregunta) {
 function load_respuestas_preguntas(div_pregunta, pregunta) {
     if (!$.isEmptyObject(pregunta.preg_resp)) {
         switch (pregunta.tipo) {
-            case "5": 
-                //console.log(JSON.parse(pregunta.preg_resp[0].opcion));
-                //alert($(div_pregunta).html());
-                $(div_pregunta).bootstrapTable("load",JSON.parse(pregunta.preg_resp[0].opcion));
+            case "5":
+                data = JSON.parse(pregunta.preg_resp[0].opcion);
+                $(div_pregunta).bootstrapTable("load", data);
                 break;
             case "4":
                 id = pregunta.preg_resp[0].opcion;
@@ -381,89 +383,92 @@ function par(num) {
     return (num % 2) === 0;
 }
 
-function tb_header(tb) {
-    thead = [];
-    $(tb).find("thead tr th[data-field]").each(function (i, th) {
-        thead.push($(th).attr("data-field"));
-    });
-    return thead;
-}
 
-function tb_rdb_json(tb) {
-    thead = tb_header(tb);
-    datos = [];
-    $(tb).find("tbody tr").each(function (itr, tr) {
-        dat_td = {};
-        $(tr).find("td").each(function (itd, td) {
-            value = '"' + thead[itd] + '" : ';
-            if (itd === 0)
-                value += '"' + $(td).html() + '"';
-            else
-                value += '' + $(td).find("input[type='radio']").prop('checked') + '';
-            $.extend(dat_td, JSON.parse("{ " + value + " }"));
-        });
-        datos.push(dat_td);
-    });
-    //alert(JSON.stringify(datos));
-    return (JSON.stringify(datos));
-}
-
-function tb_cbk_json(tb) {
-    thead = tb_header(tb);
-    datos = [];
-    $(tb).find("tbody tr").each(function (itr, tr) {
-        dat_td = {};
-        $(tr).find("td").each(function (itd, td) {
-            value = '"' + thead[itd] + '" : ';
-            if (itd === 0)
-                value += '"' + $(td).html() + '"';
-            else
-                value += '' + $(td).find("input[type='checkbox']").prop('checked') + '';
-            $.extend(dat_td, JSON.parse("{ " + value + " }"));
-        });
-        datos.push(dat_td);
-    });
-    //alert(JSON.stringify(datos));
-    return(JSON.stringify(datos));
-}
-
-function tb_txt_json(tb) {
-    thead = tb_header(tb);
-    datos = [];
-    $(tb).find("tbody tr").each(function (itr, tr) {
-        dat_td = {};
-        $(tr).find("td").each(function (itd, td) {
-            value = '"' + thead[itd] + '" : ';
-            if (itd === 0)
-                value += '"' + $(td).html() + '"';
-            else
-                value += '"' + $(td).find("input[type='text']").val() + '"';
-            $.extend(dat_td, JSON.parse("{ " + value + " }"));
-        });
-        datos.push(dat_td);
-    });
-    //alert(JSON.stringify(datos));
-    return(JSON.stringify(datos));
-}
 
 $(function () {
 
-    $("#content_evaluacion #btn_add_tb_estudios_formación_adicional").click(function () {
-        json_data = {};
-        $("#content_evaluacion #content_tb_estudios_formación_adicional").find("input[data-field],select[data-field]").each(function (i, index) {
-            $(this).attr("data-field");
-            $.extend(json_data, JSON.parse('{"' + $(this).attr("data-field") + '" : "' + $(this).val() + '" }'));
-        });
-        $("#content_evaluacion #tb_estudios_formación_adicional").bootstrapTable('insertRow', {index: 0, row: json_data});
-    });
-    $("#content_evaluacion #btn_add_tb_experiencia_laboral").click(function () {
-        json_data = {};
-        $("#content_evaluacion #content_tb_experiencia_laboral").find("input[data-field],select[data-field]").each(function (i, index) {
-            $(this).attr("data-field");
-            $.extend(json_data, JSON.parse('{"' + $(this).attr("data-field") + '" : "' + $(this).val() + '" }'));
-        });
-        $("#content_evaluacion #tb_experiencia_laboral").bootstrapTable('insertRow', {index: 0, row: json_data});
-    });
+    /*$("#content_evaluacion #btn_add_tb_estudios_formación_adicional").click(function () {
+     json_data = {};
+     $("#content_evaluacion #content_tb_estudios_formación_adicional").find("input[data-field],select[data-field]").each(function (i, index) {
+     $(this).attr("data-field");
+     $.extend(json_data, JSON.parse('{"' + $(this).attr("data-field") + '" : "' + $(this).val() + '" }'));
+     });
+     $("#content_evaluacion #tb_estudios_formación_adicional").bootstrapTable('insertRow', {index: 0, row: json_data});
+     });
+     $("#content_evaluacion #btn_add_tb_experiencia_laboral").click(function () {
+     json_data = {};
+     $("#content_evaluacion #content_tb_experiencia_laboral").find("input[data-field],select[data-field]").each(function (i, index) {
+     $(this).attr("data-field");
+     $.extend(json_data, JSON.parse('{"' + $(this).attr("data-field") + '" : "' + $(this).val() + '" }'));
+     });
+     $("#content_evaluacion #tb_experiencia_laboral").bootstrapTable('insertRow', {index: 0, row: json_data});
+     });*/
 
 
 });
+
+
+/*function tb_header(tb) {
+ thead = [];
+ $(tb).find("thead tr th[data-field]").each(function (i, th) {
+ thead.push($(th).attr("data-field"));
+ });
+ return thead;
+ }
+ 
+ function tb_rdb_json(tb) {
+ thead = tb_header(tb);
+ datos = [];
+ $(tb).find("tbody tr").each(function (itr, tr) {
+ dat_td = {};
+ $(tr).find("td").each(function (itd, td) {
+ value = '"' + thead[itd] + '" : ';
+ if (itd === 0)
+ value += '"' + $(td).html() + '"';
+ else
+ value += '' + $(td).find("input[type='radio']").prop('checked') + '';
+ $.extend(dat_td, JSON.parse("{ " + value + " }"));
+ });
+ datos.push(dat_td);
+ });
+ //alert(JSON.stringify(datos));
+ return (JSON.stringify(datos));
+ }
+ 
+ function tb_cbk_json(tb) {
+ thead = tb_header(tb);
+ datos = [];
+ $(tb).find("tbody tr").each(function (itr, tr) {
+ dat_td = {};
+ $(tr).find("td").each(function (itd, td) {
+ value = '"' + thead[itd] + '" : ';
+ if (itd === 0)
+ value += '"' + $(td).html() + '"';
+ else
+ value += '' + $(td).find("input[type='checkbox']").prop('checked') + '';
+ $.extend(dat_td, JSON.parse("{ " + value + " }"));
+ });
+ datos.push(dat_td);
+ });
+ //alert(JSON.stringify(datos));
+ return(JSON.stringify(datos));
+ }
+ 
+ function tb_txt_json(tb) {
+ thead = tb_header(tb);
+ datos = [];
+ $(tb).find("tbody tr").each(function (itr, tr) {
+ dat_td = {};
+ $(tr).find("td").each(function (itd, td) {
+ value = '"' + thead[itd] + '" : ';
+ if (itd === 0)
+ value += '"' + $(td).html() + '"';
+ else
+ value += '"' + $(td).find("input[type='text']").val() + '"';
+ $.extend(dat_td, JSON.parse("{ " + value + " }"));
+ });
+ datos.push(dat_td);
+ });
+ //alert(JSON.stringify(datos));
+ return(JSON.stringify(datos));
+ }*/

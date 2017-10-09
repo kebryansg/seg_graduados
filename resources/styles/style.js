@@ -3,7 +3,7 @@ $(function () {
         var key = window.Event ? e.which : e.keyCode;
         return (key >= 48 && key <= 57);
     });
-    
+
     $(".tablinks").click(function () {
         panel = $(this).attr("data-id");
         $(".tabcontent").hide();
@@ -24,12 +24,8 @@ $(function () {
             success: function (response) {
                 if (response.status === "ok")
                     location.href = response.url;
-                
-                
-                
-                
-                else {
-                    alert("Acceso incorrecto");
+                else if (response.status === "no") {
+                    alert(response.mensaje);
                     $("#txtAcceso").val("");
                 }
             }
@@ -62,6 +58,9 @@ function setData() {
     });
 }
 
+function row_count(value, row, index) {
+    return index;
+}
 
 function select_format(value) {
     resultado = '<select data-field="' + this.field + '" class="form-control cbo">';

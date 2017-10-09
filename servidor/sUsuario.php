@@ -20,10 +20,21 @@ switch ($op) {
                 default:
                     $response_encuesta = EncuestaDaoImp::validarAcceso($acceso);
                     if ($response_encuesta["status"]) {
-                        $_SESSION["data_encuesta"] = $response_encuesta;
-                        $_SESSION["rol"] = "eval";
+                        if ($response_encuesta["estado"] == "2") {
+                            $response["status"] = "no";
+                            $response["mensaje"] = "Encuesta no se puede editar.";
+                        } else if ($response_encuesta["estado"] == "1") {
+                            if ($response_encuesta["encuesta_estado"] == "0") {
+                                $response["status"] = "no";
+                                $response["mensaje"] = "Encuesta se encuentra deshabilitada.";
+                            } else {
+                                $_SESSION["data_encuesta"] = $response_encuesta;
+                                $_SESSION["rol"] = "eval";
+                            }
+                        }
                     } else {
                         $response["status"] = "no";
+                        $response["mensaje"] = "Clave no valida";
                     }
                     break;
             }

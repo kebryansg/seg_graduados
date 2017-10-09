@@ -39,77 +39,90 @@ $(function () {
     $("#tb_listPreguntas").bootstrapTable();
 
     $("#btn_new_row").click(function () {
-        str_row = [];
-        $.each(columns, function (index, value) {
-            switch (value.tipo) {
-                case "check":
-                    str_row.push('"' + value.field + '" : false');
-                    break;
-                case "input":
-                    str_row.push('"' + value.field + '" : ""');
-                    break;
-            }
-
-        });
         total = $("#tb_listPreguntas").bootstrapTable('getData').length;
-        $("#tb_listPreguntas").bootstrapTable('insertRow', {
-            index: total,
-            row: JSON.parse('{ ' + str_row.join() + ' }')
-        });
+        if (total === 0) {
+            str_row = [];
+            $.each(columns, function (index, value) {
+                switch (value.tipo) {
+                    case "check":
+                        str_row.push('"' + value.field + '" : false');
+                        break;
+                    case "input":
+                        str_row.push('"' + value.field + '" : ""');
+                        break;
+                }
+
+            });
+            total = $("#tb_listPreguntas").bootstrapTable('getData').length;
+            $("#tb_listPreguntas").bootstrapTable('insertRow', {
+                index: total,
+                row: JSON.parse('{ ' + str_row.join() + ' }')
+            });
+        }
     });
 
     $("#btn_add").click(function () {
         valor = $("#col_add").val();
-        tipo = $("#cboTipo").val();
-        $("#cboColumnas").append('<option value="' + valor + '">' + valor + '</option>');
-        $("#cboColumnas").selectpicker("refresh");
+        if (!$.isEmptyObject(valor)) {
+            tipo = $("#cboTipo").val();
+            bandera = 0;
+            switch (tipo) {
+                case "check":
+                    columns.push({
+                        field: valor,
+                        title: valor,
+                        tipo: "check",
+                        sortable: false,
+                        formatter: "cbk_format",
+                        events: "cbk_action"
+                    });
+                    break;
+                case "input":
+                    columns.push({
+                        field: valor,
+                        title: valor,
+                        tipo: "input",
+                        sortable: false,
+                        formatter: "input_format",
+                        events: "input_action"
+                    });
+                    break;
+                case "select":
+                    source = [];
+                    if ($("#op_select select option").length > 0) {
+                        $("#op_select select option").each(function (i, v) {
+                            source.push({value: i, text: $(v).html()});
+                        });
+                        columns.push({
+                            field: valor,
+                            title: valor,
+                            tipo: "select",
+                            sortable: false,
+                            data_source: source,
+                            formatter: "select_format",
+                            events: "cbo_action"
+                        });
+                    } else {
+                        bandera = 3;
+                    }
+                    break;
+            }
+            if (bandera === 0) {
+                $("#cboColumnas").append('<option value="' + valor + '">' + valor + '</option>');
+                $("#cboColumnas").selectpicker("refresh");
 
-        switch (tipo) {
-            case "check":
-                columns.push({
-                    field: valor,
-                    title: valor,
-                    tipo: "check",
-                    sortable: false,
-                    formatter: "cbk_format",
-                    events: "cbk_action"
+                $("#tb_listPreguntas").bootstrapTable('refreshOptions', {
+                    columns: columns
                 });
-                break;
-            case "input":
-                columns.push({
-                    field: valor,
-                    title: valor,
-                    tipo: "input",
-                    sortable: false,
-                    formatter: "input_format",
-                    events: "input_action"
-                });
-                break;
-            case "select":
-                source = [];
-                $("#op_select select option").each(function (i, v) {
-                    source.push({value: i, text: $(v).html()});
-                    /*selected = value === i.toString() ? 'selected="true"' : "";
-                     resultado += '<option ' + selected + ' value="' + i + '">' + $(v).html() + '</option>';*/
-                });
-
-                columns.push({
-                    field: valor,
-                    title: valor,
-                    tipo: "select",
-                    sortable: false,
-                    data_source: source,
-                    formatter: "select_format",
-                    events: "cbo_action"
-                });
-                break;
+                $("#col_add").val("");
+                $("#cboTipo").selectpicker("val", "input").change();
+                valor = null;
+            } else if (bandera === 3) {
+                alert("Advertencia: Combo vacio.");
+            }
+        } else {
+            alert("Advertencia: Campo requerido.");
         }
-
-        $("#tb_listPreguntas").bootstrapTable('refreshOptions', {
-            columns: columns
-        });
-        $("#col_add").val("");
-        valor = null;
     });
 });
 

@@ -8,7 +8,7 @@ class EstudianteDaoImp {
     public static function _genAcceso($id_titulo, $id_encuesta) {
         $conn = (new C_MySQL())->open();
         $acceso = md5($id_titulo . $id_encuesta . rand());
-        $sql = "insert into encuesta_titulo(Encuestas_id,Titulo_id,fecha,acceso) values($id_encuesta,$id_titulo,curdate(),'$acceso')";
+        $sql = "insert into encuesta_titulo(Encuestas_id,Titulo_id,fecha,acceso,estado) values($id_encuesta,$id_titulo,curdate(),'$acceso','1')";
         $conn->query($sql);
         $conn->close();
     }
