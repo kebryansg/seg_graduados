@@ -19,6 +19,12 @@ class EncuestaDaoImp {
         $conn->close();
         return $list;
     }
+    public static function _refresh($id) {
+        $conn = (new C_MySQL())->open();
+        $sql = "update encuestas set estado = '1' where id = '$id'";
+        $conn->query($sql);
+        $conn->close();
+    }
 
     public static function _delete($id) {
         $conn = (new C_MySQL())->open();
@@ -50,18 +56,20 @@ class EncuestaDaoImp {
         $conn->close();
     }
 
-    public static function _list($top, $limit) {
+    public static function _list($top, $limit,$deshabilitada) {
         $conn = (new C_MySQL())->open();
         $list_count = new list_count();
         $list = array();
         $pag = ($top > 0 ) ? "limit $top offset $limit" : "";
-        $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta $pag;";
+        $sql_2 = ($deshabilitada == "true")? "" : "where estado = '1'";
+        $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta  $sql_2  $pag;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
                 $encuesta = new Encuesta();
                 $encuesta->setId($row["id"]);
                 $encuesta->setFecha($row["fecha"]);
                 $encuesta->setNombre($row["nombre"]);
+                $encuesta->setEstado($row["estado"]);
                 $encuesta->setCant_preg($row["total_preguntas"]);
                 array_push($list, $encuesta);
             }

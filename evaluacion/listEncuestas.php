@@ -40,6 +40,12 @@
         <div class="pull-right">
             <ul id="pagination-demo" class="pagination"></ul>
         </div>
+        <div class="pull-left">
+            <div class="checkbox">
+                <label><input type="checkbox" id="cbk_encuestas_ocultas" >Ver encuentas deshabilitadas</label>
+            </div>
+            
+        </div>
     </div>
     <div class="row">
         <div id="modal_editEncuesta" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">

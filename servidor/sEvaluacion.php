@@ -14,6 +14,9 @@ $op = $_POST["op"];
 $resultado = "";
 $list_result = [];
 switch ($op) {
+    case "refresh":
+        EncuestaDaoImp::_refresh($_POST["id"]);
+        break;
     case "duplicar":
         $id_origen = $_POST["id_origen"];
         $id_destino = $_POST["id_destino"];
@@ -49,14 +52,17 @@ switch ($op) {
     case "list":
         $top = $_POST["top"];
         $pag = $_POST["pag"];
-        $list = EncuestaDaoImp::_list($top, $pag); //$top
+        $deshabilitada = $_POST["deshabilitada"];
+        $list = EncuestaDaoImp::_list($top, $pag,$deshabilitada); //$top
         foreach ($list->getList() as $value) {
+            $estado = ($value->getEstado() == "1") ? '<button dat-id=\"' . $value->getId() . '\" name=\"del_encuesta\" class=\"btn btn-danger btn-sm\" data-toggle=\"tooltip\" title=\"Eliminar encuesta\"><i class=\"fa fa-trash\"></i></button>':
+                        '<button dat-id=\"' . $value->getId() . '\" name=\"refresh_encuesta\" class=\"btn btn-success btn-sm\" data-toggle=\"tooltip\" title=\"Reestablecer encuesta\"><i class=\"fa fa-refresh\"></i></button>';
             $resultado = '{ "id" : ' . $value->getId() . ' , '
                     . '"nombre" : "' . $value->getNombre() . '" , '
                     . '"fecha" : "' . $value->getFecha() . '" ,'
                     . '"cant" : "' . $value->getCant_preg() . '" ,'
                     . '"accion" : "<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" data-toggle=\"modal\" data-target=\"#modal_editEncuesta\" class=\"btn btn-success btn-sm\" data-toggle=\"tooltip\" title=\"Editar encuesta\"><i class=\"fa fa-edit\"></i></button> '
-                    . '<button dat-id=\"' . $value->getId() . '\" name=\"del_encuesta\" class=\"btn btn-danger btn-sm\" data-toggle=\"tooltip\" title=\"Eliminar encuesta\"><i class=\"fa fa-trash\"></i></button> '
+                    . ' '.$estado.' '
                     . '<button dat-id=\"' . $value->getId() . '\" name=\"dupl_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_duplEncuesta\" class=\"btn btn-primary btn-sm\" data-toggle=\"tooltip\" title=\"Duplicar\"><i class=\"fa fa-files-o\"></i></button> '
                     . '<button dat-id=\"' . $value->getId() . '\" name=\"list_pregunt_Encuesta\" class=\"btn btn-info btn-sm\" data-toggle=\"tooltip\" title=\"Listado de Preguntas\"><i class=\"fa fa-align-justify\"></i></button>" }';
             array_push($list_result, $resultado);

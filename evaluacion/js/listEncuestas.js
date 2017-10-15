@@ -1,5 +1,6 @@
 table = "#tb_listEncuestas";
 paginacion = ("#pag_tb_listEncuestas");
+deshabilitada = false;
 ban_new = true;
 default_encuesta = {
     initiateStartPageClick: false,
@@ -16,6 +17,20 @@ $(function () {
     load_cboEncuestas();
 
     load_Encuestas(1);
+    $("#cbk_encuestas_ocultas").change(function(){
+        deshabilitada = $(this).is(":checked");
+        load_Encuestas(1);
+    });
+    $(table).on("click", "button[name='refresh_encuesta']", function () {
+        id = ($(this).attr("dat-id"));
+        $.post("servidor/sEvaluacion.php",
+        {
+            op: "refresh",
+            id: id
+        },function(response){
+            load_Encuestas(1);
+        });
+    });
 
     $(table).on("click", "button[name='edit_encuesta']", function () {
         id = $(this).attr("dat-id");
@@ -148,6 +163,7 @@ function load_Encuestas(pag) {
         async: false,
         data: {
             op: "list",
+            deshabilitada: deshabilitada,
             top: top,
             pag: ((pag - 1) * top)
         },

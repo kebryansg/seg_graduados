@@ -30,10 +30,16 @@
             </thead>
         </table>
     </div>
-    <br>
+    <!--<br>-->
     <div class="row">
         <div class="pull-right">
             <ul id="pagination-demo" class="pagination"></ul>
+        </div>
+        <div class="pull-left">
+            <div class="checkbox">
+                <label><input type="checkbox" id="cbk_preguntas_ocultas" >Ver preguntas deshabilitadas</label>
+            </div>
+            
         </div>
     </div>
 </div>

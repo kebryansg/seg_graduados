@@ -105,12 +105,13 @@ class PreguntasDaoImp implements PreguntasDao {
         return $list;
     }
 
-    public static function list_filter($top, $limit, $categoria_id, $encuesta_id) {
+    public static function list_filter($top, $limit, $categoria_id, $encuesta_id,$deshabilitada) {
         $conn = (new C_MySQL())->open();
         $list_count = new list_count();
         $list = array();
         $sql_1 = ($categoria_id == 0) ? "" : " and $categoria_id = cat.id ";
-        $sql = "select SQL_CALC_FOUND_ROWS  p.* , cat.descripcion from preguntas p inner join categoria cat on cat.id = p.categoria_id  $sql_1  where p.estado = '1' and Encuestas_id = $encuesta_id limit $top offset $limit;";
+        $_sql_2 = ($deshabilitada == "true")? "" : "p.estado = '1' and ";
+        $sql = "select SQL_CALC_FOUND_ROWS  p.* , cat.descripcion from preguntas p inner join categoria cat on cat.id = p.categoria_id  $sql_1  where $_sql_2 Encuestas_id = $encuesta_id limit $top offset $limit;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
 
@@ -118,6 +119,7 @@ class PreguntasDaoImp implements PreguntasDao {
                 $pregunta->setId($row["id"]);
                 $pregunta->setEnunciado($row["enunciado"]);
                 $pregunta->setTipo($row["tipo"]);
+                $pregunta->setEstado($row["estado"]);
                 $pregunta->setCategoria(new Categoria($row["categoria_id"], $row["descripcion"]));
                 array_push($list, $pregunta);
             }
@@ -127,6 +129,13 @@ class PreguntasDaoImp implements PreguntasDao {
         $list_count->setTotal(C_MySQL::row_count($conn));
         $conn->close();
         return $list_count;
+    }
+
+    public static function refresh($id) {
+        $conn = (new C_MySQL())->open();
+        $sql = "update preguntas set estado = '1' where id = " . $id;
+        $conn->query($sql);
+        $conn->close();
     }
 
 }

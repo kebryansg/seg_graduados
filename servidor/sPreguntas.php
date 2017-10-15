@@ -23,20 +23,27 @@ switch ($op) {
     case "delete":
         (new PreguntasDaoImp())->delete($_POST["id"]);
         break;
+    case "refresh":
+        PreguntasDaoImp::refresh($_POST["id"]);
+        break;
     case "list":
         $top = $_POST["top"];
         $pag = $_POST["pag"];
         $id_categoria = $_POST["categoria"];
+        $deshabilitada = $_POST["deshabilitada"];
         $id_encuesta = $_POST["idEncuesta"];
-        $list = PreguntasDaoImp::list_filter($top, $pag, $id_categoria, $id_encuesta);
+        $list = PreguntasDaoImp::list_filter($top, $pag, $id_categoria, $id_encuesta, $deshabilitada);
         foreach ($list->getList() as $pregunta) {
+            $estado = ($pregunta->getEstado() == "1") ?
+                    '<button dat-id=\"' . $pregunta->getId() . '\" name=\"deletePregunta\" data-toggle=\"tooltip\" title=\"Eliminar Pregunta\" class=\"btn btn-danger\" ><i class=\"glyphicon glyphicon-trash\"></i></button>' : 
+                    '<button dat-id=\"' . $pregunta->getId() . '\" name=\"addPregunta\" data-toggle=\"tooltip\" title=\"Reestablecer Pregunta\" class=\"btn btn-success\" ><i class=\"glyphicon glyphicon-refresh\"></i></button>';
             $resultado = '{
                 "id" : "' . $pregunta->getId() . '",
                 "enunciado" : "' . $pregunta->getEnunciado() . '",
                 "tipo" : "' . $pregunta->getTipo() . '",
                 "categoria" : "' . $pregunta->getCategoria()->getDescripcion() . '",
                 "accion": "<button data-toggle=\"tooltip\" title=\"Editar Pregunta\" dat-id=\"' . $pregunta->getId() . '\" name=\"editPregunta\" class=\"btn btn-primary\" ><i class=\"glyphicon glyphicon-edit\"></i></button> '
-                    . ' <button dat-id=\"' . $pregunta->getId() . '\" name=\"deletePregunta\" data-toggle=\"tooltip\" title=\"Eliminar Pregunta\" class=\"btn btn-danger\" ><i class=\"glyphicon glyphicon-trash\"></i></button> '
+                    . ' ' . $estado . ' '
                     . ' <button dat-id=\"' . $pregunta->getId() . '\" name=\"estado_excel\" data-toggle=\"tooltip\" title=\"Permitir excel\" class=\"btn btn-default\" ><i class=\"glyphicon glyphicon-align-justify\"></i></button>"}';
             array_push($list_resultado, $resultado);
         }
@@ -80,7 +87,7 @@ switch ($op) {
         }
         break;
     case "list_preguntas":
-        $list_preguntas = PreguntasDaoImp::list_($_POST["categoria"],$_POST["encuesta"]);
+        $list_preguntas = PreguntasDaoImp::list_($_POST["categoria"], $_POST["encuesta"]);
         foreach ($list_preguntas as $pregunta) {
             $resultado = '{
                 "id" : "' . $pregunta["id"] . '",

@@ -1,10 +1,26 @@
 idEncuesta = 0;
-function getEncuesta_id(id){
+deshabilitada = false;
+function getEncuesta_id(id) {
     idEncuesta = id;
 }
+$(function () {
+    $("#tb_listPreguntas").bootstrapTable();
+    $(".selectpicker").selectpicker("refresh");
+    load_Categoria();
+    //load_Preguntas(1);
+    //setData();
+});
+
+$("#cbk_preguntas_ocultas").change(function () {
+    deshabilitada = $(this).is(":checked");
+    load_Preguntas(1);
+    /*if ($(this).is(":checked")) {
+        alert("true");
+    }*/
+});
 $("#orderPregunta").click(function () {
     id = idEncuesta;
-    $("#content").load('pregunta/orderPregunta.php',function(){
+    $("#content").load('pregunta/orderPregunta.php', function () {
         order_Encuesta_id(id);
     });
 });
@@ -20,6 +36,7 @@ default_pregunta = {
 };
 
 function load_Preguntas(pag) {
+    //alert(deshabilitada);
     var top = $("#cboTop").val();
     $.ajax({
         type: "POST",
@@ -29,6 +46,7 @@ function load_Preguntas(pag) {
         data: {
             op: "list",
             top: top,
+            deshabilitada: deshabilitada,
             idEncuesta: idEncuesta,
             pag: ((pag - 1) * top),
             categoria: $("#cboCategoria").val()
@@ -59,7 +77,7 @@ $("#cboTop").change(function () {
 $("#newPregunta").click(function (e) {
     e.preventDefault();
     id = (idEncuesta);
-    $("#content").load("pregunta/newPregunta.php",function(){
+    $("#content").load("pregunta/newPregunta.php", function () {
         NewEncuesta_id(id);
     });
 });
@@ -85,14 +103,21 @@ $("#tb_listPreguntas").on("click", 'button[name="deletePregunta"]', function () 
             }
     );
 });
-
-$(function () {
-    $("#tb_listPreguntas").bootstrapTable();
-    $(".selectpicker").selectpicker("refresh");
-    load_Categoria();
-    //load_Preguntas(1);
-    //setData();
+$("#tb_listPreguntas").on("click", 'button[name="addPregunta"]', function () {
+    id = ($(this).attr("dat-id"));
+    $.post("servidor/sPreguntas.php",
+            {
+                op: "refresh",
+                id: id
+            },
+            function (data) {
+                load_Preguntas(1);
+            }
+    );
 });
+
+
+
 
 
 
