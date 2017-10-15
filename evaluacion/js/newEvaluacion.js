@@ -34,8 +34,8 @@ $(window).load(function () {
             return row.id;
         });
         $(table).bootstrapTable('remove', {
-            field: 'state',
-            values: true
+            field: 'id',
+            values: ids
         });
     });
 });
@@ -204,8 +204,8 @@ function load_preguntas_cat(id, panel) {
                             checkbox: true
                         }, {
                             field: "id",
-                            title: "id",
-                            formatter: "row_count"
+                            title: "id"
+                            /*, formatter: "row_count"*/
                         });
 
                         $(div_tipoPregunta).data("columns", columns);
@@ -257,6 +257,9 @@ function load_respuestas_preguntas(div_pregunta, pregunta) {
         switch (pregunta.tipo) {
             case "5":
                 data = JSON.parse(pregunta.preg_resp[0].opcion);
+                $.each(data,function(i,row){
+                    $.extend(row,{id: i});
+                });
                 $(div_pregunta).bootstrapTable("load", data);
                 break;
             case "4":
