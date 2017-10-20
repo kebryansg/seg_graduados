@@ -120,6 +120,7 @@ class PreguntasDaoImp implements PreguntasDao {
                 $pregunta->setEnunciado($row["enunciado"]);
                 $pregunta->setTipo($row["tipo"]);
                 $pregunta->setEstado($row["estado"]);
+                $pregunta->setEstado_excel($row["estado_excel"]);
                 $pregunta->setCategoria(new Categoria($row["categoria_id"], $row["descripcion"]));
                 array_push($list, $pregunta);
             }
@@ -134,6 +135,13 @@ class PreguntasDaoImp implements PreguntasDao {
     public static function refresh($id) {
         $conn = (new C_MySQL())->open();
         $sql = "update preguntas set estado = '1' where id = " . $id;
+        $conn->query($sql);
+        $conn->close();
+    }
+
+    public static function estado_excel($id,$estado) {
+        $conn = (new C_MySQL())->open();
+        $sql = "update preguntas set estado_excel = '$estado' where id = " . $id;
         $conn->query($sql);
         $conn->close();
     }

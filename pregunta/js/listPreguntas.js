@@ -11,6 +11,38 @@ $(function () {
     //setData();
 });
 
+$("#tb_listPreguntas").on("click","button[name='estado_excel']",function(){
+    btn = $(this);
+    id = $(this).attr("dat-id");
+    estado = 0;
+    if($(this).hasClass("btn-danger")){
+        estado = 1;
+    }
+    $.ajax({
+        url: "servidor/sPreguntas.php",
+        type: 'POST',
+        data: {
+            id : id,
+            estado: estado,
+            op: "estado_excel"
+        },
+        success: function(response){
+            if(estado === 1){
+                $(btn).removeClass("btn-danger");
+                $(btn).addClass("btn-success");
+                $(btn).find("i").removeClass("glyphicon-remove");
+                $(btn).find("i").addClass("glyphicon-ok");
+            }
+            else{
+                $(btn).removeClass("btn-success");
+                $(btn).addClass("btn-danger");
+                $(btn).find("i").removeClass("glyphicon-ok");
+                $(btn).find("i").addClass("glyphicon-remove");
+            }
+        }
+    });
+});
+
 $("#cbk_preguntas_ocultas").change(function () {
     deshabilitada = $(this).is(":checked");
     load_Preguntas(1);

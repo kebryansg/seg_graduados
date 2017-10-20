@@ -70,7 +70,7 @@ switch ($op) {
         $resultado = '{ "count" : ' . ceil($list->getTotal() / $top) . ' , "load" : [' . join($list_result, ",") . '] }';
         break;
     case "list_cbo":
-        $list = EncuestaDaoImp::_list(0, $pag);
+        $list = EncuestaDaoImp::_list(0, 0,"false");
         foreach ($list->getList() as $value) {
             $resultado .= '<option value="' . $value->getId() . '">' . $value->getNombre() . '</option>';
         }
