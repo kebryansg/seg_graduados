@@ -1,4 +1,5 @@
 columns = [];
+contador = 1;
 $(function () {
     $("#cboTipo").change(function () {
         value = $(this).val();
@@ -60,32 +61,34 @@ $(function () {
             });
         }
     });
+    $("#datos").click(function () {
+        console.log($("#tb_columnas").bootstrapTable("getData"));
+    });
+    $(".btn-remove-table").click(function () {
+        table = $(this).closest(".row").find("table");
+        var ids = $.map($(table).bootstrapTable('getSelections'), function (row) {
+            return row.id;
+        });
+        $(table).bootstrapTable('remove', {
+            field: 'id',
+            values: ids
+        });
+    });
 
     $("#btn_add").click(function () {
         valor = $("#col_add").val();
         if (!$.isEmptyObject(valor)) {
             tipo = $("#cboTipo").val();
             bandera = 0;
+            row = {};
             switch (tipo) {
-                case "check":
-                    columns.push({
-                        field: valor,
-                        title: valor,
-                        tipo: "check",
-                        sortable: false,
-                        formatter: "cbk_format",
-                        events: "cbk_action"
-                    });
-                    break;
-                case "input":
-                    columns.push({
-                        field: valor,
-                        title: valor,
-                        tipo: "input",
-                        sortable: false,
-                        formatter: "input_format",
-                        events: "input_action"
-                    });
+                default:
+                    row = {
+                        id: contador,
+                        columna: valor,
+                        tipo: $("#cboTipo option[value='" + tipo + "']").html(),
+                        excel: true
+                    };
                     break;
                 case "select":
                     source = [];
@@ -93,27 +96,66 @@ $(function () {
                         $("#op_select select option").each(function (i, v) {
                             source.push({value: i, text: $(v).html()});
                         });
-                        columns.push({
-                            field: valor,
-                            title: valor,
-                            tipo: "select",
-                            sortable: false,
+                        row = {
+                            id: contador,
+                            columna: valor,
                             data_source: source,
-                            formatter: "select_format",
-                            events: "cbo_action"
-                        });
+                            tipo: $("#cboTipo option[value='" + tipo + "']").html(),
+                            excel: true
+                        };
                     } else {
                         bandera = 3;
                     }
                     break;
             }
+            /*switch (tipo) {
+             case "check":
+             columns.push({
+             field: valor,
+             title: valor,
+             tipo: "check",
+             sortable: false,
+             formatter: "cbk_format",
+             events: "cbk_action"
+             });
+             break;
+             case "input":
+             columns.push({
+             field: valor,
+             title: valor,
+             tipo: "input",
+             sortable: false,
+             formatter: "input_format",
+             events: "input_action"
+             });
+             break;
+             case "select":
+             source = [];
+             if ($("#op_select select option").length > 0) {
+             $("#op_select select option").each(function (i, v) {
+             source.push({value: i, text: $(v).html()});
+             });
+             columns.push({
+             field: valor,
+             title: valor,
+             tipo: "select",
+             sortable: false,
+             data_source: source,
+             formatter: "select_format",
+             events: "cbo_action"
+             });
+             } else {
+             bandera = 3;
+             }
+             break;
+             }*/
             if (bandera === 0) {
-                $("#cboColumnas").append('<option value="' + valor + '">' + valor + '</option>');
-                $("#cboColumnas").selectpicker("refresh");
-
-                $("#tb_listPreguntas").bootstrapTable('refreshOptions', {
-                    columns: columns
-                });
+                $("#tb_columnas").bootstrapTable("insertRow",
+                        {
+                            index: contador,
+                            row: row
+                        });
+                contador++;
                 $("#col_add").val("");
                 $("#cboTipo").selectpicker("val", "input").change();
                 valor = null;

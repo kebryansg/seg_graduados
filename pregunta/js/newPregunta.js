@@ -6,6 +6,7 @@ $(".selectpicker").selectpicker();
 $("#div_tipoPreguntas > div").hide();
 $(function () {
     loadCategoria();
+    $("#tb_columnas").bootstrapTable();
     $("#savePregunta").data("id", 0);
 });
 

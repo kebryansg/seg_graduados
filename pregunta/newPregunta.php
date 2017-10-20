@@ -93,11 +93,38 @@
             </div>
             <br>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
+                    <button class="btn btn-danger btn-remove-table">Eliminar Columnas</button>
+                    <div class="clearfix"></div>
+                    <br>
+                    <table id="tb_columnas" >
+                        <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true">cod</th>
+                                <th data-field="id">id</th>
+                                <th data-field="columna">Columnas</th>
+                                <th data-field="tipo">Tipo</th>
+                                <th data-field="excel" data-events="cbk_action" data-formatter="cbk_format">Permitir excel</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <button class="btn btn-default" id="datos">datos</button>
+            <br>
+            <div class="row">
+                <div class="col-md-5">
                     <div class="form-inline">
                         <label for="" class="control-label">Eliminar columna:</label>
                         <select class="selectpicker form-control" data-width="220" id="cboColumnas" title="Eliminar"></select>
                         <button id="btn_remove_column" class="btn btn-danger">Eliminar</button>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-inline">
+                        <label for="" class="control-label">Columna Dominante:</label>
+                        <select class="selectpicker form-control" data-width="220" id="cboColumnas" title="Eliminar"></select>
                     </div>
 
                 </div>
@@ -119,8 +146,6 @@
                     <table data-toggle="table" data-width="300" id="tb_listPreguntas">
                         <thead>
                             <tr>
-                                <!--<th data-field="h1">h1</th>
-                                <th data-field="h2">h2</th>-->
                             </tr>
                         </thead>
                     </table>
