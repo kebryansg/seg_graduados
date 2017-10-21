@@ -6,6 +6,33 @@ include_once '../mvc/controlador/entidades/Encuesta.php';
 
 class EncuestaDaoImp {
 
+    public static function _facultad() {
+        $conn = (new C_MySQL())->open();
+        $list = array();
+        $sql = "select * from facultad;";
+        if ($resultado = $conn->query($sql)) {
+            while ($row = $resultado->fetch_assoc()) {
+                array_push($list, (array('id' => $row["id"], 'descripcion' => $row["nombre"])));
+            }
+            $resultado->close();
+        }
+        $conn->close();
+        return $list;
+    }
+    public static function _carrera($facultad) {
+        $conn = (new C_MySQL())->open();
+        $list = array();
+        $sql = "select * from carreras where Facultad_id = $facultad;";
+        if ($resultado = $conn->query($sql)) {
+            while ($row = $resultado->fetch_assoc()) {
+                array_push($list, (array('id' => $row["id"], 'descripcion' => $row["nombre"])));
+            }
+            $resultado->close();
+        }
+        $conn->close();
+        return $list;
+    }
+
     public static function list_file() {
         $conn = (new C_MySQL())->open();
         $list = array();
@@ -19,6 +46,7 @@ class EncuestaDaoImp {
         $conn->close();
         return $list;
     }
+
     public static function _refresh($id) {
         $conn = (new C_MySQL())->open();
         $sql = "update encuestas set estado = '1' where id = '$id'";
@@ -37,7 +65,7 @@ class EncuestaDaoImp {
             $resultado->free();
             //$resultado->close();
         }
-        if($total == 0){
+        if ($total == 0) {
             $sql = "update encuestas set estado = '0' where id = $id;";
             $conn->query($sql);
         }
@@ -56,12 +84,12 @@ class EncuestaDaoImp {
         $conn->close();
     }
 
-    public static function _list($top, $limit,$deshabilitada) {
+    public static function _list($top, $limit, $deshabilitada) {
         $conn = (new C_MySQL())->open();
         $list_count = new list_count();
         $list = array();
         $pag = ($top > 0 ) ? "limit $top offset $limit" : "";
-        $sql_2 = ($deshabilitada == "true")? "" : "where estado = '1'";
+        $sql_2 = ($deshabilitada == "true") ? "" : "where estado = '1'";
         $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta  $sql_2  $pag;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {

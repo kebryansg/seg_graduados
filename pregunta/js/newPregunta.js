@@ -112,11 +112,11 @@ function getOpciones(tipoPregunta) {
     switch (tipoPregunta) {
         case "5":
             //alert($("#table table").attr("data-id"));
-            bandera = $.isEmptyObject($("#table").data("id"));
+            bandera = $.isEmptyObject($("#tb_columnas").data("id"));
             if (bandera) {
-                etiquetas.push({id: 0, value: JSON.stringify(columns)});
+                etiquetas.push({id: 0, value: JSON.stringify(get_Data())});
             } else {
-                etiquetas.push({id: $("#table").data("id"), value: JSON.stringify(columns)});
+                etiquetas.push({id: $("#tb_columnas").data("id"), value: JSON.stringify(get_Data())});
             }
             //console.log(JSON.stringify(columns));
             break;
@@ -176,6 +176,7 @@ function asignarPregunta(pregunta) {
     $("#cboTipoPregunta").selectpicker("val", pregunta.tipo);
     cboTipoPregunta(_TipoPregunta(pregunta.tipo));
 }
+
 function generarOpciones(opciones) {
     if (_TipoPregunta($("#cboTipoPregunta").val()) !== "table") {
         contenedor = "#content_" + _TipoPregunta($("#cboTipoPregunta").val());
@@ -189,15 +190,38 @@ function generarOpciones(opciones) {
         });
     } else {
         columns = JSON.parse(opciones[0].enunciado);
-        $("#table").data("id", opciones[0].id);
-        $(columns).each(function (i, v) {
-            $("#cboColumnas").append('<option value="' + i + '">' + v.field + '</option>');
+        contador = 0;
+        data = $.map(columns, function (column) {
+            row = {
+                id: contador++,
+                columna: column.title,
+                tipo: column.tipo,
+                excel: column.excel
+            };
+            switch (column.tipo) {
+                case "2":
+                    $.extend(row, {
+                        data_source: column.data_source
+                    });
+                    break;
+            }
+            return row;
         });
-        $("#cboColumnas").selectpicker("refresh");
+        $("#tb_columnas").data("id", opciones[0].id);
+        $("#tb_columnas").bootstrapTable("load", data);
+        
 
-        $("#table table").bootstrapTable("refreshOptions", {
-            columns: columns
-        });
+        //console.log(columns);
+        /*columns = JSON.parse(opciones[0].enunciado);
+         $("#table").data("id", opciones[0].id);
+         $(columns).each(function (i, v) {
+         $("#cboColumnas").append('<option value="' + i + '">' + v.field + '</option>');
+         });
+         $("#cboColumnas").selectpicker("refresh");
+         
+         $("#table table").bootstrapTable("refreshOptions", {
+         columns: columns
+         });*/
     }
 
 }

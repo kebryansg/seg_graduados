@@ -15,21 +15,29 @@ $(function () {
     $(".selectpicker").selectpicker();
     $("table").bootstrapTable();
     load_cboEncuestas();
+    load_Facultad();
+    $("#cbo_Facultad").change(function(e){
+        load_Carrera($(this).val());
+    });
 
     load_Encuestas(1);
-    $("#cbk_encuestas_ocultas").change(function(){
+    $("#cbk_encuestas_ocultas").change(function () {
         deshabilitada = $(this).is(":checked");
         load_Encuestas(1);
     });
     $(table).on("click", "button[name='refresh_encuesta']", function () {
         id = ($(this).attr("dat-id"));
         $.post("servidor/sEvaluacion.php",
-        {
-            op: "refresh",
-            id: id
-        },function(response){
+                {
+                    op: "refresh",
+                    id: id
+                }, function (response) {
             load_Encuestas(1);
         });
+    });
+    $(table).on("click", "button[name='gen_Encuesta']", function () {
+        id = $(this).attr("dat-id");
+        //alert(id);
     });
 
     $(table).on("click", "button[name='edit_encuesta']", function () {
@@ -138,6 +146,50 @@ $(function () {
     });
 
 });
+
+
+function load_Facultad() {
+    $.ajax({
+        url: "servidor/SEvaluacion.php",
+        type: "POST",
+        dataType: 'json',
+        data: {
+            op: "facultad"
+        },
+        success: function (response) {
+            $("#cbo_Facultad").html("<option value='0'>Seleccione</option>");
+            $.each(response, function (i, row) {
+                option = document.createElement("option");
+                $(option).val(row.id);
+                $(option).text(row.descripcion);
+                $("#cbo_Facultad").append(option);
+
+            });
+            $("#cbo_Facultad").selectpicker("refresh");
+        }
+    });
+}
+function load_Carrera(facultad) {
+    $.ajax({
+        url: "servidor/SEvaluacion.php",
+        type: "POST",
+        dataType: 'json',
+        data: {
+            op: "carrera",
+            facultad: facultad
+        },
+        success: function (response) {
+            $("#cbo_Carrera").html("<option value='0'>Seleccione</option>");
+            $.each(response, function (i, row) {
+                option = document.createElement("option");
+                $(option).val(row.id);
+                $(option).text(row.descripcion);
+                $("#cbo_Carrera").append(option);
+            });
+            $("#cbo_Carrera").selectpicker("refresh");
+        }
+    });
+}
 
 function load_cboEncuestas() {
     $.ajax({

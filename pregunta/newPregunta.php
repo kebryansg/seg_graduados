@@ -70,9 +70,9 @@
                         <label for="" class="control-label">Nombre columna:</label>
                         <input type="text" class="form-control" id="col_add">
                         <select name="" class="form-control selectpicker" data-width="120" id="cboTipo">
-                            <option value="input">Ingreso</option>
-                            <option value="select">Combo</option>
-                            <option value="check">Checkbox</option>
+                            <option value="1">Ingreso</option>
+                            <option value="2">Combo</option>
+                            <option value="3">Checkbox</option>
                         </select>
                         <!--<input type="text" >-->
                         <button id="btn_add" class="btn btn-success">Agregar</button>
@@ -94,23 +94,32 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-danger btn-remove-table">Eliminar Columnas</button>
+                    <div class="pull-left">
+                        <button class="btn btn-danger btn-remove-table">Eliminar Columnas</button>
+                    </div>
+                    <div class="pull-right">
+                        <div class="form-inline">
+                            <label for="" class="control-label">Columna Dominante:</label>
+                            <select id="cboColumnas" title="Columna Dominante" class="selectpicker">
+                            </select>
+                        </div>
+                    </div>
                     <div class="clearfix"></div>
                     <br>
                     <table id="tb_columnas" >
                         <thead>
                             <tr>
                                 <th data-field="state" data-checkbox="true">cod</th>
-                                <th data-field="id">id</th>
+                                <!--<th data-field="id">id</th>-->
                                 <th data-field="columna">Columnas</th>
-                                <th data-field="tipo">Tipo</th>
+                                <th data-field="tipo" data-formatter="tipo_format">Tipo</th>
                                 <th data-field="excel" data-events="cbk_action" data-formatter="cbk_format">Permitir excel</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
-            <button class="btn btn-default" id="datos">datos</button>
+            <!--<button class="btn btn-default" id="datos">datos</button>
             <br>
             <div class="row">
                 <div class="col-md-5">
@@ -134,7 +143,6 @@
                 <div class="col-md-12">
                     <div class="pull-right">
                         <button id="btn_new_row" class="btn btn-success"> <i class="glyphicon glyphicon-plus"></i> Agregar Fila</button>
-                        <!--<button id="btn_data" class="btn btn-success"> Datos</button>-->
 
                     </div>
                 </div>
@@ -150,7 +158,7 @@
                         </thead>
                     </table>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <div class="hidden" >

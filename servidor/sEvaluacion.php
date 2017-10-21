@@ -14,6 +14,12 @@ $op = $_POST["op"];
 $resultado = "";
 $list_result = [];
 switch ($op) {
+    case "facultad":
+        $resultado = json_encode(EncuestaDaoImp::_facultad());
+        break;
+    case "carrera":
+        $resultado = json_encode(EncuestaDaoImp::_carrera($_POST["facultad"]));
+        break;
     case "refresh":
         EncuestaDaoImp::_refresh($_POST["id"]);
         break;
@@ -64,6 +70,7 @@ switch ($op) {
                     . '"accion" : "<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" data-toggle=\"modal\" data-target=\"#modal_editEncuesta\" class=\"btn btn-success btn-sm\" data-toggle=\"tooltip\" title=\"Editar encuesta\"><i class=\"fa fa-edit\"></i></button> '
                     . ' '.$estado.' '
                     . '<button dat-id=\"' . $value->getId() . '\" name=\"dupl_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_duplEncuesta\" class=\"btn btn-primary btn-sm\" data-toggle=\"tooltip\" title=\"Duplicar\"><i class=\"fa fa-files-o\"></i></button> '
+                    . '<button dat-id=\"' . $value->getId() . '\" name=\"gen_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_genEncuesta\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" title=\"Generar Excel\"><i class=\"fa fa-download\"></i></button> '
                     . '<button dat-id=\"' . $value->getId() . '\" name=\"list_pregunt_Encuesta\" class=\"btn btn-info btn-sm\" data-toggle=\"tooltip\" title=\"Listado de Preguntas\"><i class=\"fa fa-align-justify\"></i></button>" }';
             array_push($list_result, $resultado);
         }
