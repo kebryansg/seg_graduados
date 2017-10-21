@@ -74,7 +74,7 @@ foreach ($list_encuestas as $encuesta) {
                                 ->setCellValueByColumnAndRow($col++, $fila, $opcion["enunciado"]);
                     }
                     break;
-                case "5": case "6":
+                /*case "5": case "6":
                     if (isset($pregunta["preg_resp"][0]["opcion"])) {
                         $data = json_decode($pregunta["preg_resp"][0]["opcion"]);
                         foreach ($data as $value) {
@@ -120,7 +120,7 @@ foreach ($list_encuestas as $encuesta) {
                         $objPHPExcel->getActiveSheet()
                                 ->setCellValueByColumnAndRow($col++, $fila, $value);
                     }
-                    break;
+                    break;*/
             }
         }
         break;
@@ -176,7 +176,7 @@ foreach ($list_encuestas as $encuesta) {
                         $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col++, $fila, $valor);
                     }
                     break;
-                case "5": case "6":
+                /*case "5": case "6":
                     if (isset($pregunta["preg_resp"][0]["opcion"])) {
                         $col++;
                         $data = json_decode($pregunta["preg_resp"][0]["opcion"]);
@@ -364,7 +364,7 @@ foreach ($list_encuestas as $encuesta) {
                         }
                         $col = $col_reg;
                     }
-                    break;
+                    break;*/
                 default :
                     $col++;
                     break;
