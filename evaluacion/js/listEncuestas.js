@@ -37,7 +37,19 @@ $(function () {
     });
     $(table).on("click", "button[name='gen_Encuesta']", function () {
         id = $(this).attr("dat-id");
+        $("#btn_GenExcel").data("id",id);
         //alert(id);
+    });
+    $("#btn_GenExcel").click(function(e){
+        id = $(this).data("id");
+        $.ajax({
+            url: "servidor/SEvaluacion.php",
+            type: 'POST',
+            data: {
+                op: "file",
+                encuesta: id
+            }
+        });
     });
 
     $(table).on("click", "button[name='edit_encuesta']", function () {

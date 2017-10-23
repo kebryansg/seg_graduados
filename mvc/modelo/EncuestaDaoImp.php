@@ -33,10 +33,14 @@ class EncuestaDaoImp {
         return $list;
     }
 
-    public static function list_file() {
+    public static function list_file($encuesta) {
         $conn = (new C_MySQL())->open();
         $list = array();
-        $sql = "select id , fecha from encuesta;";
+        $sql = "SELECT e.cedula, e.nombres ,f.nombre,c.nombre,e_t.id from estudiante e 
+                inner join titulo t on t.Estudiante_id = e.id
+                inner join carreras c on c.id = t.Carreras_id
+                inner join facultad f on f.id = c.Facultad_id
+                inner join encuesta_titulo e_t on e_t.Titulo_id = t.id and e_t.Encuestas_id = $encuesta and e_t.estado = 2;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
                 array_push($list, $row);
@@ -112,7 +116,10 @@ class EncuestaDaoImp {
     public static function list_Preguntas($id_encuesta) {
         $conn = (new C_MySQL())->open();
         $list = array();
-        $sql = "select p.* from preguntas_respuestas p_r inner join  preguntas p on p.id = p_r.preguntas_id inner join categoria cat on cat.id = p.categoria_id where p_r.encuesta_id = $id_encuesta order by cat.order_;";
+        $sql = "SELECT p.id,p.enunciado,p.tipo from preguntas_respuestas p_r
+                inner join preguntas p on p.id = p_r.pregunta_id and p.estado_excel = 1
+                inner join categoria cat on cat.id = p.categoria_id 
+                where p_r.encuesta_titulo_id = $id_encuesta order by cat.order_,p.order_by;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
                 array_push($list, $row);

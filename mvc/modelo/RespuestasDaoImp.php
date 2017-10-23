@@ -5,7 +5,9 @@ class RespuestasDaoImp{
     
     public static function _listRespuestas($id_preg_resp){
         $conn = (new C_MySQL())->open();
-        $sql = "select * from respuestas where preguntas_respuestas_id = $id_preg_resp ;";
+        $sql = "SELECT p_r.id ,p_r.opcion from preguntas_respuestas p_r
+                inner join preguntas p on p.id = p_r.pregunta_id and p.estado_excel = 1
+                where p_r.encuesta_titulo_id = 6;";
         $list = array();
         if($resultado = $conn->query($sql)){
             while ($row = $resultado->fetch_assoc()) {

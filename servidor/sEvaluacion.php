@@ -36,7 +36,22 @@ switch ($op) {
         $resultado = "ok";
         break;
     case "file":
-        $list_encuesta = EncuestaDaoImp::list_file();
+        $list_encuestas = EncuestaDaoImp::list_file($_POST["encuesta"]);
+        foreach ($list_encuestas as $encuesta) {
+            $encuesta["preguntas"] = EncuestaDaoImp::list_Preguntas($encuesta["id"]);
+            $list_preguntas = array();
+            foreach ($encuesta["preguntas"] as $pregunta) {
+                $pregunta["opciones"] = OpcionesDaoImp::list_($pregunta["id"]);
+                $pregunta["respuestas"] = RespuestasDaoImp::_listRespuestas($encuesta["id"]);
+                array_push($list_preguntas, $pregunta);
+            }
+            $encuesta["preguntas"] = $list_preguntas;
+            array_push($list_result, $encuesta);
+        }
+        return $list_result;
+        
+        
+        /*$list_encuesta = EncuestaDaoImp::list_file();
         foreach ($list_encuesta as $encuesta) {
             $list_preguntas = EncuestaDaoImp::list_Preguntas($encuesta["id"]);
             $list_pregunta = array();
@@ -53,7 +68,7 @@ switch ($op) {
             $encuesta["preguntas"] = $list_pregunta;
             array_push($list_result, $encuesta);
         }
-        $_SESSION["file"] = ($list_result);
+        $_SESSION["file"] = ($list_result);*/
         break;
     case "list":
         $top = $_POST["top"];
