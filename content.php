@@ -11,6 +11,9 @@
         <link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="resources/styles/style.css" rel="stylesheet">
         <link href="resources/styles/menu.css" rel="stylesheet">
+        
+        
+        
         <script src="resources/bootstrap/js/jquery.min.js"></script>
         <script src="resources/bootstrap/js/bootstrap.min.js"></script>
         <script src="resources/bootstrap/boostrap-select/bootstrap-select.min.js"></script>

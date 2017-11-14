@@ -18,6 +18,22 @@ class RespuestasDaoImp{
         $conn->close();
         return $list;
     }
+    public static function _getRespuesta($idPregunta){
+        $conn = (new C_MySQL())->open();
+        $sql = "SELECT p_r.id ,p_r.opcion from preguntas_respuestas p_r
+                where p_r.pregunta_id = $idPregunta";
+                /*inner join preguntas p on p.id = p_r.pregunta_id and p.estado_excel = 1
+                where p_r.encuesta_titulo_id = 6;";*/
+        $list = array();
+        if($resultado = $conn->query($sql)){
+            while ($row = $resultado->fetch_assoc()) {
+                array_push($list,$row);
+            }
+            $resultado->close();
+        }
+        $conn->close();
+        return $list;
+    }
     
     public static function save($respuesta){
         $conn = (new C_MySQL())->open();

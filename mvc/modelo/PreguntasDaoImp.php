@@ -89,14 +89,13 @@ class PreguntasDaoImp implements PreguntasDao {
         $conn = (new C_MySQL())->open();
         $list = array();
         //$sql = ("select * from preguntas where (estado = '1' or estado = '2') and categoria_id = " . $categoria_id . " and Encuestas_id = $encuesta_id order by order_by");
-        $sql = "select p.* from encuesta_titulo e_t inner join encuestas e on e.id = e_t.Encuestas_id inner join preguntas p on p.Encuestas_id = e.id  where (p.estado = '1' or p.estado = '2') and categoria_id = $categoria_id and e_t.id = $encuesta_id;";
+        $sql = "select p.* from carreras_encuesta e_t "
+                . "inner join encuestas e on e.id = e_t.Encuestas_id "
+                . "inner join preguntas p on p.Encuestas_id = e.id  "
+                . "where (p.estado = '1' or p.estado = '2') and categoria_id = $categoria_id and "
+                . "e_t.id = $encuesta_id;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
-                /* $pregunta = new Preguntas();
-                  $pregunta->setId($row["id"]);
-                  $pregunta->setEnunciado($row["enunciado"]);
-                  $pregunta->setTipo($row["tipo"]);
-                  $pregunta->setCategoria(new Categoria($row["categoria_id"], "")); */
                 array_push($list, $row);
             }
             $resultado->close();

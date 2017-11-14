@@ -8,11 +8,40 @@ class EstudianteDaoImp {
     public static function _genAcceso($id_titulo, $id_encuesta) {
         $conn = (new C_MySQL())->open();
         $acceso = md5($id_titulo . $id_encuesta . rand());
-        $sql = "insert into encuesta_titulo(Encuestas_id,Titulo_id,fecha,acceso,estado) values($id_encuesta,$id_titulo,curdate(),'$acceso','1')";
+        $sql = "insert into carreras_encuesta(Encuestas_id,Titulo_id,fecha,acceso,estado) values($id_encuesta,$id_titulo,curdate(),'$acceso','1')";
         $conn->query($sql);
         $conn->close();
     }
+    
+    public static function _save($estudiante){
+        //$estudiante = new Estudiante();
+        $conn = (new C_MySQL())->open();
+        $sql = "";
+        if($estudiante->getId() == 0){
+            $sql = "insert into estudiante(nombres,cedula) values('".$estudiante->getNombres()."',".$estudiante->getCedula().")";
+        }
+        if($conn->query($sql) == TRUE){
+            $estudiante->setId($conn->insert_id);
+        }
+        $conn->close();
+        return $estudiante;
+    }
+    public static function _validarEstudiante($estudiante){
+        $conn = (new C_MySQL())->open();
+        $sql = "select validarEstudiante('". $estudiante->getCedula() ."') as 'resultado'";
+        if($result = $conn->query($sql)){
+            while ($row = $result->fetch_assoc()) {
+                $resultado = $row["resultado"];
+            }
+            $result->free();
+        }
+        $estudiante->setId($resultado);
+        $conn->close();
+        //return $resultado;
+    }
+    
 
+    // No se porque esta comparando cedula con el 'id' pero para no dañar nada XD queda ahi
     public static function _edit($id) {
         $estudiante = new Estudiante();
         $conn = (new C_MySQL())->open();
@@ -30,63 +59,26 @@ class EstudianteDaoImp {
     }
 
     public static function _encuestas_titulo($idEstudiante) {
-        $data = NULL;
-        $a_titulo = [];
-        $a_encuestas = [];
-        //$a_encuestas_in = [];
-        $a_encuestas_titulo_in = [];
-        $a_encuestas_titulo = [];
-        $cont = 1;
+        $data = [];
         $conn = (new C_MySQL())->open();
-        $sql = "select t.id titulo,f.nombre facultad,c.nombre carrera from titulo t 
+        $sql = "SELECT c_e.id as 'cod', tb.*, e.nombre as 'nom_encuesta',e.id as 'id_encuesta',c_e.acceso,c_e.fecha
+                from (
+                SELECT f.nombre as 'Facultad',c.nombre as 'Carrera', t.id as 'id_titulo',  c.id as 'id_carrera' from estudiante es 
+                inner join titulo t on t.Estudiante_id = es.id
                 inner join carreras c on c.id = t.Carreras_id
                 inner join facultad f on f.id = c.Facultad_id
-                where t.Estudiante_id = $idEstudiante;";
+                where es.id = $idEstudiante
+                ) tb inner join encuestas e on e.carrera_id = tb.id_carrera and e.estado = 1
+                LEFT join carreras_encuesta c_e on c_e.Encuestas_id = e.id and c_e.Titulo_id = tb.id_titulo
+                ORDER BY c_e.fecha;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
-                array_push($a_titulo, $row);
-            }
-            $resultado->free();
-        }
-
-        $sql = "select e_t.id Cod,e_t.Titulo_id titulo,encuestas.id encuesta,f.nombre facultad,c.nombre carrera, e_t.acceso acceso,encuestas.nombre nom_encuesta,concat('Generado : ', e_t.fecha ) accion from encuesta_titulo e_t
-                inner join encuestas on encuestas.id = e_t.Encuestas_id and encuestas.estado = '1'
-                inner join titulo t on t.id = e_t.Titulo_id
-                inner join carreras c on c.id = t.Carreras_id
-                inner join facultad f on f.id = c.Facultad_id
-                where t.Estudiante_id = $idEstudiante;";
-        if ($resultado = $conn->query($sql)) {
-            while ($row = $resultado->fetch_assoc()) {
-                $row["num"] = $cont;
-                array_push($a_encuestas_titulo, $row);
-                array_push($a_encuestas_titulo_in, $row["titulo"] . ':' . $row["encuesta"]);
-                //array_push($a_encuestas_in, $row["encuesta"]);
-                $cont++;
-            }
-            $resultado->free();
-        }
-
-        $sql = "select e.id cod,e.nombre from encuestas e where e.estado = '1';";
-        if ($resultado = $conn->query($sql)) {
-            while ($row = $resultado->fetch_assoc()) {
-                array_push($a_encuestas, $row);
+                array_push($data, $row);
             }
             $resultado->free();
         }
         $conn->close();
-
-        foreach ($a_titulo as $titulo) {
-            foreach ($a_encuestas as $encuesta) {
-                if (!in_array(($titulo["titulo"] . ':' . $encuesta["cod"]), $a_encuestas_titulo_in)) {
-                    $row = array("num" => $cont, "Cod" => "0", "titulo" => $titulo["titulo"], "encuesta" => $encuesta["cod"],
-                        "facultad" => $titulo["facultad"], "carrera" => $titulo["carrera"],
-                        "acceso" => "", "nom_encuesta" => $encuesta["nombre"], "accion" => "<button dt-num=\"" . $cont . "\" class=\"btn btn-success btn-sm gen_acceso\">Generar acceso</button>");
-                    array_push($a_encuestas_titulo, $row);
-                    $cont++;
-                }
-            }
-        }
-        return $a_encuestas_titulo;
+        return $data;
     }
 
 }

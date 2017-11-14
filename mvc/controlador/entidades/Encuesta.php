@@ -4,6 +4,7 @@ class Encuesta{
     private $id;
     private $fecha;
     private $nombre;
+    private $carrera;
     private $cant_preg;
     private $estado;
     
@@ -13,7 +14,16 @@ class Encuesta{
     function getEstado() {
         return $this->estado;
     }
+    
+    function getCarrera() {
+        return $this->carrera;
+    }
 
+    function setCarrera($carrera) {
+        $this->carrera = $carrera;
+    }
+
+    
     function setEstado($estado) {
         $this->estado = $estado;
     }

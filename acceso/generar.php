@@ -16,10 +16,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
                 </div>
                 <br>
                 <div id="info-result" class="hidden">
@@ -50,23 +46,21 @@
                             <table id="tb_detallesEncuestas" data-unique-id="num">
                                 <thead>
                                     <tr>
-                                        <th class="col-md-1" data-field="num">Cod.</th>
-                                        <th class="col-md-1" data-field="Cod">Cod.</th>
-                                        <th data-field="titulo">titulo</th>
-                                        <th data-field="encuesta">encuesta</th>
-                                        <th class="col-md-2" data-field="facultad">Facultad</th>
-                                        <th class="col-md-2" data-field="carrera">Carrera</th>
+                                        <!--<th class="col-md-1" data-field="num">Cod.</th>-->
+                                        <th class="col-md-1" data-field="cod">Cod.</th>
+                                        <th data-field="id_titulo">titulo</th>
+                                        <th data-field="id_encuesta">encuesta</th>
+                                        <th class="col-md-2" data-field="Facultad">Facultad</th>
+                                        <th class="col-md-2" data-field="Carrera">Carrera</th>
                                         <th data-field="acceso">Clave - Acceso</th>
                                         <th class="col-md-2" data-field="nom_encuesta">Encuesta</th>
-                                        <th data-align="center" data-field="accion">Acción</th>
+                                        <th data-align="center" data-field="fecha" data-events="event_accion" data-formatter="btn_accion">Acción</th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>

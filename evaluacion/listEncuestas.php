@@ -8,17 +8,10 @@
                 <option value="20">20</option>
                 <option value="30">30</option>
             </select>
+            <select class="selectpicker"  id="cboFacultad_init"></select>
+            <select class="selectpicker" id="cboCarrera_init"></select>
         </div>
         <div class="pull-right">
-            <!--<div class="form-inline">
-                <select class="selectpicker" data-width="120px" id="cboFiltro">
-                    <option value="0">Todas</option>
-                    <option value="1">Facultad</option>
-                    <option value="2">Carrera</option>
-                </select>
-                <button class="btn btn-default" id="btnGenerar">Generar Excel</button>
-                <button class="btn btn-success" id="newEncuesta" data-toggle="modal" data-target="#modal_editEncuesta">Nueva Encuesta</button>
-            </div>-->
             <button class="btn btn-success" id="newEncuesta" data-toggle="modal" data-target="#modal_editEncuesta">Nueva Encuesta</button>
         </div>
     </div>
@@ -31,7 +24,7 @@
                     <th  data-field="nombre">Encuestas</th>
                     <th class="col-md-1" data-align="center" data-field="fecha">F. Creación - Modificación</th>
                     <th class="col-md-1" data-align="center" data-field="cant">Cant. Preguntas</th>
-                    <th class="col-md-3" data-align="center" data-field="accion">Acción</th>
+                    <th class="col-md-3" data-align="center" data-events="events_accion" data-formatter="btn_accion" data-field="accion">Acción</th>
                 </tr>
 
             </thead>
@@ -54,7 +47,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                        <h4 class="modal-title">Modificar Encuesta</h4>
+                        <h4 class="modal-title">Nueva Encuesta</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -63,19 +56,12 @@
                                     <label for="" class="control-label">Nombre: </label>
                                     <input type="text" id="edit_nombre" class="form-control">
                                 </div>
-                                <!--<div class="form-group">
-                                    <label for="" class="control-label">Encuesta predeterminada: </label>
-                                    <select name="" id="" class="form-control selectpicker">
-                                        <option value="1">No</option>
-                                        <option value="2">Si</option>
-                                    </select>
-                                </div>-->
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button id="btn_canEncuesta" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                        <button id="btn_newEncuesta" type="button" class="btn btn-success" data-dismiss="modal">Modificar</button>
+                        <button name="save" class="btn btn-success">Guardar</button>
                     </div>
                 </div>
             </div>

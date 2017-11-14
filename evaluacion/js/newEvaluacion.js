@@ -115,7 +115,7 @@ function saveE(id_enc_tit, estado) {
             preguntas_t3: pregunta_t3,
             preguntas_t4: pregunta_t4,
             preguntas_t5: pregunta_t5,
-            id_enc_tit: id_enc_tit,
+            id: id_enc_tit,
             estado: estado
         },
         beforeSend: function () {
@@ -364,7 +364,7 @@ function load_categorias() {
         url: "servidor/sEvaluacion.php",
         data: {
             op: "load_categoria",
-            id_encuesta_titulo: $("#saveEvaluacion").attr("data-id")
+            id_carrera_encuesta: $("#saveEvaluacion").attr("data-id")
         },
         async: false,
         dataType: "json",
