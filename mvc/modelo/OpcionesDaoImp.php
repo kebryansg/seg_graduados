@@ -25,6 +25,12 @@ class OpcionesDaoImp implements OpcionesDao {
         $conn->query($sql);
         $conn->close();
     }
+    public static function _DeletexPreguntas($idPregunta) {
+        $conn = (new C_MySQL())->open();
+        $sql = "delete from opciones where preguntas_id = $idPregunta;";
+        $conn->query($sql);
+        $conn->close();
+    }
 
     public static function list_($pregunta) {
         $conn = (new C_MySQL())->open();

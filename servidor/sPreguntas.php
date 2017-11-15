@@ -69,6 +69,7 @@ switch ($op) {
         if ($pregunta->getId() !== "0") {
             if (isset($_POST['opciones'])) {
                 $opciones = $_POST['opciones'];
+                OpcionesDaoImp::_DeletexPreguntas($pregunta->getId());
                 foreach ($opciones as $value) {
                     $opcion = new Opcion();
                     $opcion->setId($value["id"]);
@@ -77,12 +78,12 @@ switch ($op) {
                     OpcionesDaoImp::save($opcion);
                 }
             }
-            if (isset($_POST["opciones_del"])) {
+            /*if (isset($_POST["opciones_del"])) {
                 $opciones = $_POST['opciones_del'];
                 foreach ($opciones as $value) {
                     OpcionesDaoImp::delete($value);
                 }
-            }
+            }*/
             echo "Exito en todo";
         } else {
             echo "Salio mal";

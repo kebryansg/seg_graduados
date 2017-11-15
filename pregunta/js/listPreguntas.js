@@ -6,7 +6,7 @@ function getEncuesta_id(id) {
 $(function () {
     $("#tb_listPreguntas").bootstrapTable();
     $(".selectpicker").selectpicker("refresh");
-    load_Categoria();
+    //load_Categoria();
     //load_Preguntas(1);
     //setData();
 });

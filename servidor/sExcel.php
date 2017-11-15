@@ -1,5 +1,4 @@
 <?php
-
 require_once '../resources/Classes/PHPExcel.php';
 require_once '../resources/Classes/PHPExcel/Reader/Excel2007.php';
 require_once '../files_excel/Excel_OUT.php';
@@ -86,13 +85,7 @@ switch ($op){
         //Cargando el archivo para modificarlo
         $objPHPExcel = $objReader->load("../files_excel/FORMATO_INGRESO_ESTUDIANTES.xlsx");
         // Set document properties
-        $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
-                ->setLastModifiedBy("Maarten Balliauw")
-                ->setTitle("Office 2007 XLSX Test Document")
-                ->setSubject("Office 2007 XLSX Test Document")
-                ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
-                ->setKeywords("office 2007 openxml php")
-                ->setCategory("Test result file");
+
         $objPHPExcel->setActiveSheetIndex(0);
         
         require_once '../mvc/modelo/CarreraDaoImp.php';

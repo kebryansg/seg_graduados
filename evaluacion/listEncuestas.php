@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+    include_once '../mvc/modelo/CarreraDaoImp.php';
+    include_once '../mvc/modelo/EncuestaDaoImp.php';
+    //$conn = (new C_MySQL())->open();
+?>
 <div class="col-md-12">
     <div class="row">
         <div class="pull-left">
@@ -8,8 +13,28 @@
                 <option value="20">20</option>
                 <option value="30">30</option>
             </select>
-            <select class="selectpicker"  id="cboFacultad_init"></select>
-            <select class="selectpicker" id="cboCarrera_init"></select>
+            <select class="selectpicker"  id="cboFacultad_init">
+                <?php
+                    $facultads = EncuestaDaoImp::_facultad();    
+                //$carreras = CarreraDaoImp::getCarreras();
+                    foreach ($facultads as $facultad) {
+                        ?>
+                <option value="<?php echo $facultad["id"] ?>"><?php echo $facultad["descripcion"] ?></option>
+                        <?php
+                    }
+                ?>
+            </select>
+            <select class="selectpicker" id="cboCarrera_init">
+                <?php
+                    //$facultads = EncuestaDaoImp::_facultad();    
+                    $carreras = EncuestaDaoImp::_carrera($facultads[0]["id"]);
+                    foreach ($carreras as $carrera) {
+                        ?>
+                <option value="<?php echo $carrera["id"] ?>"><?php echo $carrera["descripcion"] ?></option>
+                        <?php
+                    }
+                ?>
+            </select>
         </div>
         <div class="pull-right">
             <button class="btn btn-success" id="newEncuesta" data-toggle="modal" data-target="#modal_editEncuesta">Nueva Encuesta</button>
@@ -107,7 +132,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="" class="control-label">Faculta: </label>
-                                    <select id="cbo_Facultad" class="selectpicker form-control"></select>
+                                    <select id="cbo_Facultad" class="selectpicker form-control">
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="control-label">Carrera: </label>

@@ -23,19 +23,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="listEncuestas.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/evaluacion/listEncuestas.php">
+      <file leaf-file-name="newPregunta.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pregunta/js/newPregunta.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="55" selection-start="569" selection-end="569" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="2567">
-              <folding />
+            <state line="28" column="39" selection-start="724" selection-end="724" vertical-scroll-proportion="0.30605564" vertical-offset="255" max-vertical-offset="4250">
+              <folding>
+                <element signature="e#387#441#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="listEncuestas.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/evaluacion/js/listEncuestas.js">
+      <file leaf-file-name="newPregunta.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pregunta/newPregunta.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="178" column="15" selection-start="5740" selection-end="5740" vertical-scroll-proportion="0.30441898" vertical-offset="2840" max-vertical-offset="4301">
+            <state line="5" column="60" selection-start="297" selection-end="309" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="3417">
               <folding />
             </state>
           </provider>
@@ -57,6 +59,9 @@
         <option value="$PROJECT_DIR$/mvc/controlador/C_MySQL.php" />
         <option value="$PROJECT_DIR$/evaluacion/listEncuestas.php" />
         <option value="$PROJECT_DIR$/evaluacion/js/listEncuestas.js" />
+        <option value="$PROJECT_DIR$/files_excel/Excel_OUT.php" />
+        <option value="$PROJECT_DIR$/servidor/sExcel.php" />
+        <option value="$PROJECT_DIR$/pregunta/js/newPregunta.js" />
       </list>
     </option>
   </component>
@@ -122,7 +127,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="evaluacion" />
+              <option name="myItemId" value="pregunta" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -136,7 +141,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="evaluacion" />
+              <option name="myItemId" value="pregunta" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -186,7 +191,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21961933" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18008785" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -194,11 +199,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -218,45 +223,84 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mvc/view/Menu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="32" selection-start="1452" selection-end="1452" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1071">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mvc/view/Menu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="32" selection-start="1452" selection-end="1452" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1071">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mvc/view/Menu.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="34" selection-start="942" selection-end="942" vertical-scroll-proportion="0.23247863" vertical-offset="153" max-vertical-offset="1071">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mvc/controlador/C_MySQL.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="5" selection-start="115" selection-end="115" vertical-scroll-proportion="0.23247863" vertical-offset="0" max-vertical-offset="646">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/evaluacion/listEncuestas.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="55" selection-start="569" selection-end="569" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="2567">
+        <state line="13" column="55" selection-start="569" selection-end="569" vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="2567">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/evaluacion/js/listEncuestas.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="178" column="15" selection-start="5740" selection-end="5740" vertical-scroll-proportion="0.30441898" vertical-offset="2840" max-vertical-offset="4301">
+        <state line="178" column="15" selection-start="5740" selection-end="5740" vertical-scroll-proportion="0.0" vertical-offset="3026" max-vertical-offset="4301">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mvc/view/Menu.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="32" selection-start="1452" selection-end="1452" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1071" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mvc/view/Menu.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="32" selection-start="1452" selection-end="1452" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1071" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mvc/view/Menu.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="34" selection-start="942" selection-end="942" vertical-scroll-proportion="0.23247863" vertical-offset="153" max-vertical-offset="1071" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mvc/controlador/C_MySQL.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="5" selection-start="115" selection-end="115" vertical-scroll-proportion="0.23247863" vertical-offset="0" max-vertical-offset="646" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/evaluacion/js/listEncuestas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="149" column="21" selection-start="4290" selection-end="4290" vertical-scroll-proportion="0.22742476" vertical-offset="2397" max-vertical-offset="4828">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/evaluacion/listEncuestas.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="46" selection-start="614" selection-end="614" vertical-scroll-proportion="0.2972028" vertical-offset="68" max-vertical-offset="2295">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/servidor/sExcel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="6" selection-end="6" vertical-scroll-proportion="0.02905983" vertical-offset="0" max-vertical-offset="585">
+          <folding>
+            <element signature="e#354#3121#0" expanded="false" />
+            <element signature="e#3126#3931#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/files_excel/Excel_OUT.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="547" selection-end="547" vertical-scroll-proportion="0.31965813" vertical-offset="0" max-vertical-offset="629">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pregunta/newPregunta.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="60" selection-start="297" selection-end="309" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="3417">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pregunta/js/newPregunta.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="39" selection-start="724" selection-end="724" vertical-scroll-proportion="0.30605564" vertical-offset="255" max-vertical-offset="4250">
+          <folding>
+            <element signature="e#387#441#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

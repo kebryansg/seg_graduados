@@ -1,5 +1,9 @@
 <?php session_start();?>
 <!DOCTYPE html>
+<?php
+    //include_once '../mvc/controlador/C_MySQL.php';
+    //$conn = (new C_MySQL())->open();
+?>
 <html>
     <head>
         <meta charset="utf-8">

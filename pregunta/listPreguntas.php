@@ -1,3 +1,6 @@
+<?php
+    include_once '../mvc/modelo/CategoriaDaoImp.php';
+?>
 <div class="col-md-12">
     <div class="row">
         <div class="pull-left">
@@ -11,6 +14,16 @@
         <div class="pull-right">
             <div class="form-inline">
                 <select class="selectpicker form-control" data-width="300px" id="cboCategoria">
+                    <option value="0">Seleccione Categoria</option>
+                    <?php
+                        $categorias = CategoriaDaoImp::listCategoria();
+                        foreach ($categorias as $categoria) {
+                            ?>
+                    <option value="<?php echo $categoria->getId();  ?>"><?php echo $categoria->getDescripcion();  ?></option>
+                            <?php
+                        }
+                        
+                    ?>
                 </select>
                 <button class="btn btn-success" id="newPregunta">Nueva Pregunta</button>
             </div>

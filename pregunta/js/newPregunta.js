@@ -5,7 +5,7 @@ function NewEncuesta_id(id) {
 $(".selectpicker").selectpicker();
 $("#div_tipoPreguntas > div").hide();
 $(function () {
-    loadCategoria();
+    //loadCategoria();
     $("#tb_columnas").bootstrapTable();
     $("#savePregunta").data("id", 0);
 });
@@ -31,8 +31,8 @@ function savePregunta() {
                 tipo: $("#cboTipoPregunta").val(),
                 categoria: $("#cboCategoria").val(),
                 encuesta: idEncuesta,
-                opciones: getOpciones($("#cboTipoPregunta").val()),
-                opciones_del: $("#content_" + _TipoPregunta($("#cboTipoPregunta").val())).data("opcion_del")
+                opciones: getOpciones($("#cboTipoPregunta").val())
+                //,opciones_del: $("#content_" + _TipoPregunta($("#cboTipoPregunta").val())).data("opcion_del")
             },
             success: function (data) {
                 id = idEncuesta;
