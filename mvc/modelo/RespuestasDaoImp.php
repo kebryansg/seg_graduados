@@ -20,10 +20,11 @@ class RespuestasDaoImp{
     }
     public static function _getRespuesta($idPregunta){
         $conn = (new C_MySQL())->open();
-        $sql = "SELECT p_r.id ,p_r.opcion from preguntas_respuestas p_r
-                where p_r.pregunta_id = $idPregunta";
+        /*$sql = "SELECT p_r.id ,p_r.opcion from preguntas_respuestas p_r
+                where p_r.pregunta_id = $idPregunta";*/
                 /*inner join preguntas p on p.id = p_r.pregunta_id and p.estado_excel = 1
                 where p_r.encuesta_titulo_id = 6;";*/
+        $sql  = "SELECT * from respuestas where preguntas_respuestas_id = $idPregunta";
         $list = array();
         if($resultado = $conn->query($sql)){
             while ($row = $resultado->fetch_assoc()) {

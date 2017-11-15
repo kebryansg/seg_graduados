@@ -7,8 +7,11 @@ function get_Data() {
             title: row.columna,
             sortable: false,
             tipo: row.tipo,
-            excel: row.excel
+            excel: row.excel,
+            columna_dominante: (row.columna === $("#cboColumnas").selectpicker("val"))
         };
+        //console.log(value);
+        
         switch (row.tipo) {
             case "1":
                 $.extend(value, {
@@ -71,30 +74,6 @@ $(function () {
     $("#btn_remove_op").click(function () {
         del_select();
     });
-    /*$("#tb_listPreguntas").bootstrapTable();*/
-
-    /*$("#btn_new_row").click(function () {
-     total = $("#tb_listPreguntas").bootstrapTable('getData').length;
-     if (total === 0) {
-     str_row = [];
-     $.each(columns, function (index, value) {
-     switch (value.tipo) {
-     case "check":
-     str_row.push('"' + value.field + '" : false');
-     break;
-     case "input":
-     str_row.push('"' + value.field + '" : ""');
-     break;
-     }
-     
-     });
-     total = $("#tb_listPreguntas").bootstrapTable('getData').length;
-     $("#tb_listPreguntas").bootstrapTable('insertRow', {
-     index: total,
-     row: JSON.parse('{ ' + str_row.join() + ' }')
-     });
-     }
-     });*/
 
     $("#datos").click(function () {
         rows = get_Data();
@@ -147,7 +126,7 @@ $(function () {
             if (bandera === 0) {
                 $("#tb_columnas").bootstrapTable("insertRow", {index: contador, row: row});
                 if (row.tipo === "2") {
-                    $("#cboColumnas").append("<option value='" + row.id + "'>" + row.columna + "</option>");
+                    $("#cboColumnas").append("<option value='" + row.columna + "'>" + row.columna + "</option>");
                     $("#cboColumnas").selectpicker("refresh");
                 }
                 contador++;

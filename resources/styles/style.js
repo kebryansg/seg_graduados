@@ -3,6 +3,12 @@ $(function () {
         var key = window.Event ? e.which : e.keyCode;
         return (key >= 48 && key <= 57);
     });
+    
+    $("#txtAcceso").keydown(function(e){
+        if(e.keyCode === 13){
+            $("#btnAcceder").click();
+        }
+    });
 
     $(".tablinks").click(function () {
         panel = $(this).attr("data-id");

@@ -93,20 +93,6 @@ function limpiarOpciones() {
     $(".limpiarOpciones").html("");
 }
 
-function loadCategoria() {
-    $.ajax({
-        url: 'servidor/sPreguntas.php',
-        type: 'POST',
-        data: {
-            op: "load_categoria"
-        },
-        success: function (data) {
-            $("#cboCategoria").html(data);
-            $("#cboCategoria").selectpicker("refresh");
-        }
-    });
-}
-
 function getOpciones(tipoPregunta) {
     etiquetas = [];
     switch (tipoPregunta) {
@@ -189,41 +175,35 @@ function generarOpciones(opciones) {
             $(div_clone).appendTo(contenedor);
         });
     } else {
-        columns = JSON.parse(opciones[0].enunciado);
-        contador = 0;
-        data = $.map(columns, function (column) {
-            row = {
-                id: contador++,
-                columna: column.title,
-                tipo: column.tipo,
-                excel: column.excel
-            };
-            switch (column.tipo) {
-                case "2":
-                    $.extend(row, {
-                        data_source: column.data_source
-                    });
-                    break;
-            }
-            return row;
-        });
-        $("#tb_columnas").data("id", opciones[0].id);
-        $("#tb_columnas").bootstrapTable("load", data);
+        if(opciones.length > 0){
+            columns = JSON.parse(opciones[0].enunciado);
+            contador = 0;
+            data = $.map(columns, function (column) {
+                row = {
+                    id: contador++,
+                    columna: column.title,
+                    tipo: column.tipo,
+                    excel: column.excel
+                };
+                switch (column.tipo) {
+                    case "2":
+                        $("#cboColumnas").append("<option value='"+ column.title +"'>"+ column.title +"</option>");
+                        $("#cboColumnas").selectpicker("refresh");
+                        $.extend(row, {
+                            data_source: column.data_source
+                        });
+                        if(column.columna_dominante){
+                            $("#cboColumnas").selectpicker("val",column.title);
+                        }
+                        break;
+                }
+                return row;
+            });
+            $("#tb_columnas").data("id", opciones[0].id);
+            $("#tb_columnas").bootstrapTable("load", data);
+        }
         
-
-        //console.log(columns);
-        /*columns = JSON.parse(opciones[0].enunciado);
-         $("#table").data("id", opciones[0].id);
-         $(columns).each(function (i, v) {
-         $("#cboColumnas").append('<option value="' + i + '">' + v.field + '</option>');
-         });
-         $("#cboColumnas").selectpicker("refresh");
-         
-         $("#table table").bootstrapTable("refreshOptions", {
-         columns: columns
-         });*/
     }
-
 }
 
 function _TipoPregunta(index) {

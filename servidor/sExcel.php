@@ -7,6 +7,12 @@ require_once '../files_excel/Excel_OUT.php';
 require_once '../mvc/modelo/EstudianteDaoImp.php';
 require_once '../mvc/modelo/CarreraDaoImp.php';
 require_once '../mvc/modelo/TituloDaoImp.php';
+/* Encuestas Carrera */
+require_once '../mvc/modelo/EncuestaDaoImp.php';
+require_once '../mvc/modelo/OpcionesDaoImp.php';
+require_once '../mvc/modelo/RespuestasDaoImp.php';
+require_once '../mvc/modelo/Preguntas_RespuestasDaoImp.php';
+
 
 $op = $_GET["op"];
 switch ($op){
@@ -100,4 +106,147 @@ switch ($op){
         
         out_excel("file", $objPHPExcel, "FORMATO_INGRESO_ESTUDIANTES");
         break;
+    case "encuesta_carrera": 
+        
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        
+        
+        $list_result = array();
+        $list_encuestas = EncuestaDaoImp::list_file($_GET["encuesta"]);
+        $pRow = 1;
+        $pColumn = 0;
+        $num_p = 1;
+        /* Llenar datos */
+        foreach ($list_encuestas as $encuesta) {
+            $encuesta["preguntas"] = EncuestaDaoImp::list_Preguntas($encuesta["encuestas"]);
+            $list_preguntas = array();
+            foreach ($encuesta["preguntas"] as $pregunta) {
+                $pregunta["opciones"] = OpcionesDaoImp::list_($pregunta["id"]);
+                $list_preg_resp = Preguntas_RespuestasDaoImp::_listPregunta($encuesta["encuestas"], $pregunta["id"]);
+                foreach ($list_preg_resp as $preg_resp) {
+                    $list_preg_resp["respuestas"] = RespuestasDaoImp::_getRespuesta($preg_resp["id"]);
+                }
+                $pregunta["preg_resp"] = $list_preg_resp;
+                
+                //$pregunta["respuestas"] = RespuestasDaoImp::_listRespuestas($encuesta["encuestas"]);
+                //$pregunta["respuestas"] = RespuestasDaoImp::_getRespuesta($pregunta["id"]);
+                array_push($list_preguntas, $pregunta);
+            }
+            $encuesta["preguntas"] = $list_preguntas;
+            array_push($list_result, $encuesta);
+        }
+        
+        /* Armar Cabecera */
+        foreach ($list_result as $encuesta) {
+            //$encuesta["preguntas"] = EncuestaDaoImp::list_Preguntas($encuesta["encuestas"]);
+            //$list_preguntas = array();
+            foreach ($encuesta["preguntas"] as $pregunta) {
+                $pColumn++;
+                $objPHPExcel->getActiveSheet()
+                        ->setCellValueByColumnAndRow($pColumn++, $pRow,$num_p++ . '.- ' . $pregunta["enunciado"]);
+                //$pregunta["opciones"] = OpcionesDaoImp::list_($pregunta["id"]);
+                switch ($pregunta["tipo"]) {
+                    case "2": 
+                        foreach ($pregunta["opciones"] as $opcion) {
+                            $objPHPExcel->getActiveSheet()
+                                    ->setCellValueByColumnAndRow($pColumn++, $pRow, $opcion["enunciado"]);
+                        }
+                        break;
+                    case "5": 
+                        foreach ($pregunta["opciones"] as $opcion) {
+                            $header_tabla = json_decode($opcion["enunciado"]);
+                            $header_dominante = NULL;
+                            foreach ($header_tabla as $header) {
+                                if($header->columna_dominante){
+                                    $header_dominante = $header;
+                                    break;
+                                }
+                            }
+                            if(isset($header_dominante)){
+                                foreach ($header_dominante->data_source as $rowSource) {
+                                    $objPHPExcel->getActiveSheet()
+                                        ->setCellValueByColumnAndRow($pColumn++, $pRow, $rowSource->text);
+                                }
+                            }
+                            foreach ($header_tabla as $header) {
+                                //if($header != $header_dominante){
+                                if(true){
+                                    $objPHPExcel->getActiveSheet()
+                                        ->setCellValueByColumnAndRow($pColumn++, $pRow, $header->title);
+                                }
+                            }
+                        }
+                        break;
+                }
+                //$pregunta["respuestas"] = RespuestasDaoImp::_listRespuestas($encuesta["encuestas"]);
+                //$pregunta["respuestas"] = RespuestasDaoImp::_getRespuesta($pregunta["id"]);
+                //array_push($list_preguntas, $pregunta);
+            }
+            //$encuesta["preguntas"] = $list_preguntas;
+            //array_push($list_result, $encuesta);
+            break;
+        }
+        $pRow++;
+        
+        /* Ubicar Datos */
+        $pColumn = 0;
+        foreach ($list_result as $encuesta) {
+            foreach ($encuesta["preguntas"] as $pregunta) {
+                $pColumn += 2;
+                /*$objPHPExcel->getActiveSheet()
+                        ->setCellValueByColumnAndRow($pColumn++, $pRow,$num_p++ . '.- ' . $pregunta["enunciado"]);*/
+                 foreach ($pregunta["preg_resp"] as $preg_resp) {
+                     switch ($pregunta["tipo"]) {
+                        /*case "2": 
+                            $objPHPExcel->getActiveSheet()
+                                        ->setCellValueByColumnAndRow($pColumn++, $pRow, $respuesta["opcion"]);
+                            break;*/
+                        case "5": 
+                            foreach ($pregunta["opciones"] as $opcion) {
+                                $header_tabla = json_decode($opcion["enunciado"]);
+                                $header_dominante = NULL;
+                                foreach ($header_tabla as $header) {
+                                    if($header->columna_dominante){
+                                        $header_dominante = $header;
+                                        break;
+                                    }
+                                }
+                                if(isset($header_dominante)){
+                                    foreach ($header_dominante->data_source as $rowSource) {
+                                        $objPHPExcel->getActiveSheet()
+                                            ->setCellValueByColumnAndRow($pColumn++, $pRow, $rowSource->text);
+                                    }
+                                }
+                                foreach ($header_tabla as $header) {
+                                    //if($header != $header_dominante){
+                                    if(true){
+                                        $objPHPExcel->getActiveSheet()
+                                            ->setCellValueByColumnAndRow($pColumn++, $pRow, $header->title);
+                                    }
+                                }
+                            }
+                            break;
+                        default :
+                            foreach ($pregunta["preg_resp"]["respuestas"] as $respuesta) {
+                                $objPHPExcel->getActiveSheet()
+                                    ->setCellValueByColumnAndRow($pColumn++, $pRow,$respuesta["respuesta"]);
+                            }
+                            
+                            break;
+                    }
+
+                 }
+                
+            }
+            //break;
+        }
+        
+        out_excel("file", $objPHPExcel, "test");
+        
+        //return $list_result;
+        
+        break;
+        
 }
+//http://localhost:8080/seguimiento_graduados/servidor/sExcel.php?op=encuesta_carrera&encuesta=12

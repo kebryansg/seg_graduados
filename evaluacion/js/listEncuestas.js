@@ -24,14 +24,16 @@ window.events_accion = {
         $("#btn_newDuplicar").data("encuesta", row.id);
     },
     'click button[name="gen_Encuesta"]': function(e, value, row, index){
-        $.ajax({
+        url = "servidor/sExcel.php?op=encuesta_carrera&encuesta="+row.id;
+        window.open(url, '_blank');
+        /*$.ajax({
             url: "servidor/sEvaluacion.php",
             type: 'POST',
             data: {
                 op: "file",
                 encuesta: row.id
             }
-        });
+        });*/
     },
     'click button[name="list_pregunt_Encuesta"]': function(e, value, row, index){
         $("#content").load("pregunta/listPreguntas.php", function () {
