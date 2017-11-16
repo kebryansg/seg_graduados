@@ -103,6 +103,24 @@ class PreguntasDaoImp implements PreguntasDao {
         $conn->close();
         return $list;
     }
+    
+    public static function _listPreguntasReporte($encuesta_id){
+        $conn = (new C_MySQL())->open();
+        $list = array();
+        $sql = "SELECT  p.id,p.enunciado,p.tipo from preguntas p 
+			where 
+			p.Encuestas_id = $encuesta_id 
+			and 
+			p.estado_tabulacion = '1';";
+        if ($resultado = $conn->query($sql)) {
+            while ($row = $resultado->fetch_assoc()) {
+                array_push($list, $row);
+            }
+            $resultado->close();
+        }
+        $conn->close();
+        return $list;
+    }
 
     public static function list_filter($top, $limit, $categoria_id, $encuesta_id,$deshabilitada) {
         $conn = (new C_MySQL())->open();

@@ -49,5 +49,29 @@ class OpcionesDaoImp implements OpcionesDao {
         $conn->close();
         return $list;
     }
+    public static function _listEncuesta($encuesta) {
+        $conn = (new C_MySQL())->open();
+        $list = array();
+        $sql = "SELECT p_r.opcion from (
+                    SELECT  p.*
+                                    from preguntas p 
+                                    where 
+                                    p.Encuestas_id = $encuesta 
+                                    and 
+                                    p.estado_tabulacion = '1'
+            ) as preg_default
+            inner JOIN preguntas_respuestas p_r on p_r.pregunta_id = preg_default.id;";
+        if ($resultado = $conn->query($sql)) {
+            while ($row = $resultado->fetch_assoc()) {
+                $values = explode(",", $row["opcion"]);
+                foreach ($values as $value) {
+                    array_push($list, $value);
+                }
+            }
+            $resultado->close();
+        }
+        $conn->close();
+        return $list;
+    }
 
 }
