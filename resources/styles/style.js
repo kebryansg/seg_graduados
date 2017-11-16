@@ -72,7 +72,7 @@ function select_format(value) {
     resultado = '<select data-field="' + this.field + '" class="form-control cbo">';
     $(this.data_source).each(function (i, v) {
         selected = value === v.value.toString() ? 'selected="true"' : "";
-        resultado += '<option ' + selected + ' value="' + i + '">' + v.text + '</option>';
+        resultado += '<option ' + selected + ' value="' + v.text + '">' + v.text + '</option>';
     });
     resultado += '</select>';
     return resultado;
@@ -93,7 +93,7 @@ window.input_action = {
     }
 };
 window.cbo_action = {
-    'blur .cbo': function (e, value, row, index) {
+    'change .cbo': function (e, value, row, index) {
         table = $(this).closest("table");
         $(table).bootstrapTable('updateCell', {index: index, field: $(e.target).attr('data-field'), value: $(e.target).val(), reinit: false});
     }

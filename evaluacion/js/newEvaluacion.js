@@ -1,23 +1,36 @@
 //var tables = [];
 var preguntas = [];
 
+$("#btnData").click(function(){
+    $("table").each(function(i, table){
+        console.log($(this).bootstrapTable("getData"));
+    });
+});
+
 $(window).load(function () {
     load_categorias();
     $("table").bootstrapTable("hideColumn", "id");
     load_data();
     $("select").selectpicker();
     
+    
+    
     $(".btn-add-table").click(function () {
         table = $(this).closest(".pregunta_content").find("table");
         columns = $(this).closest(".pregunta_content").data("columns");
         str_row = [];
         $.each(columns, function (index, value) {
+            
             switch (value.tipo) {
-                case "check":
+                case "3":
                     str_row.push('"' + value.field + '" : false');
                     break;
-                case "input":
+                case "1": 
                     str_row.push('"' + value.field + '" : ""');
+                    break;
+                case "2":
+                    //console.log(value);
+                    str_row.push('"' + value.field + '" : "'+ value.data_source[0].text +'"');
                     break;
             }
         });
@@ -305,30 +318,6 @@ function _TipoPregunta(tipo) {
         case "5":
             return "#pTabla";
             break;
-            /*case "5":
-             return "#tb_horas_semana";
-             break;
-             case "6":
-             return "#tb_mes_actividad";
-             break;
-             case "7":
-             return "#tb_conocimiento_informatico";
-             break;
-             case "8":
-             return "#ptb_experiencia_laboral";
-             break;
-             case "9":
-             return "#ptb_estudios_formación_adicional";
-             break;
-             case "10":
-             return "#ptb_idioma_egresar";
-             break;
-             case "11":
-             return "#ptb_idioma_actualmente";
-             break;
-             case "12":
-             return "#ptb_facilidad_condicion";
-             break;*/
     }
 }
 
@@ -388,90 +377,3 @@ function par(num) {
 
 
 
-$(function () {
-
-    /*$("#content_evaluacion #btn_add_tb_estudios_formación_adicional").click(function () {
-     json_data = {};
-     $("#content_evaluacion #content_tb_estudios_formación_adicional").find("input[data-field],select[data-field]").each(function (i, index) {
-     $(this).attr("data-field");
-     $.extend(json_data, JSON.parse('{"' + $(this).attr("data-field") + '" : "' + $(this).val() + '" }'));
-     });
-     $("#content_evaluacion #tb_estudios_formación_adicional").bootstrapTable('insertRow', {index: 0, row: json_data});
-     });
-     $("#content_evaluacion #btn_add_tb_experiencia_laboral").click(function () {
-     json_data = {};
-     $("#content_evaluacion #content_tb_experiencia_laboral").find("input[data-field],select[data-field]").each(function (i, index) {
-     $(this).attr("data-field");
-     $.extend(json_data, JSON.parse('{"' + $(this).attr("data-field") + '" : "' + $(this).val() + '" }'));
-     });
-     $("#content_evaluacion #tb_experiencia_laboral").bootstrapTable('insertRow', {index: 0, row: json_data});
-     });*/
-
-
-});
-
-
-/*function tb_header(tb) {
- thead = [];
- $(tb).find("thead tr th[data-field]").each(function (i, th) {
- thead.push($(th).attr("data-field"));
- });
- return thead;
- }
- 
- function tb_rdb_json(tb) {
- thead = tb_header(tb);
- datos = [];
- $(tb).find("tbody tr").each(function (itr, tr) {
- dat_td = {};
- $(tr).find("td").each(function (itd, td) {
- value = '"' + thead[itd] + '" : ';
- if (itd === 0)
- value += '"' + $(td).html() + '"';
- else
- value += '' + $(td).find("input[type='radio']").prop('checked') + '';
- $.extend(dat_td, JSON.parse("{ " + value + " }"));
- });
- datos.push(dat_td);
- });
- //alert(JSON.stringify(datos));
- return (JSON.stringify(datos));
- }
- 
- function tb_cbk_json(tb) {
- thead = tb_header(tb);
- datos = [];
- $(tb).find("tbody tr").each(function (itr, tr) {
- dat_td = {};
- $(tr).find("td").each(function (itd, td) {
- value = '"' + thead[itd] + '" : ';
- if (itd === 0)
- value += '"' + $(td).html() + '"';
- else
- value += '' + $(td).find("input[type='checkbox']").prop('checked') + '';
- $.extend(dat_td, JSON.parse("{ " + value + " }"));
- });
- datos.push(dat_td);
- });
- //alert(JSON.stringify(datos));
- return(JSON.stringify(datos));
- }
- 
- function tb_txt_json(tb) {
- thead = tb_header(tb);
- datos = [];
- $(tb).find("tbody tr").each(function (itr, tr) {
- dat_td = {};
- $(tr).find("td").each(function (itd, td) {
- value = '"' + thead[itd] + '" : ';
- if (itd === 0)
- value += '"' + $(td).html() + '"';
- else
- value += '"' + $(td).find("input[type='text']").val() + '"';
- $.extend(dat_td, JSON.parse("{ " + value + " }"));
- });
- datos.push(dat_td);
- });
- //alert(JSON.stringify(datos));
- return(JSON.stringify(datos));
- }*/

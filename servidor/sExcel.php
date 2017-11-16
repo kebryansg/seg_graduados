@@ -114,21 +114,24 @@ switch ($op){
         
         $list_result = array();
         $list_encuestas = EncuestaDaoImp::list_file($_GET["encuesta"]);
+        
+        
         $pRow = 1;
         $pColumn = 0;
         $num_p = 1;
         /* Llenar datos */
         foreach ($list_encuestas as $encuesta) {
-            $encuesta["preguntas"] = EncuestaDaoImp::list_Preguntas($encuesta["encuestas"]);
+            $encuesta["preguntas"] = EncuestaDaoImp::list_Preguntas($encuesta["carrera_encuesta"]);
             $list_preguntas = array();
             foreach ($encuesta["preguntas"] as $pregunta) {
                 $pregunta["opciones"] = OpcionesDaoImp::list_($pregunta["id"]);
-                $list_preg_resp = Preguntas_RespuestasDaoImp::_listPregunta($encuesta["encuestas"], $pregunta["id"]);
+                $list_preg_resp = Preguntas_RespuestasDaoImp::_listPregunta($encuesta["carrera_encuesta"], $pregunta["id"]);
+                $list_preguntas_respuestas = array();
                 foreach ($list_preg_resp as $preg_resp) {
-                    $list_preg_resp["respuestas"] = RespuestasDaoImp::_getRespuesta($preg_resp["id"]);
+                    $preg_resp["respuestas"] = RespuestasDaoImp::_getRespuesta($preg_resp["id"]);
+                    array_push($list_preguntas_respuestas, $preg_resp);
                 }
-                $pregunta["preg_resp"] = $list_preg_resp;
-                
+                $pregunta["preg_resp"] = $list_preguntas_respuestas;
                 //$pregunta["respuestas"] = RespuestasDaoImp::_listRespuestas($encuesta["encuestas"]);
                 //$pregunta["respuestas"] = RespuestasDaoImp::_getRespuesta($pregunta["id"]);
                 array_push($list_preguntas, $pregunta);
@@ -138,14 +141,22 @@ switch ($op){
         }
         
         /* Armar Cabecera */
+        
+        $keys = array("N","Facultad","Carrera","cedula","Estudiante");
+        
         foreach ($list_result as $encuesta) {
-            //$encuesta["preguntas"] = EncuestaDaoImp::list_Preguntas($encuesta["encuestas"]);
-            //$list_preguntas = array();
+            
+            foreach ($keys as $key) {
+                $objPHPExcel->getActiveSheet()
+                        ->setCellValueByColumnAndRow($pColumn++, $pRow, $key);
+            }
+            
+            
             foreach ($encuesta["preguntas"] as $pregunta) {
                 $pColumn++;
                 $objPHPExcel->getActiveSheet()
                         ->setCellValueByColumnAndRow($pColumn++, $pRow,$num_p++ . '.- ' . $pregunta["enunciado"]);
-                //$pregunta["opciones"] = OpcionesDaoImp::list_($pregunta["id"]);
+                
                 switch ($pregunta["tipo"]) {
                     case "2": 
                         foreach ($pregunta["opciones"] as $opcion) {
@@ -164,9 +175,11 @@ switch ($op){
                                 }
                             }
                             if(isset($header_dominante)){
+                                //$header = "["+ $header_dominante->title +"]";
                                 foreach ($header_dominante->data_source as $rowSource) {
+                                    $valor = "[". $header_dominante->title ."]". " " . $rowSource->text;
                                     $objPHPExcel->getActiveSheet()
-                                        ->setCellValueByColumnAndRow($pColumn++, $pRow, $rowSource->text);
+                                        ->setCellValueByColumnAndRow($pColumn++, $pRow,$valor);
                                 }
                             }
                             foreach ($header_tabla as $header) {
@@ -191,18 +204,25 @@ switch ($op){
         
         /* Ubicar Datos */
         $pColumn = 0;
+        $pRowTabla = 0;
         foreach ($list_result as $encuesta) {
+            $pColumn = 0;
+            
+            foreach ($keys as $key) {
+                $objPHPExcel->getActiveSheet()
+                        ->setCellValueByColumnAndRow($pColumn++, $pRow,$encuesta[$key]);
+            }
+            
+            
             foreach ($encuesta["preguntas"] as $pregunta) {
                 $pColumn += 2;
-                /*$objPHPExcel->getActiveSheet()
-                        ->setCellValueByColumnAndRow($pColumn++, $pRow,$num_p++ . '.- ' . $pregunta["enunciado"]);*/
                  foreach ($pregunta["preg_resp"] as $preg_resp) {
                      switch ($pregunta["tipo"]) {
-                        /*case "2": 
-                            $objPHPExcel->getActiveSheet()
-                                        ->setCellValueByColumnAndRow($pColumn++, $pRow, $respuesta["opcion"]);
-                            break;*/
                         case "5": 
+                            $auxpRow = $pRow;
+                            $refColDominante = 0;
+                            $refColDominanteInicio = 0;
+                            
                             foreach ($pregunta["opciones"] as $opcion) {
                                 $header_tabla = json_decode($opcion["enunciado"]);
                                 $header_dominante = NULL;
@@ -213,40 +233,79 @@ switch ($op){
                                     }
                                 }
                                 if(isset($header_dominante)){
-                                    foreach ($header_dominante->data_source as $rowSource) {
-                                        $objPHPExcel->getActiveSheet()
-                                            ->setCellValueByColumnAndRow($pColumn++, $pRow, $rowSource->text);
-                                    }
+                                    $refColDominanteInicio = $pColumn;
+                                    $pColumn = $pColumn + count($header_dominante->data_source);
                                 }
-                                foreach ($header_tabla as $header) {
-                                    //if($header != $header_dominante){
-                                    if(true){
+                                $data = json_decode($preg_resp["opcion"],true);
+                                $auxpColumn = $pColumn;
+                                foreach ($data as $row) {
+                                    $pColumn = $auxpColumn;
+                                    foreach ($header_tabla as $header) {
+                                        if($header->columna_dominante){
+                                            $refColDominante = $pColumn;
+                                        }
+                                        $valor = $row[$header->title];
                                         $objPHPExcel->getActiveSheet()
-                                            ->setCellValueByColumnAndRow($pColumn++, $pRow, $header->title);
+                                            ->setCellValueByColumnAndRow($pColumn++, $auxpRow, $valor);
+                                    }
+                                    $auxpRow++;
+                                }
+                                
+                                
+                                if(isset($header_dominante)){
+                                    $inicio_rango = $objPHPExcel->getActiveSheet()
+                                                    ->getCellByColumnAndRow($refColDominante, $pRow)->getCoordinate();
+                                    $fin_rango = $objPHPExcel->getActiveSheet()
+                                                        ->getCellByColumnAndRow($refColDominante, $pRow + count($data) - 1 )->getCoordinate();
+
+                                    $inicio_rango_estatica = $objPHPExcel->getActiveSheet()->getCell()->absoluteCoordinate($inicio_rango);
+                                    $fin_rango_estatica = $objPHPExcel->getActiveSheet()->getCell()->absoluteCoordinate($fin_rango);
+                                    foreach ($header_dominante->data_source as $source) {
+                                        $valor = '=COUNTIF(' . $inicio_rango_estatica.':' . $fin_rango_estatica . ',"'. $source->text .'")';
+                                        $objPHPExcel->getActiveSheet()
+                                                    ->setCellValueByColumnAndRow($refColDominanteInicio++,$pRow, $valor);
                                     }
                                 }
                             }
+                            if(count($data) > $pRowTabla ){
+                                $pRowTabla= count($data);
+                            }
                             break;
-                        default :
-                            foreach ($pregunta["preg_resp"]["respuestas"] as $respuesta) {
+                        case "1":
+                            $pColumn--;
+                            foreach ($preg_resp["respuestas"] as $respuesta) {
                                 $objPHPExcel->getActiveSheet()
                                     ->setCellValueByColumnAndRow($pColumn++, $pRow,$respuesta["respuesta"]);
                             }
-                            
+                            break;
+                        case "3":  case "4":
+                            $pColumn--;
+                            if(isset($preg_resp["opcion"])){
+                                $opcion = $preg_resp["opcion"];
+                                $opciones = explode(",", $opcion);
+                                $valores = array();
+                                foreach ($opciones as $opcion) {
+                                    $key = array_search($opcion, array_column($pregunta["opciones"], 'id'));
+                                    $opciones_select = $pregunta["opciones"][$key];
+                                    array_push($valores, $opciones_select["enunciado"]);
+                                }
+                                $objPHPExcel->getActiveSheet()
+                                        ->setCellValueByColumnAndRow($pColumn++, $pRow, implode(",", $valores));
+                                
+                            }
+                            break;
+                        default :
+                            foreach ($preg_resp["respuestas"] as $respuesta) {
+                                $objPHPExcel->getActiveSheet()
+                                    ->setCellValueByColumnAndRow($pColumn++, $pRow,$respuesta["respuesta"]);
+                            }
                             break;
                     }
-
                  }
-                
             }
-            //break;
+            $pRow+= $pRowTabla + 1;
         }
-        
         out_excel("file", $objPHPExcel, "test");
-        
-        //return $list_result;
-        
         break;
-        
 }
 //http://localhost:8080/seguimiento_graduados/servidor/sExcel.php?op=encuesta_carrera&encuesta=12

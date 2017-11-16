@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 14/11/2017 04:47:32
+ Date: 16/11/2017 04:18:55
 */
 
 SET NAMES utf8mb4;
@@ -50,7 +50,7 @@ CREATE TABLE `carreras_encuesta`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_carreras_encuesta_Encuestas1_idx`(`Encuestas_id`) USING BTREE,
   CONSTRAINT `fk_carreras_encuesta_encuestas_1` FOREIGN KEY (`Encuestas_id`) REFERENCES `encuestas` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of carreras_encuesta
@@ -59,6 +59,8 @@ INSERT INTO `carreras_encuesta` VALUES (8, '9a0fe792620c21f73f43c6b2fba2f889', '
 INSERT INTO `carreras_encuesta` VALUES (9, '81949e1e03de635c16a39dd16f833e2b', '2017-11-12', 10, '1', 2);
 INSERT INTO `carreras_encuesta` VALUES (10, 'a8781a1f67d3ce32a93ac6c84e491765', '2017-11-12', 3, '1', 1);
 INSERT INTO `carreras_encuesta` VALUES (11, '212d4b510ef0afc81c123629254eff71', '2017-11-13', 2, '1', 1);
+INSERT INTO `carreras_encuesta` VALUES (12, 'd12e69253080cb7b869b8ef6313665a1', '2017-11-14', 13, '2', 6);
+INSERT INTO `carreras_encuesta` VALUES (13, '62f696d53d6aed1d18f18f10d86e8cfb', '2017-11-16', 13, '2', 8);
 
 -- ----------------------------
 -- Table structure for categoria
@@ -94,7 +96,7 @@ CREATE TABLE `encuestas`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `ref_carrera_id`(`carrera_id`) USING BTREE,
   CONSTRAINT `ref_carrera_id` FOREIGN KEY (`carrera_id`) REFERENCES `carreras` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of encuestas
@@ -111,6 +113,7 @@ INSERT INTO `encuestas` VALUES (9, 'encuesta prueba', '2017-09-23', '0', 1);
 INSERT INTO `encuestas` VALUES (10, 'Encuesta 2015', '2017-10-06', '0', 1);
 INSERT INTO `encuestas` VALUES (11, 'Encuesta tabla', '2017-10-07', '1', 2);
 INSERT INTO `encuestas` VALUES (12, 'test', '2017-11-13', '1', 2);
+INSERT INTO `encuestas` VALUES (13, 'Test Edit Preguntas', '2017-11-14', '1', 1);
 
 -- ----------------------------
 -- Table structure for estudiante
@@ -121,13 +124,14 @@ CREATE TABLE `estudiante`  (
   `cedula` char(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `nombres` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of estudiante
 -- ----------------------------
 INSERT INTO `estudiante` VALUES (1, '1206249391', 'suarez guzman kevin');
 INSERT INTO `estudiante` VALUES (4, '1234567890', 'Test');
+INSERT INTO `estudiante` VALUES (5, '1987654321', 'Test Estudiantes excel');
 
 -- ----------------------------
 -- Table structure for facultad
@@ -155,7 +159,7 @@ CREATE TABLE `opciones`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_opciones_preguntas_idx`(`preguntas_id`) USING BTREE,
   CONSTRAINT `fk_opciones_preguntas` FOREIGN KEY (`preguntas_id`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 1310 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1350 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of opciones
@@ -1452,6 +1456,16 @@ INSERT INTO `opciones` VALUES (1306, '[{\"field\":\"titulo\",\"title\":\"titulo\
 INSERT INTO `opciones` VALUES (1307, '[{\"field\":\"a\",\"title\":\"a\",\"sortable\":false,\"excel\":true,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"cbo\",\"title\":\"cbo\",\"sortable\":false,\"excel\":true,\"data_source\":[{\"value\":0,\"text\":\"a\"},{\"value\":1,\"text\":\"b\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"c\",\"title\":\"c\",\"sortable\":false,\"excel\":true,\"formatter\":\"cbk_format\",\"events\":\"cbk_action\"}]', 580);
 INSERT INTO `opciones` VALUES (1308, '[{\"field\":\"input\",\"title\":\"input\",\"sortable\":false,\"excel\":true,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"cbo\",\"title\":\"cbo\",\"sortable\":false,\"excel\":true,\"data_source\":[{\"value\":0,\"text\":\"a\"},{\"value\":1,\"text\":\"b\"},{\"value\":2,\"text\":\"c\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"cbk\",\"title\":\"cbk\",\"sortable\":false,\"excel\":true,\"formatter\":\"cbk_format\",\"events\":\"cbk_action\"},{\"field\":\"cbk2\",\"title\":\"cbk2\",\"sortable\":false,\"excel\":true,\"formatter\":\"cbk_format\",\"events\":\"cbk_action\"},{\"field\":\"cbo2\",\"title\":\"cbo2\",\"sortable\":false,\"excel\":true,\"data_source\":[{\"value\":0,\"text\":\"z\"},{\"value\":1,\"text\":\"x\"},{\"value\":2,\"text\":\"y\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"}]', 581);
 INSERT INTO `opciones` VALUES (1309, '[{\"field\":\"a\",\"title\":\"a\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"z\",\"title\":\"z\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"formatter\":\"input_format\",\"events\":\"input_action\"}]', 582);
+INSERT INTO `opciones` VALUES (1340, 'IMultiple 1', 585);
+INSERT INTO `opciones` VALUES (1341, 'IMultiple 2', 585);
+INSERT INTO `opciones` VALUES (1342, '[{\"field\":\"cb1\",\"title\":\"cb1\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":false,\"data_source\":[{\"value\":0,\"text\":\"a\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"cb2\",\"title\":\"cb2\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":true,\"data_source\":[{\"value\":0,\"text\":\"x\"},{\"value\":1,\"text\":\"y\"},{\"value\":2,\"text\":\"z\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"Ingreso\",\"title\":\"Ingreso\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"checkbox\",\"title\":\"checkbox\",\"sortable\":false,\"tipo\":\"3\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"cbk_format\",\"events\":\"cbk_action\"}]', 583);
+INSERT INTO `opciones` VALUES (1343, '[{\"field\":\"nombre\",\"title\":\"nombre\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"apellidos\",\"title\":\"apellidos\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"}]', 586);
+INSERT INTO `opciones` VALUES (1344, 'a', 587);
+INSERT INTO `opciones` VALUES (1345, 'b', 587);
+INSERT INTO `opciones` VALUES (1346, 'c', 587);
+INSERT INTO `opciones` VALUES (1347, 'x', 588);
+INSERT INTO `opciones` VALUES (1348, 'y', 588);
+INSERT INTO `opciones` VALUES (1349, 'z', 588);
 
 -- ----------------------------
 -- Table structure for preguntas
@@ -1471,7 +1485,7 @@ CREATE TABLE `preguntas`  (
   INDEX `fk_preguntas_Encuestas1_idx`(`Encuestas_id`) USING BTREE,
   CONSTRAINT `fk_preguntas_encuestas_1` FOREIGN KEY (`Encuestas_id`) REFERENCES `encuestas` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `pregunta_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 583 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 589 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of preguntas
@@ -1849,6 +1863,12 @@ INSERT INTO `preguntas` VALUES (579, 'tabla 2', 5, 1, '1', 0, 12, '1');
 INSERT INTO `preguntas` VALUES (580, 'tabla new', 5, 6, '0', 0, 12, '1');
 INSERT INTO `preguntas` VALUES (581, 'tb new', 5, 1, '0', 0, 12, '1');
 INSERT INTO `preguntas` VALUES (582, 'tb new 1', 5, 6, '1', 0, 12, '1');
+INSERT INTO `preguntas` VALUES (583, 'Test cambio tipo', 5, 6, '1', 0, 13, '1');
+INSERT INTO `preguntas` VALUES (584, 'Test Ingreso Simple', 1, 6, '1', 0, 13, '1');
+INSERT INTO `preguntas` VALUES (585, 'Test Ingreso Multiple', 2, 6, '1', 0, 13, '1');
+INSERT INTO `preguntas` VALUES (586, 'tabla sin col dom', 5, 6, '1', 0, 13, '1');
+INSERT INTO `preguntas` VALUES (587, 'seleccion multiple', 3, 6, '1', 0, 13, '1');
+INSERT INTO `preguntas` VALUES (588, 'Seleccion Unica', 4, 6, '1', 0, 13, '1');
 
 -- ----------------------------
 -- Table structure for preguntas_respuestas
@@ -1862,7 +1882,7 @@ CREATE TABLE `preguntas_respuestas`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_preguntas_respuestas_encuesta_titulo1_idx`(`encuesta_carreras_id`) USING BTREE,
   CONSTRAINT `fk_encuestas_carreras_id` FOREIGN KEY (`encuesta_carreras_id`) REFERENCES `carreras_encuesta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 66 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of preguntas_respuestas
@@ -1903,6 +1923,18 @@ INSERT INTO `preguntas_respuestas` VALUES (62, '', 9, 491);
 INSERT INTO `preguntas_respuestas` VALUES (63, '[{\"nombres\":\"a\",\"apellidos\":\"a\",\"estado civil\":\"1\",\"id\":0},{\"nombres\":\"b\",\"apellidos\":\"b\",\"estado civil\":\"2\"}]', 8, 573);
 INSERT INTO `preguntas_respuestas` VALUES (64, '[]', 8, 577);
 INSERT INTO `preguntas_respuestas` VALUES (65, '[]', 8, 574);
+INSERT INTO `preguntas_respuestas` VALUES (96, '[{\"cb1\":\"a\",\"cb2\":\"y\",\"Ingreso\":\"abc\",\"checkbox\":false,\"id\":0},{\"cb1\":\"a\",\"cb2\":\"y\",\"Ingreso\":\"xyz\",\"checkbox\":true,\"id\":1}]', 12, 583);
+INSERT INTO `preguntas_respuestas` VALUES (97, '[{\"nombre\":\"kevin\",\"apellidos\":\"suarez\",\"id\":0},{\"nombre\":\"adrian\",\"apellidos\":\"cevallos\",\"id\":1}]', 12, 586);
+INSERT INTO `preguntas_respuestas` VALUES (98, '1346,1345', 12, 587);
+INSERT INTO `preguntas_respuestas` VALUES (99, '1348', 12, 588);
+INSERT INTO `preguntas_respuestas` VALUES (100, '', 12, 584);
+INSERT INTO `preguntas_respuestas` VALUES (101, '', 12, 585);
+INSERT INTO `preguntas_respuestas` VALUES (108, '[{\"cb1\":\"a\",\"cb2\":\"y\",\"Ingreso\":\"eva2\",\"checkbox\":false,\"id\":0}]', 13, 583);
+INSERT INTO `preguntas_respuestas` VALUES (109, '[{\"nombre\":\"eva2Nombre1\",\"apellidos\":\"eva2Apellidos1\",\"id\":0},{\"nombre\":\"eva2Nombre2\",\"apellidos\":\"eva2Apellidos2\",\"id\":1}]', 13, 586);
+INSERT INTO `preguntas_respuestas` VALUES (110, '1346,1345', 13, 587);
+INSERT INTO `preguntas_respuestas` VALUES (111, '1347', 13, 588);
+INSERT INTO `preguntas_respuestas` VALUES (112, '', 13, 584);
+INSERT INTO `preguntas_respuestas` VALUES (113, '', 13, 585);
 
 -- ----------------------------
 -- Table structure for respuestas
@@ -1916,7 +1948,7 @@ CREATE TABLE `respuestas`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `ref_preguntas_respuestas_id_idx`(`preguntas_respuestas_id`) USING BTREE,
   CONSTRAINT `ref_preguntas_respuestas_id` FOREIGN KEY (`preguntas_respuestas_id`) REFERENCES `preguntas_respuestas` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of respuestas
@@ -1939,6 +1971,12 @@ INSERT INTO `respuestas` VALUES (15, '', 61, 985);
 INSERT INTO `respuestas` VALUES (16, '', 61, 986);
 INSERT INTO `respuestas` VALUES (17, '', 62, 987);
 INSERT INTO `respuestas` VALUES (18, '', 62, 988);
+INSERT INTO `respuestas` VALUES (46, 'Ingreso Simple', 100, 0);
+INSERT INTO `respuestas` VALUES (47, 'Multiple01', 101, 1340);
+INSERT INTO `respuestas` VALUES (48, 'Multiple02', 101, 1341);
+INSERT INTO `respuestas` VALUES (52, 'eva2', 112, 0);
+INSERT INTO `respuestas` VALUES (53, 'eva2M1', 113, 1340);
+INSERT INTO `respuestas` VALUES (54, 'eva2M2', 113, 1341);
 
 -- ----------------------------
 -- Table structure for titulo
@@ -1958,13 +1996,14 @@ CREATE TABLE `titulo`  (
   INDEX `fk_Titulo_Carreras1_idx`(`Carreras_id`) USING BTREE,
   CONSTRAINT `fk_Titulo_Carreras1` FOREIGN KEY (`Carreras_id`) REFERENCES `carreras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Titulo_Estudiante1` FOREIGN KEY (`Estudiante_id`) REFERENCES `estudiante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of titulo
 -- ----------------------------
 INSERT INTO `titulo` VALUES (6, 3, 2, 6, '2017-10-10', '2017-10-16', 1, 1);
 INSERT INTO `titulo` VALUES (7, 8, 9, 72, '2017-02-10', '2017-10-10', 4, 2);
+INSERT INTO `titulo` VALUES (8, 9, 8.5, 76.5, '2010-10-10', '2016-02-20', 5, 1);
 
 -- ----------------------------
 -- View structure for viewencuesta
@@ -1976,7 +2015,7 @@ CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER V
 -- View structure for viewfilecarrera
 -- ----------------------------
 DROP VIEW IF EXISTS `viewfilecarrera`;
-CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `viewfilecarrera` AS select `est`.`id` AS `codigoEstudiante`,`est`.`cedula` AS `cedula`,`est`.`nombres` AS `Estudiante`,`f`.`nombre` AS `Facultad`,`c`.`nombre` AS `Carrera`,`c_e`.`id` AS `encuestas`,`c_e`.`estado` AS `estado` from (((((`carreras_encuesta` `c_e` join `encuestas` `e` on((`e`.`id` = `c_e`.`Encuestas_id`))) join `carreras` `c` on((`c`.`id` = `e`.`carrera_id`))) join `facultad` `f` on((`f`.`id` = `c`.`Facultad_id`))) join `titulo` `t` on((`t`.`id` = `c_e`.`Titulo_id`))) join `estudiante` `est` on((`est`.`id` = `t`.`Estudiante_id`)));
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `viewfilecarrera` AS select `rownum`() AS `N`,`e`.`id` AS `encuestas`,`est`.`id` AS `codigoEstudiante`,`est`.`cedula` AS `cedula`,`est`.`nombres` AS `Estudiante`,`f`.`nombre` AS `Facultad`,`c`.`nombre` AS `Carrera`,`c_e`.`id` AS `carrera_encuesta`,`c_e`.`estado` AS `estado` from (((((`carreras_encuesta` `c_e` join `encuestas` `e` on((`e`.`id` = `c_e`.`Encuestas_id`))) join `carreras` `c` on((`c`.`id` = `e`.`carrera_id`))) join `facultad` `f` on((`f`.`id` = `c`.`Facultad_id`))) join `titulo` `t` on((`t`.`id` = `c_e`.`Titulo_id`))) join `estudiante` `est` on((`est`.`id` = `t`.`Estudiante_id`)));
 
 -- ----------------------------
 -- View structure for viewpreguntaencuestascarrera
@@ -1999,6 +2038,21 @@ BEGIN
 		 SELECT "ERROR" as "status";
 	END IF;
 
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Function structure for rownum
+-- ----------------------------
+DROP FUNCTION IF EXISTS `rownum`;
+delimiter ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `rownum`() RETURNS int(11)
+BEGIN
+	#Routine body goes here...
+	set @prvrownum=if(@ranklastrun=CURTIME(6),@prvrownum+1,1);
+  set @ranklastrun=CURTIME(6);
+  RETURN @prvrownum;
 END
 ;;
 delimiter ;

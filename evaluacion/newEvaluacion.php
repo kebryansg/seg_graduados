@@ -15,6 +15,7 @@ if ($var["estado"] == "0") {
         <div class="col-md-12">
             <div class="pull-right">
                 <a href="cerrar_session.php" class="btn btn-danger">Cancelar</a>
+                <button id="btnData" class="btn btn-success">Data</button>
                 <button id="submitEval" class="btn btn-info" data-encuesta="<?php echo $var["encuesta"]; ?>" data-id="<?php echo $var["id"]; ?>">Guardar</button>
                 <button id="saveEvaluacion" class="btn btn-success" data-encuesta="<?php echo $var["encuesta"]; ?>" data-id="<?php echo $var["id"]; ?>">Enviar</button>
             </div>
@@ -97,6 +98,8 @@ if ($var["estado"] == "0") {
             </div>
 
         </div>
+        
+        
         <div id="pTabla">
             <div class="pregunta_content">
                 <label class="control-label label-mod enunciado_pregunta"></label>
@@ -123,6 +126,8 @@ if ($var["estado"] == "0") {
             </div>
             <div class="clearfix"></div>
         </div>
+        
+        <!--
         <div id="tb_mes_actividad">
             <div class="pregunta_content">
                 <label class="control-label enunciado_pregunta">Enunciado:</label>
@@ -804,7 +809,7 @@ if ($var["estado"] == "0") {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div>-->
 
 
         <div class="panel panel-primary" id="panel_default">
