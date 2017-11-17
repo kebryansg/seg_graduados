@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="panel panel-body col-md-12" id="content">
                     <?php
-                    //$url_body = "pregunta/newPregunta.php";
+                    //$url_body = "evaluacion/listEncuestas.php";
                         if(isset($url_body)){
                             include_once $url_body;
                         }
@@ -54,7 +54,7 @@
             </div>
         </div>
         <script type="text/javascript">
-                //$("#content").load("pregunta/listPreguntas.php");
+                $("#content").load("evaluacion/reporteEvaluacion.php");
                 //$("#content").load("preview.html");
         </script>
     </body>
