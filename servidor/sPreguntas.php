@@ -43,10 +43,8 @@ switch ($op) {
                 "id" : "' . $pregunta->getId() . '",
                 "enunciado" : "' . $pregunta->getEnunciado() . '",
                 "tipo" : "' . $pregunta->getTipo() . '",
-                "categoria" : "' . $pregunta->getCategoria()->getDescripcion() . '",
-                "accion": "<button data-toggle=\"tooltip\" title=\"Editar Pregunta\" dat-id=\"' . $pregunta->getId() . '\" name=\"editPregunta\" class=\"btn btn-sm btn-primary\" ><i class=\"glyphicon glyphicon-edit\"></i></button> '
-                    . ' ' . $estado . ' '
-                    . ' <button dat-id=\"' . $pregunta->getId() . '\" name=\"estado_excel\" data-toggle=\"tooltip\" title=\"Permitir excel\" class=\"btn btn-sm '. $estado_excel .'\" ><i class=\"glyphicon '. $estado_excel_2 .'\"></i></button>"}';
+                "accion" : "' . $pregunta->getEstado_excel() . '",
+                "categoria" : "' . $pregunta->getCategoria()->getDescripcion() . '"}';
             array_push($list_resultado, $resultado);
         }
         $resultado = '{ "count": ' . ceil($list->getTotal() / $top) . ' , "load": [' . join($list_resultado, ",") . ']}';

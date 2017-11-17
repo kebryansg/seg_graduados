@@ -49,6 +49,13 @@ class OpcionesDaoImp implements OpcionesDao {
         $conn->close();
         return $list;
     }
+    public static function json_validate($string) {
+        if (is_string($string)) {
+            @json_decode($string);
+            return (json_last_error() === JSON_ERROR_NONE);
+        }
+        return false;
+    }
     public static function _listEncuesta($encuesta) {
         $conn = (new C_MySQL())->open();
         $list = array();
@@ -63,10 +70,26 @@ class OpcionesDaoImp implements OpcionesDao {
             inner JOIN preguntas_respuestas p_r on p_r.pregunta_id = preg_default.id;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
-                $values = explode(",", $row["opcion"]);
-                foreach ($values as $value) {
-                    array_push($list, $value);
+                
+                $values = $row["opcion"];
+                if(isset($values) && !empty($values)  ){ //empty
+                    if (is_string($values)) {
+                        @json_decode($values);
+                        if(json_last_error() === JSON_ERROR_NONE){
+                            array_push($list, $values);
+                        }elseif(count($values) > 0){
+                            $values = explode(",", $values);
+                            foreach ($values as $value) {
+                                array_push($list, $value);
+                            }
+                        }
+                    }
                 }
+                
+                
+                //$this->json_validate($row["opcion"]);
+                //$values = explode(",", $row["opcion"]);
+                
             }
             $resultado->close();
         }

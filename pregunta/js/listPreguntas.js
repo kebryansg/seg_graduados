@@ -1,5 +1,8 @@
 idEncuesta = 0;
 deshabilitada = false;
+
+
+
 function getEncuesta_id(id) {
     idEncuesta = id;
 }
@@ -10,6 +13,29 @@ $(function () {
     //load_Preguntas(1);
     //setData();
 });
+
+
+function colAccion(value){
+    console.log(value);
+    estado = '';
+    estado_1 = '';
+    estado_2 = '';
+    if(value === '1'){
+        estado = '<button name="deletePregunta" data-toggle="tooltip" title="Eliminar Pregunta" class="btn btn-sm btn-danger" ><i class="glyphicon glyphicon-trash"></i></button> ';
+        estado_1 = 'btn-success';
+        estado_2 = 'btn-danger';
+    }else{
+        estado = '<button name="addPregunta" data-toggle="tooltip" title="Reestablecer Pregunta" class="btn btn-sm btn-success" ><i class="glyphicon glyphicon-refresh"></i></button>';
+        estado_1 = 'glyphicon-ok';
+        estado_2 = 'glyphicon-remove';
+    }
+    
+    
+    return ''+
+           '<button data-toggle="tooltip" title="Editar Pregunta" name="editPregunta" class="btn btn-sm btn-primary" ><i class="glyphicon glyphicon-edit"></i></button> '+
+           estado +
+           '<button name="estado_excel" data-toggle="tooltip" title="Permitir excel" class="btn btn-sm '+ estado_1 +'" ><i class="glyphicon '+ estado_2 +'"></i></button>';
+}
 
 $("#tb_listPreguntas").on("click","button[name='estado_excel']",function(){
     btn = $(this);

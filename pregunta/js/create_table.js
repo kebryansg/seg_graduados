@@ -157,14 +157,17 @@ function select_format(value) {
     resultado += '</select>';
     return resultado;
 }
+
 function cbk_format(value) {
     checked = (value) ? "checked" : "";
     return '<input type="checkbox" class="form-control cbk" data-field="' + this.field + '" ' + checked + ' >';
 }
+
 function input_format(value) {
     value = $.isEmptyObject(value) ? "" : value;
     return '<input type="text" class="form-control col-md-1 txt" data-field="' + this.field + '" value="' + value + '">';
 }
+
 function tipo_format(value) {
     valor = "";
     switch (value) {

@@ -54,7 +54,7 @@
             </div>
         </div>
         <script type="text/javascript">
-                $("#content").load("evaluacion/reporteEvaluacion.php");
+                //$("#content").load("evaluacion/reporteEvaluacion.php");
                 //$("#content").load("preview.html");
         </script>
     </body>

@@ -12,6 +12,14 @@ default_encuesta = {
     last: "&rarrb;"
 };
 window.events_accion = {
+    'click button[name="reporte_Encuesta"]': function(e, value, row, index){
+        $("#content").load("evaluacion/reporteEvaluacion.php?id_encuesta=" + row.id);
+        /*$("#modal_editEncuesta h4.modal-title").html("Modificar Encuesta");
+        $("#modal_editEncuesta button[name='save']")
+                .html("Modificar")
+                .data("id", row.id);
+        $("#edit_nombre").val(row.nombre);*/
+    },
     'click button[name="edit_encuesta"]': function(e, value, row, index){
         $("#modal_editEncuesta h4.modal-title").html("Modificar Encuesta");
         $("#modal_editEncuesta button[name='save']")
@@ -274,10 +282,11 @@ function btn_accion(value){
         estado = '<button name="refresh_encuesta" class="btn btn-success btn-sm" data-toggle="tooltip" title="Reestablecer encuesta"><i class="fa fa-refresh"></i></button> ';
     }
     return ''+
-    '<button name="edit_encuesta" data-toggle="modal" data-target="#modal_editEncuesta" class="btn btn-success btn-sm" data-toggle="tooltip" title="Editar encuesta"><i class="fa fa-edit"></i></button> '+
-    estado +
-    '<button name="dupl_Encuesta" data-toggle="modal" data-target="#modal_duplEncuesta" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Duplicar"><i class="fa fa-files-o"></i></button> '+
-    '<button name="gen_Encuesta" class="btn btn-default btn-sm" data-toggle="tooltip" title="Generar Excel"><i class="fa fa-download"></i></button> '+
-    '<button name="list_pregunt_Encuesta" class="btn btn-info btn-sm" data-toggle="tooltip" title="Listado de Preguntas"><i class="fa fa-align-justify"></i></button>';
+            '<button name="edit_encuesta" data-toggle="modal" data-target="#modal_editEncuesta" class="btn btn-success btn-sm" data-toggle="tooltip" title="Editar encuesta"><i class="fa fa-edit"></i></button> '+
+            estado +
+            '<button name="dupl_Encuesta" data-toggle="modal" data-target="#modal_duplEncuesta" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Duplicar"><i class="fa fa-files-o"></i></button> '+
+            '<button name="gen_Encuesta" class="btn btn-default btn-sm" data-toggle="tooltip" title="Generar Excel"><i class="fa fa-download"></i></button> '+
+            '<button name="reporte_Encuesta" class="btn btn-default btn-sm" data-toggle="tooltip" title="Reportes"><i class="fa fa-file"></i></button> '+
+            '<button name="list_pregunt_Encuesta" class="btn btn-info btn-sm" data-toggle="tooltip" title="Listado de Preguntas"><i class="fa fa-align-justify"></i></button>';
 }
 
