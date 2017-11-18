@@ -32,7 +32,7 @@ class PreguntasDaoImp implements PreguntasDao {
         $conn = (new C_MySQL())->open();
         $sql = "";
         if ($pregunta->getId() == "0") {
-            $sql = "insert into preguntas(enunciado,tipo,categoria_id,estado,Encuestas_id,estado_excel,order_by) values('" . ($pregunta->getEnunciado()) . "'," . ($pregunta->getTipo()) . "," . ($pregunta->getCategoria()->getId()) . ",'" . ($pregunta->getEstado()) . "'," . ($pregunta->getEncuesta()) . ",'" . ($pregunta->getEstado_excel()) . "'," . ($pregunta->getOrder_by()) . ");";
+            $sql = "insert into preguntas(enunciado,tipo,categoria_id,estado,Encuestas_id,estado_excel,order_by,estado_tabulacion) values('" . ($pregunta->getEnunciado()) . "'," . ($pregunta->getTipo()) . "," . ($pregunta->getCategoria()->getId()) . ",'" . ($pregunta->getEstado()) . "'," . ($pregunta->getEncuesta()) . ",'" . ($pregunta->getEstado_excel()) . "'," . ($pregunta->getOrder_by()) . ",'0');";
         } else {
             $sql = "update preguntas set enunciado = '" . $pregunta->getEnunciado() . "', tipo = " . $pregunta->getTipo() . ", categoria_id = " . $pregunta->getCategoria()->getId() . " where id = " . $pregunta->getId();
         }
@@ -138,6 +138,7 @@ class PreguntasDaoImp implements PreguntasDao {
                 $pregunta->setTipo($row["tipo"]);
                 $pregunta->setEstado($row["estado"]);
                 $pregunta->setEstado_excel($row["estado_excel"]);
+                $pregunta->setEstado_tabulacion($row["estado_tabulacion"]);
                 $pregunta->setCategoria(new Categoria($row["categoria_id"], $row["descripcion"]));
                 array_push($list, $pregunta);
             }
@@ -159,6 +160,12 @@ class PreguntasDaoImp implements PreguntasDao {
     public static function estado_excel($id,$estado) {
         $conn = (new C_MySQL())->open();
         $sql = "update preguntas set estado_excel = '$estado' where id = " . $id;
+        $conn->query($sql);
+        $conn->close();
+    }
+    public static function estado_tabulacion($id,$estado) {
+        $conn = (new C_MySQL())->open();
+        $sql = "update preguntas set estado_tabulacion = '$estado' where id = " . $id;
         $conn->query($sql);
         $conn->close();
     }

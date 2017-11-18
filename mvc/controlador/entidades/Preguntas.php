@@ -10,7 +10,17 @@ class Preguntas {
     private $order_by;
     private $estado;
     private $estado_excel;
+    private $estado_tabulacion;
+    
+    function getEstado_tabulacion() {
+        return $this->estado_tabulacion;
+    }
 
+    function setEstado_tabulacion($estado_tabulacion) {
+        $this->estado_tabulacion = $estado_tabulacion;
+    }
+
+    
     function __construct() {
         $this->id = 0;
         $this->estado_excel = '1';

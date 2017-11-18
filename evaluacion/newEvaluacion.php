@@ -15,7 +15,7 @@ if ($var["estado"] == "0") {
         <div class="col-md-12">
             <div class="pull-right">
                 <a href="cerrar_session.php" class="btn btn-danger">Cancelar</a>
-                <button id="btnData" class="btn btn-success">Data</button>
+                <!--<button id="btnData" class="btn btn-success">Data</button>-->
                 <button id="submitEval" class="btn btn-info" data-encuesta="<?php echo $var["encuesta"]; ?>" data-id="<?php echo $var["id"]; ?>">Guardar</button>
                 <button id="saveEvaluacion" class="btn btn-success" data-encuesta="<?php echo $var["encuesta"]; ?>" data-id="<?php echo $var["id"]; ?>">Enviar</button>
             </div>

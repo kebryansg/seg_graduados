@@ -38,7 +38,7 @@
                     <th class="col-md-5" data-field="enunciado">Enunciado</th>
                     <th data-field="tipo">Tipo</th>
                     <th class="col-md-4" data-field="categoria">Categoria</th>
-                    <th data-formatter='colAccion' data-field="accion">Acción</th>
+                    <th data-formatter='colAccion' data-events="event_colAccion" data-field="accion">Acción</th>
                 </tr>
             </thead>
         </table>

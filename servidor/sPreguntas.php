@@ -34,16 +34,17 @@ switch ($op) {
         $id_encuesta = $_POST["idEncuesta"];
         $list = PreguntasDaoImp::list_filter($top, $pag, $id_categoria, $id_encuesta, $deshabilitada);
         foreach ($list->getList() as $pregunta) {
-            $estado_excel = $pregunta->getEstado_excel() == "1"? "btn-success":"btn-danger";
+            /*$estado_excel = $pregunta->getEstado_excel() == "1"? "btn-success":"btn-danger";
             $estado_excel_2 = $pregunta->getEstado_excel() == "1"? "glyphicon-ok":"glyphicon-remove";
             $estado = ($pregunta->getEstado() == "1") ?
                     '<button dat-id=\"' . $pregunta->getId() . '\" name=\"deletePregunta\" data-toggle=\"tooltip\" title=\"Eliminar Pregunta\" class=\"btn btn-sm btn-danger\" ><i class=\"glyphicon glyphicon-trash\"></i></button>' : 
-                    '<button dat-id=\"' . $pregunta->getId() . '\" name=\"addPregunta\" data-toggle=\"tooltip\" title=\"Reestablecer Pregunta\" class=\"btn btn-sm btn-success\" ><i class=\"glyphicon glyphicon-refresh\"></i></button>';
+                    '<button dat-id=\"' . $pregunta->getId() . '\" name=\"addPregunta\" data-toggle=\"tooltip\" title=\"Reestablecer Pregunta\" class=\"btn btn-sm btn-success\" ><i class=\"glyphicon glyphicon-refresh\"></i></button>';*/
             $resultado = '{
                 "id" : "' . $pregunta->getId() . '",
                 "enunciado" : "' . $pregunta->getEnunciado() . '",
                 "tipo" : "' . $pregunta->getTipo() . '",
-                "accion" : "' . $pregunta->getEstado_excel() . '",
+                "accion" : "' . $pregunta->getEstado() .':'.$pregunta->getEstado_excel().':'.$pregunta->getEstado_tabulacion(). '",
+                "encuesta" : "' . $pregunta->getEncuesta() . '",
                 "categoria" : "' . $pregunta->getCategoria()->getDescripcion() . '"}';
             array_push($list_resultado, $resultado);
         }
@@ -102,6 +103,9 @@ switch ($op) {
         break;
     case "estado_excel":
         PreguntasDaoImp::estado_excel($_POST["id"],$_POST["estado"]);
+        break;
+    case "estado_tabulacion":
+        PreguntasDaoImp::estado_tabulacion($_POST["id"],$_POST["estado"]);
         break;
         
 }
