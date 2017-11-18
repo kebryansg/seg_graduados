@@ -89,14 +89,14 @@ window.event_colAccion = {
                 if(estado === 1){
                     $(btn).removeClass("btn-danger");
                     $(btn).addClass("btn-success");
-                    $(btn).find("i").removeClass("glyphicon-remove");
+                    $(btn).find("i").removeClass("glyphicon-trash");
                     $(btn).find("i").addClass("glyphicon-ok");
                 }
                 else {
                     $(btn).removeClass("btn-success");
                     $(btn).addClass("btn-danger");
                     $(btn).find("i").removeClass("glyphicon-ok");
-                    $(btn).find("i").addClass("glyphicon-remove");
+                    $(btn).find("i").addClass("glyphicon-trash");
                 }
             }
         });

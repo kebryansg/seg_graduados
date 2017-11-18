@@ -14,11 +14,6 @@ default_encuesta = {
 window.events_accion = {
     'click button[name="reporte_Encuesta"]': function(e, value, row, index){
         $("#content").load("evaluacion/reporteEvaluacion.php?id_encuesta=" + row.id);
-        /*$("#modal_editEncuesta h4.modal-title").html("Modificar Encuesta");
-        $("#modal_editEncuesta button[name='save']")
-                .html("Modificar")
-                .data("id", row.id);
-        $("#edit_nombre").val(row.nombre);*/
     },
     'click button[name="edit_encuesta"]': function(e, value, row, index){
         $("#modal_editEncuesta h4.modal-title").html("Modificar Encuesta");
