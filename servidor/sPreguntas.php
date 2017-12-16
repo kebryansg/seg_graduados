@@ -64,6 +64,7 @@ switch ($op) {
         $pregunta->setTipo($_POST["tipo"]);
         $pregunta->setCategoria(new Categoria($_POST["categoria"], ''));
         $pregunta->setEncuesta($_POST["encuesta"]);
+        $pregunta->setEstado_tabulacion($_POST["tabulacion"]);
         PreguntasDaoImp::save($pregunta);
         if ($pregunta->getId() !== "0") {
             if (isset($_POST['opciones'])) {

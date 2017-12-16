@@ -7,6 +7,14 @@ final class C_MySQL {
     function __construct() {
         $this->open();
     }
+    public static function returnListAsoc($conn, $sql){
+        $list = array();
+        foreach ($conn->query($sql) as $row) {
+            array_push($list, $row);
+        }
+        //$conn->close();
+        return $list;
+    }
 
     public function open() {
         $this->mysqli = new mysqli("localhost", "root", "12345", "seg_graduados_v3");

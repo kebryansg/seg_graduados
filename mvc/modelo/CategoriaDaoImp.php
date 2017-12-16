@@ -31,7 +31,7 @@ class CategoriaDaoImp implements CategoriaDao
         $list = [];
         $sentencia = $conn->prepare("select categoria.* "
                 . "from categoria "
-                . "where EXISTS "
+                . "where categoria.id  in "
                         . "(select categoria_id from carreras_encuesta c_e inner join encuestas e on c_e.Encuestas_id = e.id inner join preguntas p on p.Encuestas_id = e.id where c_e.id = $carrera_encuesta) "
                 . "order by categoria.order_;");
         $sentencia->execute();

@@ -32,9 +32,9 @@ class PreguntasDaoImp implements PreguntasDao {
         $conn = (new C_MySQL())->open();
         $sql = "";
         if ($pregunta->getId() == "0") {
-            $sql = "insert into preguntas(enunciado,tipo,categoria_id,estado,Encuestas_id,estado_excel,order_by,estado_tabulacion) values('" . ($pregunta->getEnunciado()) . "'," . ($pregunta->getTipo()) . "," . ($pregunta->getCategoria()->getId()) . ",'" . ($pregunta->getEstado()) . "'," . ($pregunta->getEncuesta()) . ",'" . ($pregunta->getEstado_excel()) . "'," . ($pregunta->getOrder_by()) . ",'0');";
+            $sql = "insert into preguntas(enunciado,tipo,categoria_id,estado,Encuestas_id,estado_excel,order_by,estado_tabulacion) values('" . ($pregunta->getEnunciado()) . "'," . ($pregunta->getTipo()) . "," . ($pregunta->getCategoria()->getId()) . ",'" . ($pregunta->getEstado()) . "'," . ($pregunta->getEncuesta()) . ",'" . ($pregunta->getEstado_excel()) . "'," . ($pregunta->getOrder_by()) . ",'" . ($pregunta->getEstado_tabulacion()) . "');";
         } else {
-            $sql = "update preguntas set enunciado = '" . $pregunta->getEnunciado() . "', tipo = " . $pregunta->getTipo() . ", categoria_id = " . $pregunta->getCategoria()->getId() . " where id = " . $pregunta->getId();
+            $sql = "update preguntas set estado_tabulacion = '" . ($pregunta->getEstado_tabulacion()) . "' ,enunciado = '" . $pregunta->getEnunciado() . "', tipo = " . $pregunta->getTipo() . ", categoria_id = " . $pregunta->getCategoria()->getId() . " where id = " . $pregunta->getId();
         }
         if ($conn->query($sql)) {
             if ($pregunta->getId() == "0") {
@@ -62,6 +62,7 @@ class PreguntasDaoImp implements PreguntasDao {
                 $pregunta->setTipo($row["tipo"]);
                 $pregunta->setCategoria(new Categoria($row["categoria_id"], ""));
                 $pregunta->setEstado($row["estado"]);
+                $pregunta->setEstado_tabulacion($row["estado_tabulacion"]);
                 $pregunta->setOrder_by($row["order_by"]);
                 $pregunta->setEncuesta($id_destino);
                 $pregunta->setEstado_excel($row["estado_excel"]);

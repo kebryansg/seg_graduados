@@ -30,9 +30,10 @@ function savePregunta() {
                 enunciado: $("#txtEnunciado").val(),
                 tipo: $("#cboTipoPregunta").val(),
                 categoria: $("#cboCategoria").val(),
+                tabulacion: $('#tabulacion input[type="checkbox"]').prop("checked") ? '1' : '0',
                 encuesta: idEncuesta,
                 opciones: getOpciones($("#cboTipoPregunta").val())
-                //,opciones_del: $("#content_" + _TipoPregunta($("#cboTipoPregunta").val())).data("opcion_del")
+                        //,opciones_del: $("#content_" + _TipoPregunta($("#cboTipoPregunta").val())).data("opcion_del")
             },
             success: function (data) {
                 id = idEncuesta;
@@ -175,7 +176,7 @@ function generarOpciones(opciones) {
             $(div_clone).appendTo(contenedor);
         });
     } else {
-        if(opciones.length > 0){
+        if (opciones.length > 0) {
             columns = JSON.parse(opciones[0].enunciado);
             contador = 0;
             data = $.map(columns, function (column) {
@@ -187,13 +188,13 @@ function generarOpciones(opciones) {
                 };
                 switch (column.tipo) {
                     case "2":
-                        $("#cboColumnas").append("<option value='"+ column.title +"'>"+ column.title +"</option>");
+                        $("#cboColumnas").append("<option value='" + column.title + "'>" + column.title + "</option>");
                         $("#cboColumnas").selectpicker("refresh");
                         $.extend(row, {
                             data_source: column.data_source
                         });
-                        if(column.columna_dominante){
-                            $("#cboColumnas").selectpicker("val",column.title);
+                        if (column.columna_dominante) {
+                            $("#cboColumnas").selectpicker("val", column.title);
                         }
                         break;
                 }
@@ -202,11 +203,16 @@ function generarOpciones(opciones) {
             $("#tb_columnas").data("id", opciones[0].id);
             $("#tb_columnas").bootstrapTable("load", data);
         }
-        
+
     }
 }
 
 function _TipoPregunta(index) {
+    $('#tabulacion input[type="checkbox"]').prop("checked", false);
+    if (!$("#tabulacion").hasClass("hidden")) {
+        $("#tabulacion").addClass("hidden");
+    }
+
     switch (index) {
         case "1":
             return "ISimple";
@@ -215,12 +221,15 @@ function _TipoPregunta(index) {
             return "IMultiple";
             break;
         case "3":
+            $("#tabulacion").removeClass("hidden");
             return "SMultiple";
             break;
         case "4":
+            $("#tabulacion").removeClass("hidden");
             return "SUnica";
             break;
         case "5":
+            $("#tabulacion").removeClass("hidden");
             return "table";
             break;
     }

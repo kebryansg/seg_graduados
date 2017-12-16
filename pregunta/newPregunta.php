@@ -1,5 +1,5 @@
 <?php
-    include_once '../mvc/modelo/CategoriaDaoImp.php';
+include_once '../mvc/modelo/CategoriaDaoImp.php';
 ?>
 <div class="col-md-12">
     <div class="row">
@@ -13,29 +13,46 @@
             <label class="control-label">Ingrese el enunciado:</label>
             <input type="text" class="form-control" id="txtEnunciado">
         </div>
-        <div class="form-group">
-            <label  class="control-label">Categoria:</label>
-            <select class="form-control selectpicker" id="cboCategoria" >
-                    <?php
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label  class="control-label">Categoria:</label>
+                    <select class="form-control selectpicker" id="cboCategoria" >
+                        <?php
                         $categorias = CategoriaDaoImp::listCategoria();
                         foreach ($categorias as $categoria) {
                             ?>
-                    <option value="<?php echo $categoria->getId();  ?>"><?php echo $categoria->getDescripcion();  ?></option>
+                            <option value="<?php echo $categoria->getId(); ?>"><?php echo $categoria->getDescripcion(); ?></option>
                             <?php
                         }
-                    ?>
-            </select>
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label  class="control-label">Tipo de Pregunta:</label>
+                    <select class="form-control selectpicker" id="cboTipoPregunta" >
+                        <option value="1" div_content="ISimple" >Ingreso Simple</option>
+                        <option value="2" div_content="IMultiple">Ingreso Multiple</option>
+                        <option value="3" div_content="SMultiple">Seleccion Multiple</option>
+                        <option value="4" div_content="SUnica">Seleccion Unica</option>
+                        <option value="5" div_content="table">Tabla</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label  class="control-label" style="color: white;">:</label>
+                    <div class="checkbox hidden" id="tabulacion">
+                        <label><input type="checkbox" value="">Permitir Tabulación</label>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="form-group">
-            <label  class="control-label">Tipo de Pregunta:</label>
-            <select class="form-control selectpicker" id="cboTipoPregunta" >
-                <option value="1" div_content="ISimple" >Ingreso Simple</option>
-                <option value="2" div_content="IMultiple">Ingreso Multiple</option>
-                <option value="3" div_content="SMultiple">Seleccion Multiple</option>
-                <option value="4" div_content="SUnica">Seleccion Unica</option>
-                <option value="5" div_content="table">Tabla</option>
-            </select>
-        </div>
+
+
     </div>
     <div class="row" id="div_tipoPreguntas">
         <div id="ISimple">

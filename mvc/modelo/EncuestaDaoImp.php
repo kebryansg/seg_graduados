@@ -62,7 +62,7 @@ class EncuestaDaoImp {
 
     public static function _delete($id) {
         $conn = (new C_MySQL())->open();
-        $sql = "select count(*) total from encuesta_titulo where Encuestas_id = $id;";
+        $sql = "select count(*) total from carreras_encuesta where Encuestas_id = $id;";
         $total = 0;
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {

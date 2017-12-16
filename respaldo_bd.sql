@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 16/11/2017 04:18:55
+ Date: 16/12/2017 01:14:50
 */
 
 SET NAMES utf8mb4;
@@ -50,7 +50,7 @@ CREATE TABLE `carreras_encuesta`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_carreras_encuesta_Encuestas1_idx`(`Encuestas_id`) USING BTREE,
   CONSTRAINT `fk_carreras_encuesta_encuestas_1` FOREIGN KEY (`Encuestas_id`) REFERENCES `encuestas` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of carreras_encuesta
@@ -60,7 +60,12 @@ INSERT INTO `carreras_encuesta` VALUES (9, '81949e1e03de635c16a39dd16f833e2b', '
 INSERT INTO `carreras_encuesta` VALUES (10, 'a8781a1f67d3ce32a93ac6c84e491765', '2017-11-12', 3, '1', 1);
 INSERT INTO `carreras_encuesta` VALUES (11, '212d4b510ef0afc81c123629254eff71', '2017-11-13', 2, '1', 1);
 INSERT INTO `carreras_encuesta` VALUES (12, 'd12e69253080cb7b869b8ef6313665a1', '2017-11-14', 13, '2', 6);
-INSERT INTO `carreras_encuesta` VALUES (13, '62f696d53d6aed1d18f18f10d86e8cfb', '2017-11-16', 13, '2', 8);
+INSERT INTO `carreras_encuesta` VALUES (13, '62f696d53d6aed1d18f18f10d86e8cfb', '2017-11-16', 13, '1', 8);
+INSERT INTO `carreras_encuesta` VALUES (14, 'ca1568366c2fa2b13181e395c5537cf3', '2017-11-16', 3, '1', 9);
+INSERT INTO `carreras_encuesta` VALUES (15, '91bb5b560e2c046ba9eb5bf2dbb4b021', '2017-11-18', 15, '2', 6);
+INSERT INTO `carreras_encuesta` VALUES (16, '56ea554b70bbf3d72c10dc40cdeb93b3', '2017-11-18', 16, '2', 10);
+INSERT INTO `carreras_encuesta` VALUES (17, '2f5b037f0236aa3d33675688fdf66417', '2017-11-18', 15, '1', 10);
+INSERT INTO `carreras_encuesta` VALUES (18, '5ab5b8c0c580973b3c9b02b08091c1e3', '2017-12-14', 17, '1', 6);
 
 -- ----------------------------
 -- Table structure for categoria
@@ -84,6 +89,25 @@ INSERT INTO `categoria` VALUES (5, 'SATISFACCIÓN CON LA FORMACION Y ATENCION OF
 INSERT INTO `categoria` VALUES (6, 'DATOS PERSONALES', 1);
 
 -- ----------------------------
+-- Table structure for config
+-- ----------------------------
+DROP TABLE IF EXISTS `config`;
+CREATE TABLE `config`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `descripcion` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `objetivo` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `imagen` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of config
+-- ----------------------------
+INSERT INTO `config` VALUES (3, 'Encuestas de graduados', 'test', 'test', NULL);
+INSERT INTO `config` VALUES (4, '', '', '', NULL);
+
+-- ----------------------------
 -- Table structure for encuestas
 -- ----------------------------
 DROP TABLE IF EXISTS `encuestas`;
@@ -96,14 +120,14 @@ CREATE TABLE `encuestas`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `ref_carrera_id`(`carrera_id`) USING BTREE,
   CONSTRAINT `ref_carrera_id` FOREIGN KEY (`carrera_id`) REFERENCES `carreras` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of encuestas
 -- ----------------------------
 INSERT INTO `encuestas` VALUES (1, 'Encuesta 2015', '2017-09-15', '0', 1);
-INSERT INTO `encuestas` VALUES (2, 'Encuesta 2016', '2017-09-15', '1', 1);
-INSERT INTO `encuestas` VALUES (3, 'Encuesta 2017', '2017-09-15', '1', 1);
+INSERT INTO `encuestas` VALUES (2, 'Encuesta 2016', '2017-09-15', '0', 1);
+INSERT INTO `encuestas` VALUES (3, 'Encuesta 2017', '2017-09-15', '0', 1);
 INSERT INTO `encuestas` VALUES (4, 'Encuesta 2014', '2017-09-23', '0', 2);
 INSERT INTO `encuestas` VALUES (5, 'Encuesta 2013', '2017-09-17', '0', 1);
 INSERT INTO `encuestas` VALUES (6, 'Encuesta 2012', '2017-09-17', '0', 2);
@@ -114,6 +138,10 @@ INSERT INTO `encuestas` VALUES (10, 'Encuesta 2015', '2017-10-06', '0', 1);
 INSERT INTO `encuestas` VALUES (11, 'Encuesta tabla', '2017-10-07', '1', 2);
 INSERT INTO `encuestas` VALUES (12, 'test', '2017-11-13', '1', 2);
 INSERT INTO `encuestas` VALUES (13, 'Test Edit Preguntas', '2017-11-14', '1', 1);
+INSERT INTO `encuestas` VALUES (14, 'Encuesta Duplicada', '2017-11-18', '0', 1);
+INSERT INTO `encuestas` VALUES (15, 'Encuesta Tabla', '2017-11-18', '1', 1);
+INSERT INTO `encuestas` VALUES (16, 'Encuesta Sabado', '2017-11-18', '0', 1);
+INSERT INTO `encuestas` VALUES (17, 'Encuesta 2016-2017', '2017-12-14', '1', 1);
 
 -- ----------------------------
 -- Table structure for estudiante
@@ -124,7 +152,7 @@ CREATE TABLE `estudiante`  (
   `cedula` char(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `nombres` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of estudiante
@@ -132,6 +160,11 @@ CREATE TABLE `estudiante`  (
 INSERT INTO `estudiante` VALUES (1, '1206249391', 'suarez guzman kevin');
 INSERT INTO `estudiante` VALUES (4, '1234567890', 'Test');
 INSERT INTO `estudiante` VALUES (5, '1987654321', 'Test Estudiantes excel');
+INSERT INTO `estudiante` VALUES (6, '123456784', 'nombre');
+INSERT INTO `estudiante` VALUES (7, '1206395863', 'Mychael');
+INSERT INTO `estudiante` VALUES (8, '1207644996', 'Cinthia');
+INSERT INTO `estudiante` VALUES (9, '1206395866', 'Daniel Castro');
+INSERT INTO `estudiante` VALUES (10, '1234567899', 'Byron Cardenas');
 
 -- ----------------------------
 -- Table structure for facultad
@@ -159,7 +192,7 @@ CREATE TABLE `opciones`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_opciones_preguntas_idx`(`preguntas_id`) USING BTREE,
   CONSTRAINT `fk_opciones_preguntas` FOREIGN KEY (`preguntas_id`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 1350 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1375 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of opciones
@@ -1456,16 +1489,34 @@ INSERT INTO `opciones` VALUES (1306, '[{\"field\":\"titulo\",\"title\":\"titulo\
 INSERT INTO `opciones` VALUES (1307, '[{\"field\":\"a\",\"title\":\"a\",\"sortable\":false,\"excel\":true,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"cbo\",\"title\":\"cbo\",\"sortable\":false,\"excel\":true,\"data_source\":[{\"value\":0,\"text\":\"a\"},{\"value\":1,\"text\":\"b\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"c\",\"title\":\"c\",\"sortable\":false,\"excel\":true,\"formatter\":\"cbk_format\",\"events\":\"cbk_action\"}]', 580);
 INSERT INTO `opciones` VALUES (1308, '[{\"field\":\"input\",\"title\":\"input\",\"sortable\":false,\"excel\":true,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"cbo\",\"title\":\"cbo\",\"sortable\":false,\"excel\":true,\"data_source\":[{\"value\":0,\"text\":\"a\"},{\"value\":1,\"text\":\"b\"},{\"value\":2,\"text\":\"c\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"cbk\",\"title\":\"cbk\",\"sortable\":false,\"excel\":true,\"formatter\":\"cbk_format\",\"events\":\"cbk_action\"},{\"field\":\"cbk2\",\"title\":\"cbk2\",\"sortable\":false,\"excel\":true,\"formatter\":\"cbk_format\",\"events\":\"cbk_action\"},{\"field\":\"cbo2\",\"title\":\"cbo2\",\"sortable\":false,\"excel\":true,\"data_source\":[{\"value\":0,\"text\":\"z\"},{\"value\":1,\"text\":\"x\"},{\"value\":2,\"text\":\"y\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"}]', 581);
 INSERT INTO `opciones` VALUES (1309, '[{\"field\":\"a\",\"title\":\"a\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"z\",\"title\":\"z\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"formatter\":\"input_format\",\"events\":\"input_action\"}]', 582);
-INSERT INTO `opciones` VALUES (1340, 'IMultiple 1', 585);
-INSERT INTO `opciones` VALUES (1341, 'IMultiple 2', 585);
-INSERT INTO `opciones` VALUES (1342, '[{\"field\":\"cb1\",\"title\":\"cb1\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":false,\"data_source\":[{\"value\":0,\"text\":\"a\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"cb2\",\"title\":\"cb2\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":true,\"data_source\":[{\"value\":0,\"text\":\"x\"},{\"value\":1,\"text\":\"y\"},{\"value\":2,\"text\":\"z\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"Ingreso\",\"title\":\"Ingreso\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"checkbox\",\"title\":\"checkbox\",\"sortable\":false,\"tipo\":\"3\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"cbk_format\",\"events\":\"cbk_action\"}]', 583);
-INSERT INTO `opciones` VALUES (1343, '[{\"field\":\"nombre\",\"title\":\"nombre\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"apellidos\",\"title\":\"apellidos\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"}]', 586);
 INSERT INTO `opciones` VALUES (1344, 'a', 587);
 INSERT INTO `opciones` VALUES (1345, 'b', 587);
 INSERT INTO `opciones` VALUES (1346, 'c', 587);
 INSERT INTO `opciones` VALUES (1347, 'x', 588);
 INSERT INTO `opciones` VALUES (1348, 'y', 588);
 INSERT INTO `opciones` VALUES (1349, 'z', 588);
+INSERT INTO `opciones` VALUES (1351, '[{\"field\":\"cb1\",\"title\":\"cb1\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":false,\"data_source\":[{\"value\":0,\"text\":\"a\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"cb2\",\"title\":\"cb2\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":false,\"data_source\":[{\"value\":0,\"text\":\"x\"},{\"value\":1,\"text\":\"y\"},{\"value\":2,\"text\":\"z\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"Ingreso\",\"title\":\"Ingreso\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"checkbox\",\"title\":\"checkbox\",\"sortable\":false,\"tipo\":\"3\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"cbk_format\",\"events\":\"cbk_action\"},{\"field\":\"cbo2\",\"title\":\"cbo2\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":true,\"data_source\":[{\"value\":0,\"text\":\"cb1\"},{\"value\":1,\"text\":\"cb2\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"}]', 583);
+INSERT INTO `opciones` VALUES (1352, '[{\"field\":\"nombre\",\"title\":\"nombre\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"apellidos\",\"title\":\"apellidos\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"}]', 586);
+INSERT INTO `opciones` VALUES (1353, 'IMultiple 1', 585);
+INSERT INTO `opciones` VALUES (1354, 'IMultiple 2', 585);
+INSERT INTO `opciones` VALUES (1355, '[{\"field\":\"cb1\",\"title\":\"cb1\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":false,\"data_source\":[{\"value\":0,\"text\":\"a\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"cb2\",\"title\":\"cb2\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":false,\"data_source\":[{\"value\":0,\"text\":\"x\"},{\"value\":1,\"text\":\"y\"},{\"value\":2,\"text\":\"z\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"Ingreso\",\"title\":\"Ingreso\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"checkbox\",\"title\":\"checkbox\",\"sortable\":false,\"tipo\":\"3\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"cbk_format\",\"events\":\"cbk_action\"},{\"field\":\"cbo2\",\"title\":\"cbo2\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":true,\"data_source\":[{\"value\":0,\"text\":\"cb1\"},{\"value\":1,\"text\":\"cb2\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"}]', 589);
+INSERT INTO `opciones` VALUES (1356, 'IMultiple 1', 591);
+INSERT INTO `opciones` VALUES (1357, 'IMultiple 2', 591);
+INSERT INTO `opciones` VALUES (1358, '[{\"field\":\"nombre\",\"title\":\"nombre\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"apellidos\",\"title\":\"apellidos\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"}]', 592);
+INSERT INTO `opciones` VALUES (1359, 'a', 593);
+INSERT INTO `opciones` VALUES (1360, 'b', 593);
+INSERT INTO `opciones` VALUES (1361, 'c', 593);
+INSERT INTO `opciones` VALUES (1362, 'x', 594);
+INSERT INTO `opciones` VALUES (1363, 'y', 594);
+INSERT INTO `opciones` VALUES (1364, 'z', 594);
+INSERT INTO `opciones` VALUES (1365, '[{\"field\":\"Trabajo\",\"title\":\"Trabajo\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":true,\"data_source\":[{\"value\":0,\"text\":\"Obrero\"},{\"value\":1,\"text\":\"Electrico\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"Lugar\",\"title\":\"Lugar\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"}]', 596);
+INSERT INTO `opciones` VALUES (1368, '[{\"field\":\"tipo curso\",\"title\":\"tipo curso\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":true,\"data_source\":[{\"value\":0,\"text\":\"congreso\"},{\"value\":1,\"text\":\"simposio\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"lugar\",\"title\":\"lugar\",\"sortable\":false,\"tipo\":\"1\",\"excel\":false,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"}]', 598);
+INSERT INTO `opciones` VALUES (1369, '[{\"field\":\"TIPO TRABAJO\",\"title\":\"TIPO TRABAJO\",\"sortable\":false,\"tipo\":\"2\",\"excel\":true,\"columna_dominante\":true,\"data_source\":[{\"value\":0,\"text\":\"1 PUBLICO\"},{\"value\":1,\"text\":\"2 PRIVADO\"},{\"value\":2,\"text\":\"3 PROPIO\"}],\"formatter\":\"select_format\",\"events\":\"cbo_action\"},{\"field\":\"DIRECCION\",\"title\":\"DIRECCION\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"},{\"field\":\"AÑO\",\"title\":\"AÑO\",\"sortable\":false,\"tipo\":\"1\",\"excel\":true,\"columna_dominante\":false,\"formatter\":\"input_format\",\"events\":\"input_action\"}]', 600);
+INSERT INTO `opciones` VALUES (1370, 'aa', 601);
+INSERT INTO `opciones` VALUES (1371, 'bb', 601);
+INSERT INTO `opciones` VALUES (1372, 'aa', 602);
+INSERT INTO `opciones` VALUES (1373, 'a', 603);
+INSERT INTO `opciones` VALUES (1374, 'b', 603);
 
 -- ----------------------------
 -- Table structure for preguntas
@@ -1480,395 +1531,411 @@ CREATE TABLE `preguntas`  (
   `order_by` int(11) NULL DEFAULT NULL,
   `Encuestas_id` int(11) NOT NULL,
   `estado_excel` char(1) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `estado_tabulacion` char(1) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `pregunta_categoria_idx`(`categoria_id`) USING BTREE,
   INDEX `fk_preguntas_Encuestas1_idx`(`Encuestas_id`) USING BTREE,
   CONSTRAINT `fk_preguntas_encuestas_1` FOREIGN KEY (`Encuestas_id`) REFERENCES `encuestas` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `pregunta_categoria` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 589 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 604 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of preguntas
 -- ----------------------------
-INSERT INTO `preguntas` VALUES (24, 'Nombres:', 1, 6, '1', 2, 1, '1');
-INSERT INTO `preguntas` VALUES (25, 'Apellidos:', 1, 6, '1', 3, 1, '1');
-INSERT INTO `preguntas` VALUES (26, 'Cédula de Identidad', 1, 6, '1', 1, 1, '1');
-INSERT INTO `preguntas` VALUES (27, 'Fecha de Nacimiento', 1, 6, '1', 4, 1, '1');
-INSERT INTO `preguntas` VALUES (29, 'Estado Civil', 4, 6, '1', 5, 1, '1');
-INSERT INTO `preguntas` VALUES (30, 'País de nacimiento ', 1, 6, '1', 6, 1, '1');
-INSERT INTO `preguntas` VALUES (31, 'Dirección Domiciliaria', 2, 6, '1', 7, 1, '1');
-INSERT INTO `preguntas` VALUES (32, 'Teléfonos', 2, 6, '1', 8, 1, '1');
-INSERT INTO `preguntas` VALUES (33, 'Correo(s) Electrónico(s)', 1, 6, '1', 9, 1, '1');
-INSERT INTO `preguntas` VALUES (34, 'Genero', 4, 6, '1', 10, 1, '1');
-INSERT INTO `preguntas` VALUES (35, '¿Cuenta con sus padres vivos?', 3, 1, '1', 1, 1, '1');
-INSERT INTO `preguntas` VALUES (36, '¿Con quién  vive actualmente? ', 3, 1, '1', 2, 1, '1');
-INSERT INTO `preguntas` VALUES (37, 'Nivel de formación del padre', 4, 1, '1', 3, 1, '1');
-INSERT INTO `preguntas` VALUES (38, 'Nivel de formación de la madre', 4, 1, '1', 4, 1, '1');
-INSERT INTO `preguntas` VALUES (39, '¿Tiene hermanos? ', 4, 1, '1', 5, 1, '1');
-INSERT INTO `preguntas` VALUES (40, '¿Cuántos hermanos tiene?', 1, 1, '1', 6, 1, '1');
-INSERT INTO `preguntas` VALUES (41, '¿Cuántos miembros conforman su hogar?', 1, 1, '1', 7, 1, '1');
-INSERT INTO `preguntas` VALUES (42, 'Total de ingresos mensuales en el hogar', 1, 1, '1', 8, 1, '1');
-INSERT INTO `preguntas` VALUES (43, '¿Qué tipo de colegio? ', 4, 2, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (44, 'Nombre del colegio donde se graduó:', 1, 2, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (45, '¿Cuántas horas por semana dedicó en promedio durante sus estudios a cada una de las siguientes actividades? Estimar', 5, 3, '2', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (46, '¿Cuántos meses transcurridos entre el ingreso a la Universidad y la graduación, pasó predominantemente en?:', 6, 3, '2', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (47, '¿Qué conocimientos sobre informática poseía en el momento que se graduó y actualmente?', 7, 3, '2', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (48, 'Describa sus experiencias laborales más relevantes antes de su trabajo actual.', 8, 4, '2', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (49, 'Después de la graduación, ¿emprendió otros estudios/formación adicional (cursos de posgrado, cursos, seminarios, cursos no completados, etc.) relacionados con su profesión? Excluya los que NO considere que están relacionados con su trabajo', 9, 3, '2', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (51, '¿Cómo califica su nivel de competencia en un idioma extranjero en el momento de egresar de la Universidad?  Responda con respeto a cualquier idioma en la lista y marque el tipo de competencia en cada fila. Respuesta múltiple posible en cada fila', 10, 3, '2', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (52, '¿Cómo califica su nivel de competencia de un  idioma extranjero actualmente?  Responda respeto a cualquier idioma en la lista. Respuesta múltiple posible en cada fila', 11, 3, '2', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (53, 'Principal ocupación del padre', 4, 1, '1', 9, 1, '1');
-INSERT INTO `preguntas` VALUES (54, 'Principal ocupación de la madre', 4, 1, '1', 10, 1, '1');
-INSERT INTO `preguntas` VALUES (55, '¿Cómo fue el financiamiento de sus estudios de grado?', 3, 1, '1', 11, 1, '1');
-INSERT INTO `preguntas` VALUES (56, 'Indique los Egresos Familiares Mensuales', 1, 1, '1', 12, 1, '1');
-INSERT INTO `preguntas` VALUES (57, 'La vivienda que dispone es', 4, 1, '1', 13, 1, '1');
-INSERT INTO `preguntas` VALUES (58, '¿Cuenta con los servicios básicos?', 3, 1, '1', 14, 1, '1');
-INSERT INTO `preguntas` VALUES (59, '¿Tiene alguna capacidad especial?', 4, 1, '1', 15, 1, '1');
-INSERT INTO `preguntas` VALUES (60, 'En caso de tener capacidad especial, ¿De qué tipo es?', 3, 1, '1', 16, 1, '1');
-INSERT INTO `preguntas` VALUES (61, '¿Recibe asistencia médica?', 4, 1, '1', 17, 1, '1');
-INSERT INTO `preguntas` VALUES (62, 'Indique el tipo de asistencia médica', 3, 1, '1', 18, 1, '1');
-INSERT INTO `preguntas` VALUES (63, 'Título obtenido en:', 4, 2, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (64, 'Calificación de grado del Bachillerato', 1, 2, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (65, '¿Cuántos años de escolaridad (secundaria) pasó en total hasta adquirir la calificación de ingreso a la educación superior? (incluir años de clases repetitivas)', 1, 2, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (66, 'Título obtenido (UTEQ)', 4, 3, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (67, 'Año en el que ingresó (UTEQ)', 1, 3, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (68, 'Año en el que se incorporó (UTEQ)', 1, 3, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (69, 'Promedio de graduación', 1, 3, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (70, 'Pertenece a algún Colegio de Profesionales, nombre del Colegio', 1, 3, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (71, 'Facultad', 4, 3, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (72, '¿Estudió la carrera universitaria que eligió en primera opción?', 4, 3, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (73, '¿Cuánto tiempo estudió en la UTEQ para obtener el título?', 2, 3, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (74, 'Si trabajó durante la carrera que estudió, ¿hasta qué punto sus experiencias de trabajo (empleo) se relacionaron con el contenido de sus estudios?', 4, 3, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (75, 'Actividad que desempeña actualmente.', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (76, '¿Qué tiempo transcurrió para obtener su primer empleo? ', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (77, '¿Cómo trató de encontrar su primer empleo después de la graduación? Múltiples respuestas son posibles.', 3, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (78, '¿Cuáles fueron los requisitos de la empresa o del primer empleador para contratarlo? Seleccionar 1 o más', 3, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (79, 'Nombre de la Empresa:', 1, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (80, 'Lugar de trabajo (provincia, cantón, parroquia, etc.):', 2, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (81, 'Dirección de la Empresa: ', 1, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (82, 'Teléfono: ', 1, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (83, 'Email:', 1, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (84, 'Cargo que desempeña:  ', 1, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (87, 'Tiempo que lleva en la empresa: ', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (88, 'Tiempo que lleva en el cargo:', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (90, 'Nivel jerárquico', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (91, 'Condición de Trabajo', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (92, 'Relación del trabajo con su área de formación', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (93, 'Tipo de la empresa', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (94, 'Tamaño de la empresa u organización', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (95, 'Sector Económico de la Empresa u Organización', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (96, 'Señale en la siguiente escala su ingreso salarial mensual actual', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (97, 'Si usted trabaja actualmente o trabaja por cuenta propia: ¿Cómo describiría su situación profesional actual?', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (98, 'Señale por lo menos cinco competencias genéricas que usted considera más importantes en su trabajo', 3, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (99, '¿Teniendo en cuenta todos los aspectos, hasta qué punto su actual situación laboral coincide con las expectativas que tenía cuando empezó sus estudios universitarios? ', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (100, '¿Hasta qué punto utiliza los conocimientos y habilidades que adquirió durante sus estudios universitarios?', 4, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (101, 'Si considera su trabajo como escasamente apropiado y no relacionado con su educación: ¿por qué lo aceptó? Posible respuesta  múltiple', 3, 4, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (102, '¿Está satisfecho con los conocimientos adquiridos durante sus estudios en la UTEQ?', 4, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (103, '¿Por qué?', 1, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (104, '¿Cómo calificaría la utilidad de las prácticas pre profesionales (pasantías) para su desarrollo profesional y laboral? ', 4, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (105, 'La bibliografía y el material sugerido por los docentes fue: ', 4, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (106, 'Considera que los contenidos de las asignaturas, vistas a lo largo de la carrera, resultaron', 4, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (107, '¿Con qué frecuencia visita usted la UTEQ? ', 4, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (108, '¿Qué áreas reforzarías de tu plan de estudios?', 1, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (109, '¿Qué asignaturas considera que deben eliminarse del plan de estudios?', 1, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (110, '¿Cuáles son las asignaturas que han contribuido al desarrollo profesional?', 1, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (111, '¿Hasta qué punto su ocupación se corresponde con su nivel de educación?', 4, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (112, '¿Cómo valoraría las facilidades y condiciones de estudio que experimentó durante el curso de los estudios de los cuales se graduó?', 12, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (113, '¿Ha realizado trabajos de investigación científica hasta presente fecha? ', 4, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (114, '¿Ha publicado su investigación científica? ', 4, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (115, 'Seleccione el tipo de foro en el que ha publicado sus investigaciones (sólo si respondió SI en la pregunta previa).  ', 2, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (116, 'Ha generado alguna patente o producto reconocido por el instituto de propiedad intelectual.  ', 4, 5, '1', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (120, '_prueba mod1', 3, 6, '0', 0, 1, '1');
-INSERT INTO `preguntas` VALUES (121, 'Nombre:', 1, 6, '1', NULL, 2, '1');
-INSERT INTO `preguntas` VALUES (122, 'Direccion:', 1, 6, '1', NULL, 2, '1');
-INSERT INTO `preguntas` VALUES (123, 'dir', 1, 6, '1', NULL, 2, '1');
-INSERT INTO `preguntas` VALUES (124, 'ninguna', 1, 6, '1', NULL, 2, '1');
-INSERT INTO `preguntas` VALUES (303, 'Nombres:', 1, 6, '1', 2, 3, '1');
-INSERT INTO `preguntas` VALUES (304, 'Apellidos:', 1, 6, '1', 3, 3, '1');
-INSERT INTO `preguntas` VALUES (305, 'Cédula de Identidad', 1, 6, '1', 1, 3, '1');
-INSERT INTO `preguntas` VALUES (306, 'Fecha de Nacimiento', 1, 6, '1', 4, 3, '1');
-INSERT INTO `preguntas` VALUES (307, 'Estado Civil', 4, 6, '1', 5, 3, '1');
-INSERT INTO `preguntas` VALUES (308, 'País de nacimiento ', 1, 6, '1', 6, 3, '1');
-INSERT INTO `preguntas` VALUES (309, 'Dirección Domiciliaria', 2, 6, '1', 7, 3, '1');
-INSERT INTO `preguntas` VALUES (310, 'Teléfonos', 2, 6, '1', 8, 3, '1');
-INSERT INTO `preguntas` VALUES (311, 'Correo(s) Electrónico(s)', 1, 6, '1', 9, 3, '1');
-INSERT INTO `preguntas` VALUES (312, 'Genero', 4, 6, '1', 10, 3, '1');
-INSERT INTO `preguntas` VALUES (313, '¿Cuenta con sus padres vivos?', 3, 1, '1', 1, 3, '1');
-INSERT INTO `preguntas` VALUES (314, '¿Con quién  vive actualmente? ', 3, 1, '1', 2, 3, '1');
-INSERT INTO `preguntas` VALUES (315, 'Nivel de formación del padre', 4, 1, '1', 3, 3, '1');
-INSERT INTO `preguntas` VALUES (316, 'Nivel de formación de la madre', 4, 1, '1', 4, 3, '1');
-INSERT INTO `preguntas` VALUES (317, '¿Tiene hermanos? ', 4, 1, '1', 5, 3, '1');
-INSERT INTO `preguntas` VALUES (318, '¿Cuántos hermanos tiene?', 1, 1, '1', 6, 3, '1');
-INSERT INTO `preguntas` VALUES (319, '¿Cuántos miembros conforman su hogar?', 1, 1, '1', 7, 3, '1');
-INSERT INTO `preguntas` VALUES (320, 'Total de ingresos mensuales en el hogar', 1, 1, '1', 8, 3, '1');
-INSERT INTO `preguntas` VALUES (321, '¿Qué tipo de colegio? ', 4, 2, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (322, 'Nombre del colegio donde se graduó:', 1, 2, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (323, '¿Cuántas horas por semana dedicó en promedio durante sus estudios a cada una de las siguientes actividades? Estimar', 5, 3, '2', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (324, '¿Cuántos meses transcurridos entre el ingreso a la Universidad y la graduación, pasó predominantemente en?:', 6, 3, '2', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (325, '¿Qué conocimientos sobre informática poseía en el momento que se graduó y actualmente?', 7, 3, '2', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (326, 'Describa sus experiencias laborales más relevantes antes de su trabajo actual.', 8, 4, '2', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (327, 'Después de la graduación, ¿emprendió otros estudios/formación adicional (cursos de posgrado, cursos, seminarios, cursos no completados, etc.) relacionados con su profesión? Excluya los que NO considere que están relacionados con su trabajo', 9, 3, '2', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (328, '¿Cómo califica su nivel de competencia en un idioma extranjero en el momento de egresar de la Universidad?  Responda con respeto a cualquier idioma en la lista y marque el tipo de competencia en cada fila. Respuesta múltiple posible en cada fila', 10, 3, '2', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (329, '¿Cómo califica su nivel de competencia de un  idioma extranjero actualmente?  Responda respeto a cualquier idioma en la lista. Respuesta múltiple posible en cada fila', 11, 3, '2', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (330, 'Principal ocupación del padre', 4, 1, '1', 9, 3, '1');
-INSERT INTO `preguntas` VALUES (331, 'Principal ocupación de la madre', 4, 1, '1', 10, 3, '1');
-INSERT INTO `preguntas` VALUES (332, '¿Cómo fue el financiamiento de sus estudios de grado?', 3, 1, '1', 11, 3, '1');
-INSERT INTO `preguntas` VALUES (333, 'Indique los Egresos Familiares Mensuales', 1, 1, '1', 12, 3, '1');
-INSERT INTO `preguntas` VALUES (334, 'La vivienda que dispone es', 4, 1, '1', 13, 3, '1');
-INSERT INTO `preguntas` VALUES (335, '¿Cuenta con los servicios básicos?', 3, 1, '1', 14, 3, '1');
-INSERT INTO `preguntas` VALUES (336, '¿Tiene alguna capacidad especial?', 4, 1, '1', 15, 3, '1');
-INSERT INTO `preguntas` VALUES (337, 'En caso de tener capacidad especial, ¿De qué tipo es?', 3, 1, '1', 16, 3, '1');
-INSERT INTO `preguntas` VALUES (338, '¿Recibe asistencia médica?', 4, 1, '1', 17, 3, '1');
-INSERT INTO `preguntas` VALUES (339, 'Indique el tipo de asistencia médica', 3, 1, '1', 18, 3, '1');
-INSERT INTO `preguntas` VALUES (340, 'Título obtenido en:', 4, 2, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (341, 'Calificación de grado del Bachillerato', 1, 2, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (342, '¿Cuántos años de escolaridad (secundaria) pasó en total hasta adquirir la calificación de ingreso a la educación superior? (incluir años de clases repetitivas)', 1, 2, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (343, 'Título obtenido (UTEQ)', 4, 3, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (344, 'Año en el que ingresó (UTEQ)', 1, 3, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (345, 'Año en el que se incorporó (UTEQ)', 1, 3, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (346, 'Promedio de graduación', 1, 3, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (347, 'Pertenece a algún Colegio de Profesionales, nombre del Colegio', 1, 3, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (348, 'Facultad', 4, 3, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (349, '¿Estudió la carrera universitaria que eligió en primera opción?', 4, 3, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (350, '¿Cuánto tiempo estudió en la UTEQ para obtener el título?', 2, 3, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (351, 'Si trabajó durante la carrera que estudió, ¿hasta qué punto sus experiencias de trabajo (empleo) se relacionaron con el contenido de sus estudios?', 4, 3, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (352, 'Actividad que desempeña actualmente.', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (353, '¿Qué tiempo transcurrió para obtener su primer empleo? ', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (354, '¿Cómo trató de encontrar su primer empleo después de la graduación? Múltiples respuestas son posibles.', 3, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (355, '¿Cuáles fueron los requisitos de la empresa o del primer empleador para contratarlo? Seleccionar 1 o más', 3, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (356, 'Nombre de la Empresa:', 1, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (357, 'Lugar de trabajo (provincia, cantón, parroquia, etc.):', 2, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (358, 'Dirección de la Empresa: ', 1, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (359, 'Teléfono: ', 1, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (360, 'Email:', 1, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (361, 'Cargo que desempeña:  ', 1, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (362, 'Tiempo que lleva en la empresa: ', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (363, 'Tiempo que lleva en el cargo:', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (364, 'Nivel jerárquico', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (365, 'Condición de Trabajo', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (366, 'Relación del trabajo con su área de formación', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (367, 'Tipo de la empresa', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (368, 'Tamaño de la empresa u organización', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (369, 'Sector Económico de la Empresa u Organización', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (370, 'Señale en la siguiente escala su ingreso salarial mensual actual', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (371, 'Si usted trabaja actualmente o trabaja por cuenta propia: ¿Cómo describiría su situación profesional actual?', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (372, 'Señale por lo menos cinco competencias genéricas que usted considera más importantes en su trabajo', 3, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (373, '¿Teniendo en cuenta todos los aspectos, hasta qué punto su actual situación laboral coincide con las expectativas que tenía cuando empezó sus estudios universitarios? ', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (374, '¿Hasta qué punto utiliza los conocimientos y habilidades que adquirió durante sus estudios universitarios?', 4, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (375, 'Si considera su trabajo como escasamente apropiado y no relacionado con su educación: ¿por qué lo aceptó? Posible respuesta  múltiple', 3, 4, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (376, '¿Está satisfecho con los conocimientos adquiridos durante sus estudios en la UTEQ?', 4, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (377, '¿Por qué?', 1, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (378, '¿Cómo calificaría la utilidad de las prácticas pre profesionales (pasantías) para su desarrollo profesional y laboral? ', 4, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (379, 'La bibliografía y el material sugerido por los docentes fue: ', 4, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (380, 'Considera que los contenidos de las asignaturas, vistas a lo largo de la carrera, resultaron', 4, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (381, '¿Con qué frecuencia visita usted la UTEQ? ', 4, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (382, '¿Qué áreas reforzarías de tu plan de estudios?', 1, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (383, '¿Qué asignaturas considera que deben eliminarse del plan de estudios?', 1, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (384, '¿Cuáles son las asignaturas que han contribuido al desarrollo profesional?', 1, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (385, '¿Hasta qué punto su ocupación se corresponde con su nivel de educación?', 4, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (386, '¿Cómo valoraría las facilidades y condiciones de estudio que experimentó durante el curso de los estudios de los cuales se graduó?', 12, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (387, '¿Ha realizado trabajos de investigación científica hasta presente fecha? ', 4, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (388, '¿Ha publicado su investigación científica? ', 4, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (389, 'Seleccione el tipo de foro en el que ha publicado sus investigaciones (sólo si respondió SI en la pregunta previa).  ', 2, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (390, 'Ha generado alguna patente o producto reconocido por el instituto de propiedad intelectual.  ', 4, 5, '1', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (391, '_prueba mod1', 3, 6, '0', 0, 3, '1');
-INSERT INTO `preguntas` VALUES (392, 'Nombres:', 1, 6, '1', 2, 2, '1');
-INSERT INTO `preguntas` VALUES (393, 'Apellidos:', 1, 6, '1', 3, 2, '1');
-INSERT INTO `preguntas` VALUES (394, 'Cédula de Identidad', 1, 6, '1', 1, 2, '1');
-INSERT INTO `preguntas` VALUES (395, 'Fecha de Nacimiento', 1, 6, '1', 4, 2, '1');
-INSERT INTO `preguntas` VALUES (396, 'Estado Civil', 4, 6, '1', 5, 2, '1');
-INSERT INTO `preguntas` VALUES (397, 'País de nacimiento ', 1, 6, '1', 6, 2, '1');
-INSERT INTO `preguntas` VALUES (398, 'Dirección Domiciliaria', 2, 6, '1', 7, 2, '1');
-INSERT INTO `preguntas` VALUES (399, 'Teléfonos', 2, 6, '1', 8, 2, '1');
-INSERT INTO `preguntas` VALUES (400, 'Correo(s) Electrónico(s)', 1, 6, '1', 9, 2, '1');
-INSERT INTO `preguntas` VALUES (401, 'Genero', 4, 6, '1', 10, 2, '1');
-INSERT INTO `preguntas` VALUES (402, '¿Cuenta con sus padres vivos?', 3, 1, '1', 1, 2, '1');
-INSERT INTO `preguntas` VALUES (403, '¿Con quién  vive actualmente? ', 3, 1, '1', 2, 2, '1');
-INSERT INTO `preguntas` VALUES (404, 'Nivel de formación del padre', 4, 1, '1', 3, 2, '1');
-INSERT INTO `preguntas` VALUES (405, 'Nivel de formación de la madre', 4, 1, '1', 4, 2, '1');
-INSERT INTO `preguntas` VALUES (406, '¿Tiene hermanos? ', 4, 1, '1', 5, 2, '1');
-INSERT INTO `preguntas` VALUES (407, '¿Cuántos hermanos tiene?', 1, 1, '1', 6, 2, '1');
-INSERT INTO `preguntas` VALUES (408, '¿Cuántos miembros conforman su hogar?', 1, 1, '1', 7, 2, '1');
-INSERT INTO `preguntas` VALUES (409, 'Total de ingresos mensuales en el hogar', 1, 1, '1', 8, 2, '1');
-INSERT INTO `preguntas` VALUES (410, '¿Qué tipo de colegio? ', 4, 2, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (411, 'Nombre del colegio donde se graduó:', 1, 2, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (412, '¿Cuántas horas por semana dedicó en promedio durante sus estudios a cada una de las siguientes actividades? Estimar', 5, 3, '2', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (413, '¿Cuántos meses transcurridos entre el ingreso a la Universidad y la graduación, pasó predominantemente en?:', 6, 3, '2', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (414, '¿Qué conocimientos sobre informática poseía en el momento que se graduó y actualmente?', 7, 3, '2', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (415, 'Describa sus experiencias laborales más relevantes antes de su trabajo actual.', 8, 4, '2', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (416, 'Después de la graduación, ¿emprendió otros estudios/formación adicional (cursos de posgrado, cursos, seminarios, cursos no completados, etc.) relacionados con su profesión? Excluya los que NO considere que están relacionados con su trabajo', 9, 3, '2', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (417, '¿Cómo califica su nivel de competencia en un idioma extranjero en el momento de egresar de la Universidad?  Responda con respeto a cualquier idioma en la lista y marque el tipo de competencia en cada fila. Respuesta múltiple posible en cada fila', 10, 3, '2', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (418, '¿Cómo califica su nivel de competencia de un  idioma extranjero actualmente?  Responda respeto a cualquier idioma en la lista. Respuesta múltiple posible en cada fila', 11, 3, '2', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (419, 'Principal ocupación del padre', 4, 1, '1', 9, 2, '1');
-INSERT INTO `preguntas` VALUES (420, 'Principal ocupación de la madre', 4, 1, '1', 10, 2, '1');
-INSERT INTO `preguntas` VALUES (421, '¿Cómo fue el financiamiento de sus estudios de grado?', 3, 1, '1', 11, 2, '1');
-INSERT INTO `preguntas` VALUES (422, 'Indique los Egresos Familiares Mensuales', 1, 1, '1', 12, 2, '1');
-INSERT INTO `preguntas` VALUES (423, 'La vivienda que dispone es', 4, 1, '1', 13, 2, '1');
-INSERT INTO `preguntas` VALUES (424, '¿Cuenta con los servicios básicos?', 3, 1, '1', 14, 2, '1');
-INSERT INTO `preguntas` VALUES (425, '¿Tiene alguna capacidad especial?', 4, 1, '1', 15, 2, '1');
-INSERT INTO `preguntas` VALUES (426, 'En caso de tener capacidad especial, ¿De qué tipo es?', 3, 1, '1', 16, 2, '1');
-INSERT INTO `preguntas` VALUES (427, '¿Recibe asistencia médica?', 4, 1, '1', 17, 2, '1');
-INSERT INTO `preguntas` VALUES (428, 'Indique el tipo de asistencia médica', 3, 1, '1', 18, 2, '1');
-INSERT INTO `preguntas` VALUES (429, 'Título obtenido en:', 4, 2, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (430, 'Calificación de grado del Bachillerato', 1, 2, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (431, '¿Cuántos años de escolaridad (secundaria) pasó en total hasta adquirir la calificación de ingreso a la educación superior? (incluir años de clases repetitivas)', 1, 2, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (432, 'Título obtenido (UTEQ)', 4, 3, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (433, 'Año en el que ingresó (UTEQ)', 1, 3, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (434, 'Año en el que se incorporó (UTEQ)', 1, 3, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (435, 'Promedio de graduación', 1, 3, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (436, 'Pertenece a algún Colegio de Profesionales, nombre del Colegio', 1, 3, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (437, 'Facultad', 4, 3, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (438, '¿Estudió la carrera universitaria que eligió en primera opción?', 4, 3, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (439, '¿Cuánto tiempo estudió en la UTEQ para obtener el título?', 2, 3, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (440, 'Si trabajó durante la carrera que estudió, ¿hasta qué punto sus experiencias de trabajo (empleo) se relacionaron con el contenido de sus estudios?', 4, 3, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (441, 'Actividad que desempeña actualmente.', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (442, '¿Qué tiempo transcurrió para obtener su primer empleo? ', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (443, '¿Cómo trató de encontrar su primer empleo después de la graduación? Múltiples respuestas son posibles.', 3, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (444, '¿Cuáles fueron los requisitos de la empresa o del primer empleador para contratarlo? Seleccionar 1 o más', 3, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (445, 'Nombre de la Empresa:', 1, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (446, 'Lugar de trabajo (provincia, cantón, parroquia, etc.):', 2, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (447, 'Dirección de la Empresa: ', 1, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (448, 'Teléfono: ', 1, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (449, 'Email:', 1, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (450, 'Cargo que desempeña:  ', 1, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (451, 'Tiempo que lleva en la empresa: ', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (452, 'Tiempo que lleva en el cargo:', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (453, 'Nivel jerárquico', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (454, 'Condición de Trabajo', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (455, 'Relación del trabajo con su área de formación', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (456, 'Tipo de la empresa', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (457, 'Tamaño de la empresa u organización', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (458, 'Sector Económico de la Empresa u Organización', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (459, 'Señale en la siguiente escala su ingreso salarial mensual actual', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (460, 'Si usted trabaja actualmente o trabaja por cuenta propia: ¿Cómo describiría su situación profesional actual?', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (461, 'Señale por lo menos cinco competencias genéricas que usted considera más importantes en su trabajo', 3, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (462, '¿Teniendo en cuenta todos los aspectos, hasta qué punto su actual situación laboral coincide con las expectativas que tenía cuando empezó sus estudios universitarios? ', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (463, '¿Hasta qué punto utiliza los conocimientos y habilidades que adquirió durante sus estudios universitarios?', 4, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (464, 'Si considera su trabajo como escasamente apropiado y no relacionado con su educación: ¿por qué lo aceptó? Posible respuesta  múltiple', 3, 4, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (465, '¿Está satisfecho con los conocimientos adquiridos durante sus estudios en la UTEQ?', 4, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (466, '¿Por qué?', 1, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (467, '¿Cómo calificaría la utilidad de las prácticas pre profesionales (pasantías) para su desarrollo profesional y laboral? ', 4, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (468, 'La bibliografía y el material sugerido por los docentes fue: ', 4, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (469, 'Considera que los contenidos de las asignaturas, vistas a lo largo de la carrera, resultaron', 4, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (470, '¿Con qué frecuencia visita usted la UTEQ? ', 4, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (471, '¿Qué áreas reforzarías de tu plan de estudios?', 1, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (472, '¿Qué asignaturas considera que deben eliminarse del plan de estudios?', 1, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (473, '¿Cuáles son las asignaturas que han contribuido al desarrollo profesional?', 1, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (474, '¿Hasta qué punto su ocupación se corresponde con su nivel de educación?', 4, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (475, '¿Cómo valoraría las facilidades y condiciones de estudio que experimentó durante el curso de los estudios de los cuales se graduó?', 12, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (476, '¿Ha realizado trabajos de investigación científica hasta presente fecha? ', 4, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (477, '¿Ha publicado su investigación científica? ', 4, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (478, 'Seleccione el tipo de foro en el que ha publicado sus investigaciones (sólo si respondió SI en la pregunta previa).  ', 2, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (479, 'Ha generado alguna patente o producto reconocido por el instituto de propiedad intelectual.  ', 4, 5, '1', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (480, '_prueba mod1', 3, 6, '0', 0, 2, '1');
-INSERT INTO `preguntas` VALUES (481, 'q', 5, 6, '0', 0, 4, '1');
-INSERT INTO `preguntas` VALUES (482, 'casual', 1, 6, '1', 0, 4, '1');
-INSERT INTO `preguntas` VALUES (483, 'Prueba tabla', 5, 6, '1', 0, 4, '1');
-INSERT INTO `preguntas` VALUES (484, 'Nombres:', 1, 6, '1', 2, 10, '1');
-INSERT INTO `preguntas` VALUES (485, 'Apellidos:', 1, 6, '1', 3, 10, '1');
-INSERT INTO `preguntas` VALUES (486, 'Cédula de Identidad', 1, 6, '1', 1, 10, '1');
-INSERT INTO `preguntas` VALUES (487, 'Fecha de Nacimiento', 1, 6, '1', 4, 10, '1');
-INSERT INTO `preguntas` VALUES (488, 'Estado Civil', 4, 6, '1', 5, 10, '1');
-INSERT INTO `preguntas` VALUES (489, 'País de nacimiento ', 1, 6, '1', 6, 10, '1');
-INSERT INTO `preguntas` VALUES (490, 'Dirección Domiciliaria', 2, 6, '1', 7, 10, '1');
-INSERT INTO `preguntas` VALUES (491, 'Teléfonos', 2, 6, '1', 8, 10, '1');
-INSERT INTO `preguntas` VALUES (492, 'Correo(s) Electrónico(s)', 1, 6, '1', 9, 10, '1');
-INSERT INTO `preguntas` VALUES (493, 'Genero', 4, 6, '1', 10, 10, '1');
-INSERT INTO `preguntas` VALUES (494, '¿Cuenta con sus padres vivos?', 3, 1, '1', 1, 10, '1');
-INSERT INTO `preguntas` VALUES (495, '¿Con quién  vive actualmente? ', 3, 1, '1', 2, 10, '1');
-INSERT INTO `preguntas` VALUES (496, 'Nivel de formación del padre', 4, 1, '1', 3, 10, '1');
-INSERT INTO `preguntas` VALUES (497, 'Nivel de formación de la madre', 4, 1, '1', 4, 10, '1');
-INSERT INTO `preguntas` VALUES (498, '¿Tiene hermanos? ', 4, 1, '1', 5, 10, '1');
-INSERT INTO `preguntas` VALUES (499, '¿Cuántos hermanos tiene?', 1, 1, '1', 6, 10, '1');
-INSERT INTO `preguntas` VALUES (500, '¿Cuántos miembros conforman su hogar?', 1, 1, '1', 7, 10, '1');
-INSERT INTO `preguntas` VALUES (501, 'Total de ingresos mensuales en el hogar', 1, 1, '1', 8, 10, '1');
-INSERT INTO `preguntas` VALUES (502, '¿Qué tipo de colegio? ', 4, 2, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (503, 'Nombre del colegio donde se graduó:', 1, 2, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (504, '¿Cuántas horas por semana dedicó en promedio durante sus estudios a cada una de las siguientes actividades? Estimar', 5, 3, '2', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (505, '¿Cuántos meses transcurridos entre el ingreso a la Universidad y la graduación, pasó predominantemente en?:', 6, 3, '2', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (506, '¿Qué conocimientos sobre informática poseía en el momento que se graduó y actualmente?', 7, 3, '2', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (507, 'Describa sus experiencias laborales más relevantes antes de su trabajo actual.', 8, 4, '2', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (508, 'Después de la graduación, ¿emprendió otros estudios/formación adicional (cursos de posgrado, cursos, seminarios, cursos no completados, etc.) relacionados con su profesión? Excluya los que NO considere que están relacionados con su trabajo', 9, 3, '2', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (509, '¿Cómo califica su nivel de competencia en un idioma extranjero en el momento de egresar de la Universidad?  Responda con respeto a cualquier idioma en la lista y marque el tipo de competencia en cada fila. Respuesta múltiple posible en cada fila', 10, 3, '2', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (510, '¿Cómo califica su nivel de competencia de un  idioma extranjero actualmente?  Responda respeto a cualquier idioma en la lista. Respuesta múltiple posible en cada fila', 11, 3, '2', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (511, 'Principal ocupación del padre', 4, 1, '1', 9, 10, '1');
-INSERT INTO `preguntas` VALUES (512, 'Principal ocupación de la madre', 4, 1, '1', 10, 10, '1');
-INSERT INTO `preguntas` VALUES (513, '¿Cómo fue el financiamiento de sus estudios de grado?', 3, 1, '1', 11, 10, '1');
-INSERT INTO `preguntas` VALUES (514, 'Indique los Egresos Familiares Mensuales', 1, 1, '1', 12, 10, '1');
-INSERT INTO `preguntas` VALUES (515, 'La vivienda que dispone es', 4, 1, '1', 13, 10, '1');
-INSERT INTO `preguntas` VALUES (516, '¿Cuenta con los servicios básicos?', 3, 1, '1', 14, 10, '1');
-INSERT INTO `preguntas` VALUES (517, '¿Tiene alguna capacidad especial?', 4, 1, '1', 15, 10, '1');
-INSERT INTO `preguntas` VALUES (518, 'En caso de tener capacidad especial, ¿De qué tipo es?', 3, 1, '1', 16, 10, '1');
-INSERT INTO `preguntas` VALUES (519, '¿Recibe asistencia médica?', 4, 1, '1', 17, 10, '1');
-INSERT INTO `preguntas` VALUES (520, 'Indique el tipo de asistencia médica', 3, 1, '1', 18, 10, '1');
-INSERT INTO `preguntas` VALUES (521, 'Título obtenido en:', 4, 2, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (522, 'Calificación de grado del Bachillerato', 1, 2, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (523, '¿Cuántos años de escolaridad (secundaria) pasó en total hasta adquirir la calificación de ingreso a la educación superior? (incluir años de clases repetitivas)', 1, 2, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (524, 'Título obtenido (UTEQ)', 4, 3, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (525, 'Año en el que ingresó (UTEQ)', 1, 3, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (526, 'Año en el que se incorporó (UTEQ)', 1, 3, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (527, 'Promedio de graduación', 1, 3, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (528, 'Pertenece a algún Colegio de Profesionales, nombre del Colegio', 1, 3, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (529, 'Facultad', 4, 3, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (530, '¿Estudió la carrera universitaria que eligió en primera opción?', 4, 3, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (531, '¿Cuánto tiempo estudió en la UTEQ para obtener el título?', 2, 3, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (532, 'Si trabajó durante la carrera que estudió, ¿hasta qué punto sus experiencias de trabajo (empleo) se relacionaron con el contenido de sus estudios?', 4, 3, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (533, 'Actividad que desempeña actualmente.', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (534, '¿Qué tiempo transcurrió para obtener su primer empleo? ', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (535, '¿Cómo trató de encontrar su primer empleo después de la graduación? Múltiples respuestas son posibles.', 3, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (536, '¿Cuáles fueron los requisitos de la empresa o del primer empleador para contratarlo? Seleccionar 1 o más', 3, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (537, 'Nombre de la Empresa:', 1, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (538, 'Lugar de trabajo (provincia, cantón, parroquia, etc.):', 2, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (539, 'Dirección de la Empresa: ', 1, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (540, 'Teléfono: ', 1, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (541, 'Email:', 1, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (542, 'Cargo que desempeña:  ', 1, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (543, 'Tiempo que lleva en la empresa: ', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (544, 'Tiempo que lleva en el cargo:', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (545, 'Nivel jerárquico', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (546, 'Condición de Trabajo', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (547, 'Relación del trabajo con su área de formación', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (548, 'Tipo de la empresa', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (549, 'Tamaño de la empresa u organización', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (550, 'Sector Económico de la Empresa u Organización', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (551, 'Señale en la siguiente escala su ingreso salarial mensual actual', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (552, 'Si usted trabaja actualmente o trabaja por cuenta propia: ¿Cómo describiría su situación profesional actual?', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (553, 'Señale por lo menos cinco competencias genéricas que usted considera más importantes en su trabajo', 3, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (554, '¿Teniendo en cuenta todos los aspectos, hasta qué punto su actual situación laboral coincide con las expectativas que tenía cuando empezó sus estudios universitarios? ', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (555, '¿Hasta qué punto utiliza los conocimientos y habilidades que adquirió durante sus estudios universitarios?', 4, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (556, 'Si considera su trabajo como escasamente apropiado y no relacionado con su educación: ¿por qué lo aceptó? Posible respuesta  múltiple', 3, 4, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (557, '¿Está satisfecho con los conocimientos adquiridos durante sus estudios en la UTEQ?', 4, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (558, '¿Por qué?', 1, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (559, '¿Cómo calificaría la utilidad de las prácticas pre profesionales (pasantías) para su desarrollo profesional y laboral? ', 4, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (560, 'La bibliografía y el material sugerido por los docentes fue: ', 4, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (561, 'Considera que los contenidos de las asignaturas, vistas a lo largo de la carrera, resultaron', 4, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (562, '¿Con qué frecuencia visita usted la UTEQ? ', 4, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (563, '¿Qué áreas reforzarías de tu plan de estudios?', 1, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (564, '¿Qué asignaturas considera que deben eliminarse del plan de estudios?', 1, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (565, '¿Cuáles son las asignaturas que han contribuido al desarrollo profesional?', 1, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (566, '¿Hasta qué punto su ocupación se corresponde con su nivel de educación?', 4, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (567, '¿Cómo valoraría las facilidades y condiciones de estudio que experimentó durante el curso de los estudios de los cuales se graduó?', 12, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (568, '¿Ha realizado trabajos de investigación científica hasta presente fecha? ', 4, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (569, '¿Ha publicado su investigación científica? ', 4, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (570, 'Seleccione el tipo de foro en el que ha publicado sus investigaciones (sólo si respondió SI en la pregunta previa).  ', 2, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (571, 'Ha generado alguna patente o producto reconocido por el instituto de propiedad intelectual.  ', 4, 5, '1', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (572, '_prueba mod1', 3, 6, '0', 0, 10, '1');
-INSERT INTO `preguntas` VALUES (573, 'tabla1', 5, 6, '1', 0, 11, '1');
-INSERT INTO `preguntas` VALUES (574, 'tabla 2', 5, 1, '1', 0, 11, '1');
-INSERT INTO `preguntas` VALUES (575, 'tabla new', 5, 6, '0', 0, 11, '1');
-INSERT INTO `preguntas` VALUES (576, 'tb new', 5, 1, '0', 0, 11, '1');
-INSERT INTO `preguntas` VALUES (577, 'tb new 1', 5, 6, '1', 0, 11, '1');
-INSERT INTO `preguntas` VALUES (578, 'tabla1', 5, 6, '1', 0, 12, '1');
-INSERT INTO `preguntas` VALUES (579, 'tabla 2', 5, 1, '1', 0, 12, '1');
-INSERT INTO `preguntas` VALUES (580, 'tabla new', 5, 6, '0', 0, 12, '1');
-INSERT INTO `preguntas` VALUES (581, 'tb new', 5, 1, '0', 0, 12, '1');
-INSERT INTO `preguntas` VALUES (582, 'tb new 1', 5, 6, '1', 0, 12, '1');
-INSERT INTO `preguntas` VALUES (583, 'Test cambio tipo', 5, 6, '1', 0, 13, '1');
-INSERT INTO `preguntas` VALUES (584, 'Test Ingreso Simple', 1, 6, '1', 0, 13, '1');
-INSERT INTO `preguntas` VALUES (585, 'Test Ingreso Multiple', 2, 6, '1', 0, 13, '1');
-INSERT INTO `preguntas` VALUES (586, 'tabla sin col dom', 5, 6, '1', 0, 13, '1');
-INSERT INTO `preguntas` VALUES (587, 'seleccion multiple', 3, 6, '1', 0, 13, '1');
-INSERT INTO `preguntas` VALUES (588, 'Seleccion Unica', 4, 6, '1', 0, 13, '1');
+INSERT INTO `preguntas` VALUES (24, 'Nombres:', 1, 6, '1', 2, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (25, 'Apellidos:', 1, 6, '1', 3, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (26, 'Cédula de Identidad', 1, 6, '1', 1, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (27, 'Fecha de Nacimiento', 1, 6, '1', 4, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (29, 'Estado Civil', 4, 6, '1', 5, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (30, 'País de nacimiento ', 1, 6, '1', 6, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (31, 'Dirección Domiciliaria', 2, 6, '1', 7, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (32, 'Teléfonos', 2, 6, '1', 8, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (33, 'Correo(s) Electrónico(s)', 1, 6, '1', 9, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (34, 'Genero', 4, 6, '1', 10, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (35, '¿Cuenta con sus padres vivos?', 3, 1, '1', 1, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (36, '¿Con quién  vive actualmente? ', 3, 1, '1', 2, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (37, 'Nivel de formación del padre', 4, 1, '1', 3, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (38, 'Nivel de formación de la madre', 4, 1, '1', 4, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (39, '¿Tiene hermanos? ', 4, 1, '1', 5, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (40, '¿Cuántos hermanos tiene?', 1, 1, '1', 6, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (41, '¿Cuántos miembros conforman su hogar?', 1, 1, '1', 7, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (42, 'Total de ingresos mensuales en el hogar', 1, 1, '1', 8, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (43, '¿Qué tipo de colegio? ', 4, 2, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (44, 'Nombre del colegio donde se graduó:', 1, 2, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (45, '¿Cuántas horas por semana dedicó en promedio durante sus estudios a cada una de las siguientes actividades? Estimar', 5, 3, '2', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (46, '¿Cuántos meses transcurridos entre el ingreso a la Universidad y la graduación, pasó predominantemente en?:', 6, 3, '2', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (47, '¿Qué conocimientos sobre informática poseía en el momento que se graduó y actualmente?', 7, 3, '2', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (48, 'Describa sus experiencias laborales más relevantes antes de su trabajo actual.', 8, 4, '2', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (49, 'Después de la graduación, ¿emprendió otros estudios/formación adicional (cursos de posgrado, cursos, seminarios, cursos no completados, etc.) relacionados con su profesión? Excluya los que NO considere que están relacionados con su trabajo', 9, 3, '2', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (51, '¿Cómo califica su nivel de competencia en un idioma extranjero en el momento de egresar de la Universidad?  Responda con respeto a cualquier idioma en la lista y marque el tipo de competencia en cada fila. Respuesta múltiple posible en cada fila', 10, 3, '2', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (52, '¿Cómo califica su nivel de competencia de un  idioma extranjero actualmente?  Responda respeto a cualquier idioma en la lista. Respuesta múltiple posible en cada fila', 11, 3, '2', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (53, 'Principal ocupación del padre', 4, 1, '1', 9, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (54, 'Principal ocupación de la madre', 4, 1, '1', 10, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (55, '¿Cómo fue el financiamiento de sus estudios de grado?', 3, 1, '1', 11, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (56, 'Indique los Egresos Familiares Mensuales', 1, 1, '1', 12, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (57, 'La vivienda que dispone es', 4, 1, '1', 13, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (58, '¿Cuenta con los servicios básicos?', 3, 1, '1', 14, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (59, '¿Tiene alguna capacidad especial?', 4, 1, '1', 15, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (60, 'En caso de tener capacidad especial, ¿De qué tipo es?', 3, 1, '1', 16, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (61, '¿Recibe asistencia médica?', 4, 1, '1', 17, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (62, 'Indique el tipo de asistencia médica', 3, 1, '1', 18, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (63, 'Título obtenido en:', 4, 2, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (64, 'Calificación de grado del Bachillerato', 1, 2, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (65, '¿Cuántos años de escolaridad (secundaria) pasó en total hasta adquirir la calificación de ingreso a la educación superior? (incluir años de clases repetitivas)', 1, 2, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (66, 'Título obtenido (UTEQ)', 4, 3, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (67, 'Año en el que ingresó (UTEQ)', 1, 3, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (68, 'Año en el que se incorporó (UTEQ)', 1, 3, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (69, 'Promedio de graduación', 1, 3, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (70, 'Pertenece a algún Colegio de Profesionales, nombre del Colegio', 1, 3, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (71, 'Facultad', 4, 3, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (72, '¿Estudió la carrera universitaria que eligió en primera opción?', 4, 3, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (73, '¿Cuánto tiempo estudió en la UTEQ para obtener el título?', 2, 3, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (74, 'Si trabajó durante la carrera que estudió, ¿hasta qué punto sus experiencias de trabajo (empleo) se relacionaron con el contenido de sus estudios?', 4, 3, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (75, 'Actividad que desempeña actualmente.', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (76, '¿Qué tiempo transcurrió para obtener su primer empleo? ', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (77, '¿Cómo trató de encontrar su primer empleo después de la graduación? Múltiples respuestas son posibles.', 3, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (78, '¿Cuáles fueron los requisitos de la empresa o del primer empleador para contratarlo? Seleccionar 1 o más', 3, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (79, 'Nombre de la Empresa:', 1, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (80, 'Lugar de trabajo (provincia, cantón, parroquia, etc.):', 2, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (81, 'Dirección de la Empresa: ', 1, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (82, 'Teléfono: ', 1, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (83, 'Email:', 1, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (84, 'Cargo que desempeña:  ', 1, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (87, 'Tiempo que lleva en la empresa: ', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (88, 'Tiempo que lleva en el cargo:', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (90, 'Nivel jerárquico', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (91, 'Condición de Trabajo', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (92, 'Relación del trabajo con su área de formación', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (93, 'Tipo de la empresa', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (94, 'Tamaño de la empresa u organización', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (95, 'Sector Económico de la Empresa u Organización', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (96, 'Señale en la siguiente escala su ingreso salarial mensual actual', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (97, 'Si usted trabaja actualmente o trabaja por cuenta propia: ¿Cómo describiría su situación profesional actual?', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (98, 'Señale por lo menos cinco competencias genéricas que usted considera más importantes en su trabajo', 3, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (99, '¿Teniendo en cuenta todos los aspectos, hasta qué punto su actual situación laboral coincide con las expectativas que tenía cuando empezó sus estudios universitarios? ', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (100, '¿Hasta qué punto utiliza los conocimientos y habilidades que adquirió durante sus estudios universitarios?', 4, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (101, 'Si considera su trabajo como escasamente apropiado y no relacionado con su educación: ¿por qué lo aceptó? Posible respuesta  múltiple', 3, 4, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (102, '¿Está satisfecho con los conocimientos adquiridos durante sus estudios en la UTEQ?', 4, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (103, '¿Por qué?', 1, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (104, '¿Cómo calificaría la utilidad de las prácticas pre profesionales (pasantías) para su desarrollo profesional y laboral? ', 4, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (105, 'La bibliografía y el material sugerido por los docentes fue: ', 4, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (106, 'Considera que los contenidos de las asignaturas, vistas a lo largo de la carrera, resultaron', 4, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (107, '¿Con qué frecuencia visita usted la UTEQ? ', 4, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (108, '¿Qué áreas reforzarías de tu plan de estudios?', 1, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (109, '¿Qué asignaturas considera que deben eliminarse del plan de estudios?', 1, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (110, '¿Cuáles son las asignaturas que han contribuido al desarrollo profesional?', 1, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (111, '¿Hasta qué punto su ocupación se corresponde con su nivel de educación?', 4, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (112, '¿Cómo valoraría las facilidades y condiciones de estudio que experimentó durante el curso de los estudios de los cuales se graduó?', 12, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (113, '¿Ha realizado trabajos de investigación científica hasta presente fecha? ', 4, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (114, '¿Ha publicado su investigación científica? ', 4, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (115, 'Seleccione el tipo de foro en el que ha publicado sus investigaciones (sólo si respondió SI en la pregunta previa).  ', 2, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (116, 'Ha generado alguna patente o producto reconocido por el instituto de propiedad intelectual.  ', 4, 5, '1', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (120, '_prueba mod1', 3, 6, '0', 0, 1, '1', NULL);
+INSERT INTO `preguntas` VALUES (121, 'Nombre:', 1, 6, '1', NULL, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (122, 'Direccion:', 1, 6, '1', NULL, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (123, 'dir', 1, 6, '1', NULL, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (124, 'ninguna', 1, 6, '1', NULL, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (303, 'Nombres:', 1, 6, '1', 2, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (304, 'Apellidos:', 1, 6, '1', 3, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (305, 'Cédula de Identidad', 1, 6, '1', 1, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (306, 'Fecha de Nacimiento', 1, 6, '1', 4, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (307, 'Estado Civil', 4, 6, '1', 5, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (308, 'País de nacimiento ', 1, 6, '1', 6, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (309, 'Dirección Domiciliaria', 2, 6, '1', 7, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (310, 'Teléfonos', 2, 6, '1', 8, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (311, 'Correo(s) Electrónico(s)', 1, 6, '1', 9, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (312, 'Genero', 4, 6, '1', 10, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (313, '¿Cuenta con sus padres vivos?', 3, 1, '1', 1, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (314, '¿Con quién  vive actualmente? ', 3, 1, '1', 2, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (315, 'Nivel de formación del padre', 4, 1, '1', 3, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (316, 'Nivel de formación de la madre', 4, 1, '1', 4, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (317, '¿Tiene hermanos? ', 4, 1, '1', 5, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (318, '¿Cuántos hermanos tiene?', 1, 1, '1', 6, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (319, '¿Cuántos miembros conforman su hogar?', 1, 1, '1', 7, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (320, 'Total de ingresos mensuales en el hogar', 1, 1, '1', 8, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (321, '¿Qué tipo de colegio? ', 4, 2, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (322, 'Nombre del colegio donde se graduó:', 1, 2, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (323, '¿Cuántas horas por semana dedicó en promedio durante sus estudios a cada una de las siguientes actividades? Estimar', 5, 3, '2', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (324, '¿Cuántos meses transcurridos entre el ingreso a la Universidad y la graduación, pasó predominantemente en?:', 6, 3, '2', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (325, '¿Qué conocimientos sobre informática poseía en el momento que se graduó y actualmente?', 7, 3, '2', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (326, 'Describa sus experiencias laborales más relevantes antes de su trabajo actual.', 8, 4, '2', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (327, 'Después de la graduación, ¿emprendió otros estudios/formación adicional (cursos de posgrado, cursos, seminarios, cursos no completados, etc.) relacionados con su profesión? Excluya los que NO considere que están relacionados con su trabajo', 9, 3, '2', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (328, '¿Cómo califica su nivel de competencia en un idioma extranjero en el momento de egresar de la Universidad?  Responda con respeto a cualquier idioma en la lista y marque el tipo de competencia en cada fila. Respuesta múltiple posible en cada fila', 10, 3, '2', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (329, '¿Cómo califica su nivel de competencia de un  idioma extranjero actualmente?  Responda respeto a cualquier idioma en la lista. Respuesta múltiple posible en cada fila', 11, 3, '2', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (330, 'Principal ocupación del padre', 4, 1, '1', 9, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (331, 'Principal ocupación de la madre', 4, 1, '1', 10, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (332, '¿Cómo fue el financiamiento de sus estudios de grado?', 3, 1, '1', 11, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (333, 'Indique los Egresos Familiares Mensuales', 1, 1, '1', 12, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (334, 'La vivienda que dispone es', 4, 1, '1', 13, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (335, '¿Cuenta con los servicios básicos?', 3, 1, '1', 14, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (336, '¿Tiene alguna capacidad especial?', 4, 1, '1', 15, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (337, 'En caso de tener capacidad especial, ¿De qué tipo es?', 3, 1, '1', 16, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (338, '¿Recibe asistencia médica?', 4, 1, '1', 17, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (339, 'Indique el tipo de asistencia médica', 3, 1, '1', 18, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (340, 'Título obtenido en:', 4, 2, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (341, 'Calificación de grado del Bachillerato', 1, 2, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (342, '¿Cuántos años de escolaridad (secundaria) pasó en total hasta adquirir la calificación de ingreso a la educación superior? (incluir años de clases repetitivas)', 1, 2, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (343, 'Título obtenido (UTEQ)', 4, 3, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (344, 'Año en el que ingresó (UTEQ)', 1, 3, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (345, 'Año en el que se incorporó (UTEQ)', 1, 3, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (346, 'Promedio de graduación', 1, 3, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (347, 'Pertenece a algún Colegio de Profesionales, nombre del Colegio', 1, 3, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (348, 'Facultad', 4, 3, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (349, '¿Estudió la carrera universitaria que eligió en primera opción?', 4, 3, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (350, '¿Cuánto tiempo estudió en la UTEQ para obtener el título?', 2, 3, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (351, 'Si trabajó durante la carrera que estudió, ¿hasta qué punto sus experiencias de trabajo (empleo) se relacionaron con el contenido de sus estudios?', 4, 3, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (352, 'Actividad que desempeña actualmente.', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (353, '¿Qué tiempo transcurrió para obtener su primer empleo? ', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (354, '¿Cómo trató de encontrar su primer empleo después de la graduación? Múltiples respuestas son posibles.', 3, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (355, '¿Cuáles fueron los requisitos de la empresa o del primer empleador para contratarlo? Seleccionar 1 o más', 3, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (356, 'Nombre de la Empresa:', 1, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (357, 'Lugar de trabajo (provincia, cantón, parroquia, etc.):', 2, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (358, 'Dirección de la Empresa: ', 1, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (359, 'Teléfono: ', 1, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (360, 'Email:', 1, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (361, 'Cargo que desempeña:  ', 1, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (362, 'Tiempo que lleva en la empresa: ', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (363, 'Tiempo que lleva en el cargo:', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (364, 'Nivel jerárquico', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (365, 'Condición de Trabajo', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (366, 'Relación del trabajo con su área de formación', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (367, 'Tipo de la empresa', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (368, 'Tamaño de la empresa u organización', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (369, 'Sector Económico de la Empresa u Organización', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (370, 'Señale en la siguiente escala su ingreso salarial mensual actual', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (371, 'Si usted trabaja actualmente o trabaja por cuenta propia: ¿Cómo describiría su situación profesional actual?', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (372, 'Señale por lo menos cinco competencias genéricas que usted considera más importantes en su trabajo', 3, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (373, '¿Teniendo en cuenta todos los aspectos, hasta qué punto su actual situación laboral coincide con las expectativas que tenía cuando empezó sus estudios universitarios? ', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (374, '¿Hasta qué punto utiliza los conocimientos y habilidades que adquirió durante sus estudios universitarios?', 4, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (375, 'Si considera su trabajo como escasamente apropiado y no relacionado con su educación: ¿por qué lo aceptó? Posible respuesta  múltiple', 3, 4, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (376, '¿Está satisfecho con los conocimientos adquiridos durante sus estudios en la UTEQ?', 4, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (377, '¿Por qué?', 1, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (378, '¿Cómo calificaría la utilidad de las prácticas pre profesionales (pasantías) para su desarrollo profesional y laboral? ', 4, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (379, 'La bibliografía y el material sugerido por los docentes fue: ', 4, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (380, 'Considera que los contenidos de las asignaturas, vistas a lo largo de la carrera, resultaron', 4, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (381, '¿Con qué frecuencia visita usted la UTEQ? ', 4, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (382, '¿Qué áreas reforzarías de tu plan de estudios?', 1, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (383, '¿Qué asignaturas considera que deben eliminarse del plan de estudios?', 1, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (384, '¿Cuáles son las asignaturas que han contribuido al desarrollo profesional?', 1, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (385, '¿Hasta qué punto su ocupación se corresponde con su nivel de educación?', 4, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (386, '¿Cómo valoraría las facilidades y condiciones de estudio que experimentó durante el curso de los estudios de los cuales se graduó?', 12, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (387, '¿Ha realizado trabajos de investigación científica hasta presente fecha? ', 4, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (388, '¿Ha publicado su investigación científica? ', 4, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (389, 'Seleccione el tipo de foro en el que ha publicado sus investigaciones (sólo si respondió SI en la pregunta previa).  ', 2, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (390, 'Ha generado alguna patente o producto reconocido por el instituto de propiedad intelectual.  ', 4, 5, '1', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (391, '_prueba mod1', 3, 6, '0', 0, 3, '1', NULL);
+INSERT INTO `preguntas` VALUES (392, 'Nombres:', 1, 6, '1', 2, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (393, 'Apellidos:', 1, 6, '1', 3, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (394, 'Cédula de Identidad', 1, 6, '1', 1, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (395, 'Fecha de Nacimiento', 1, 6, '1', 4, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (396, 'Estado Civil', 4, 6, '1', 5, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (397, 'País de nacimiento ', 1, 6, '1', 6, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (398, 'Dirección Domiciliaria', 2, 6, '1', 7, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (399, 'Teléfonos', 2, 6, '1', 8, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (400, 'Correo(s) Electrónico(s)', 1, 6, '1', 9, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (401, 'Genero', 4, 6, '1', 10, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (402, '¿Cuenta con sus padres vivos?', 3, 1, '1', 1, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (403, '¿Con quién  vive actualmente? ', 3, 1, '1', 2, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (404, 'Nivel de formación del padre', 4, 1, '1', 3, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (405, 'Nivel de formación de la madre', 4, 1, '1', 4, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (406, '¿Tiene hermanos? ', 4, 1, '1', 5, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (407, '¿Cuántos hermanos tiene?', 1, 1, '1', 6, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (408, '¿Cuántos miembros conforman su hogar?', 1, 1, '1', 7, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (409, 'Total de ingresos mensuales en el hogar', 1, 1, '1', 8, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (410, '¿Qué tipo de colegio? ', 4, 2, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (411, 'Nombre del colegio donde se graduó:', 1, 2, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (412, '¿Cuántas horas por semana dedicó en promedio durante sus estudios a cada una de las siguientes actividades? Estimar', 5, 3, '2', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (413, '¿Cuántos meses transcurridos entre el ingreso a la Universidad y la graduación, pasó predominantemente en?:', 6, 3, '2', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (414, '¿Qué conocimientos sobre informática poseía en el momento que se graduó y actualmente?', 7, 3, '2', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (415, 'Describa sus experiencias laborales más relevantes antes de su trabajo actual.', 8, 4, '2', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (416, 'Después de la graduación, ¿emprendió otros estudios/formación adicional (cursos de posgrado, cursos, seminarios, cursos no completados, etc.) relacionados con su profesión? Excluya los que NO considere que están relacionados con su trabajo', 9, 3, '2', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (417, '¿Cómo califica su nivel de competencia en un idioma extranjero en el momento de egresar de la Universidad?  Responda con respeto a cualquier idioma en la lista y marque el tipo de competencia en cada fila. Respuesta múltiple posible en cada fila', 10, 3, '2', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (418, '¿Cómo califica su nivel de competencia de un  idioma extranjero actualmente?  Responda respeto a cualquier idioma en la lista. Respuesta múltiple posible en cada fila', 11, 3, '2', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (419, 'Principal ocupación del padre', 4, 1, '1', 9, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (420, 'Principal ocupación de la madre', 4, 1, '1', 10, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (421, '¿Cómo fue el financiamiento de sus estudios de grado?', 3, 1, '1', 11, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (422, 'Indique los Egresos Familiares Mensuales', 1, 1, '1', 12, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (423, 'La vivienda que dispone es', 4, 1, '1', 13, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (424, '¿Cuenta con los servicios básicos?', 3, 1, '1', 14, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (425, '¿Tiene alguna capacidad especial?', 4, 1, '1', 15, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (426, 'En caso de tener capacidad especial, ¿De qué tipo es?', 3, 1, '1', 16, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (427, '¿Recibe asistencia médica?', 4, 1, '1', 17, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (428, 'Indique el tipo de asistencia médica', 3, 1, '1', 18, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (429, 'Título obtenido en:', 4, 2, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (430, 'Calificación de grado del Bachillerato', 1, 2, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (431, '¿Cuántos años de escolaridad (secundaria) pasó en total hasta adquirir la calificación de ingreso a la educación superior? (incluir años de clases repetitivas)', 1, 2, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (432, 'Título obtenido (UTEQ)', 4, 3, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (433, 'Año en el que ingresó (UTEQ)', 1, 3, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (434, 'Año en el que se incorporó (UTEQ)', 1, 3, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (435, 'Promedio de graduación', 1, 3, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (436, 'Pertenece a algún Colegio de Profesionales, nombre del Colegio', 1, 3, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (437, 'Facultad', 4, 3, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (438, '¿Estudió la carrera universitaria que eligió en primera opción?', 4, 3, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (439, '¿Cuánto tiempo estudió en la UTEQ para obtener el título?', 2, 3, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (440, 'Si trabajó durante la carrera que estudió, ¿hasta qué punto sus experiencias de trabajo (empleo) se relacionaron con el contenido de sus estudios?', 4, 3, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (441, 'Actividad que desempeña actualmente.', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (442, '¿Qué tiempo transcurrió para obtener su primer empleo? ', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (443, '¿Cómo trató de encontrar su primer empleo después de la graduación? Múltiples respuestas son posibles.', 3, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (444, '¿Cuáles fueron los requisitos de la empresa o del primer empleador para contratarlo? Seleccionar 1 o más', 3, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (445, 'Nombre de la Empresa:', 1, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (446, 'Lugar de trabajo (provincia, cantón, parroquia, etc.):', 2, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (447, 'Dirección de la Empresa: ', 1, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (448, 'Teléfono: ', 1, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (449, 'Email:', 1, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (450, 'Cargo que desempeña:  ', 1, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (451, 'Tiempo que lleva en la empresa: ', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (452, 'Tiempo que lleva en el cargo:', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (453, 'Nivel jerárquico', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (454, 'Condición de Trabajo', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (455, 'Relación del trabajo con su área de formación', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (456, 'Tipo de la empresa', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (457, 'Tamaño de la empresa u organización', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (458, 'Sector Económico de la Empresa u Organización', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (459, 'Señale en la siguiente escala su ingreso salarial mensual actual', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (460, 'Si usted trabaja actualmente o trabaja por cuenta propia: ¿Cómo describiría su situación profesional actual?', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (461, 'Señale por lo menos cinco competencias genéricas que usted considera más importantes en su trabajo', 3, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (462, '¿Teniendo en cuenta todos los aspectos, hasta qué punto su actual situación laboral coincide con las expectativas que tenía cuando empezó sus estudios universitarios? ', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (463, '¿Hasta qué punto utiliza los conocimientos y habilidades que adquirió durante sus estudios universitarios?', 4, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (464, 'Si considera su trabajo como escasamente apropiado y no relacionado con su educación: ¿por qué lo aceptó? Posible respuesta  múltiple', 3, 4, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (465, '¿Está satisfecho con los conocimientos adquiridos durante sus estudios en la UTEQ?', 4, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (466, '¿Por qué?', 1, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (467, '¿Cómo calificaría la utilidad de las prácticas pre profesionales (pasantías) para su desarrollo profesional y laboral? ', 4, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (468, 'La bibliografía y el material sugerido por los docentes fue: ', 4, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (469, 'Considera que los contenidos de las asignaturas, vistas a lo largo de la carrera, resultaron', 4, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (470, '¿Con qué frecuencia visita usted la UTEQ? ', 4, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (471, '¿Qué áreas reforzarías de tu plan de estudios?', 1, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (472, '¿Qué asignaturas considera que deben eliminarse del plan de estudios?', 1, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (473, '¿Cuáles son las asignaturas que han contribuido al desarrollo profesional?', 1, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (474, '¿Hasta qué punto su ocupación se corresponde con su nivel de educación?', 4, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (475, '¿Cómo valoraría las facilidades y condiciones de estudio que experimentó durante el curso de los estudios de los cuales se graduó?', 12, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (476, '¿Ha realizado trabajos de investigación científica hasta presente fecha? ', 4, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (477, '¿Ha publicado su investigación científica? ', 4, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (478, 'Seleccione el tipo de foro en el que ha publicado sus investigaciones (sólo si respondió SI en la pregunta previa).  ', 2, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (479, 'Ha generado alguna patente o producto reconocido por el instituto de propiedad intelectual.  ', 4, 5, '1', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (480, '_prueba mod1', 3, 6, '0', 0, 2, '1', NULL);
+INSERT INTO `preguntas` VALUES (481, 'q', 5, 6, '0', 0, 4, '1', NULL);
+INSERT INTO `preguntas` VALUES (482, 'casual', 1, 6, '1', 0, 4, '1', NULL);
+INSERT INTO `preguntas` VALUES (483, 'Prueba tabla', 5, 6, '1', 0, 4, '1', NULL);
+INSERT INTO `preguntas` VALUES (484, 'Nombres:', 1, 6, '1', 2, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (485, 'Apellidos:', 1, 6, '1', 3, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (486, 'Cédula de Identidad', 1, 6, '1', 1, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (487, 'Fecha de Nacimiento', 1, 6, '1', 4, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (488, 'Estado Civil', 4, 6, '1', 5, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (489, 'País de nacimiento ', 1, 6, '1', 6, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (490, 'Dirección Domiciliaria', 2, 6, '1', 7, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (491, 'Teléfonos', 2, 6, '1', 8, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (492, 'Correo(s) Electrónico(s)', 1, 6, '1', 9, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (493, 'Genero', 4, 6, '1', 10, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (494, '¿Cuenta con sus padres vivos?', 3, 1, '1', 1, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (495, '¿Con quién  vive actualmente? ', 3, 1, '1', 2, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (496, 'Nivel de formación del padre', 4, 1, '1', 3, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (497, 'Nivel de formación de la madre', 4, 1, '1', 4, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (498, '¿Tiene hermanos? ', 4, 1, '1', 5, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (499, '¿Cuántos hermanos tiene?', 1, 1, '1', 6, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (500, '¿Cuántos miembros conforman su hogar?', 1, 1, '1', 7, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (501, 'Total de ingresos mensuales en el hogar', 1, 1, '1', 8, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (502, '¿Qué tipo de colegio? ', 4, 2, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (503, 'Nombre del colegio donde se graduó:', 1, 2, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (504, '¿Cuántas horas por semana dedicó en promedio durante sus estudios a cada una de las siguientes actividades? Estimar', 5, 3, '2', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (505, '¿Cuántos meses transcurridos entre el ingreso a la Universidad y la graduación, pasó predominantemente en?:', 6, 3, '2', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (506, '¿Qué conocimientos sobre informática poseía en el momento que se graduó y actualmente?', 7, 3, '2', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (507, 'Describa sus experiencias laborales más relevantes antes de su trabajo actual.', 8, 4, '2', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (508, 'Después de la graduación, ¿emprendió otros estudios/formación adicional (cursos de posgrado, cursos, seminarios, cursos no completados, etc.) relacionados con su profesión? Excluya los que NO considere que están relacionados con su trabajo', 9, 3, '2', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (509, '¿Cómo califica su nivel de competencia en un idioma extranjero en el momento de egresar de la Universidad?  Responda con respeto a cualquier idioma en la lista y marque el tipo de competencia en cada fila. Respuesta múltiple posible en cada fila', 10, 3, '2', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (510, '¿Cómo califica su nivel de competencia de un  idioma extranjero actualmente?  Responda respeto a cualquier idioma en la lista. Respuesta múltiple posible en cada fila', 11, 3, '2', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (511, 'Principal ocupación del padre', 4, 1, '1', 9, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (512, 'Principal ocupación de la madre', 4, 1, '1', 10, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (513, '¿Cómo fue el financiamiento de sus estudios de grado?', 3, 1, '1', 11, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (514, 'Indique los Egresos Familiares Mensuales', 1, 1, '1', 12, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (515, 'La vivienda que dispone es', 4, 1, '1', 13, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (516, '¿Cuenta con los servicios básicos?', 3, 1, '1', 14, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (517, '¿Tiene alguna capacidad especial?', 4, 1, '1', 15, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (518, 'En caso de tener capacidad especial, ¿De qué tipo es?', 3, 1, '1', 16, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (519, '¿Recibe asistencia médica?', 4, 1, '1', 17, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (520, 'Indique el tipo de asistencia médica', 3, 1, '1', 18, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (521, 'Título obtenido en:', 4, 2, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (522, 'Calificación de grado del Bachillerato', 1, 2, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (523, '¿Cuántos años de escolaridad (secundaria) pasó en total hasta adquirir la calificación de ingreso a la educación superior? (incluir años de clases repetitivas)', 1, 2, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (524, 'Título obtenido (UTEQ)', 4, 3, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (525, 'Año en el que ingresó (UTEQ)', 1, 3, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (526, 'Año en el que se incorporó (UTEQ)', 1, 3, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (527, 'Promedio de graduación', 1, 3, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (528, 'Pertenece a algún Colegio de Profesionales, nombre del Colegio', 1, 3, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (529, 'Facultad', 4, 3, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (530, '¿Estudió la carrera universitaria que eligió en primera opción?', 4, 3, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (531, '¿Cuánto tiempo estudió en la UTEQ para obtener el título?', 2, 3, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (532, 'Si trabajó durante la carrera que estudió, ¿hasta qué punto sus experiencias de trabajo (empleo) se relacionaron con el contenido de sus estudios?', 4, 3, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (533, 'Actividad que desempeña actualmente.', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (534, '¿Qué tiempo transcurrió para obtener su primer empleo? ', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (535, '¿Cómo trató de encontrar su primer empleo después de la graduación? Múltiples respuestas son posibles.', 3, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (536, '¿Cuáles fueron los requisitos de la empresa o del primer empleador para contratarlo? Seleccionar 1 o más', 3, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (537, 'Nombre de la Empresa:', 1, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (538, 'Lugar de trabajo (provincia, cantón, parroquia, etc.):', 2, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (539, 'Dirección de la Empresa: ', 1, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (540, 'Teléfono: ', 1, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (541, 'Email:', 1, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (542, 'Cargo que desempeña:  ', 1, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (543, 'Tiempo que lleva en la empresa: ', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (544, 'Tiempo que lleva en el cargo:', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (545, 'Nivel jerárquico', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (546, 'Condición de Trabajo', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (547, 'Relación del trabajo con su área de formación', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (548, 'Tipo de la empresa', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (549, 'Tamaño de la empresa u organización', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (550, 'Sector Económico de la Empresa u Organización', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (551, 'Señale en la siguiente escala su ingreso salarial mensual actual', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (552, 'Si usted trabaja actualmente o trabaja por cuenta propia: ¿Cómo describiría su situación profesional actual?', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (553, 'Señale por lo menos cinco competencias genéricas que usted considera más importantes en su trabajo', 3, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (554, '¿Teniendo en cuenta todos los aspectos, hasta qué punto su actual situación laboral coincide con las expectativas que tenía cuando empezó sus estudios universitarios? ', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (555, '¿Hasta qué punto utiliza los conocimientos y habilidades que adquirió durante sus estudios universitarios?', 4, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (556, 'Si considera su trabajo como escasamente apropiado y no relacionado con su educación: ¿por qué lo aceptó? Posible respuesta  múltiple', 3, 4, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (557, '¿Está satisfecho con los conocimientos adquiridos durante sus estudios en la UTEQ?', 4, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (558, '¿Por qué?', 1, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (559, '¿Cómo calificaría la utilidad de las prácticas pre profesionales (pasantías) para su desarrollo profesional y laboral? ', 4, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (560, 'La bibliografía y el material sugerido por los docentes fue: ', 4, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (561, 'Considera que los contenidos de las asignaturas, vistas a lo largo de la carrera, resultaron', 4, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (562, '¿Con qué frecuencia visita usted la UTEQ? ', 4, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (563, '¿Qué áreas reforzarías de tu plan de estudios?', 1, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (564, '¿Qué asignaturas considera que deben eliminarse del plan de estudios?', 1, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (565, '¿Cuáles son las asignaturas que han contribuido al desarrollo profesional?', 1, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (566, '¿Hasta qué punto su ocupación se corresponde con su nivel de educación?', 4, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (567, '¿Cómo valoraría las facilidades y condiciones de estudio que experimentó durante el curso de los estudios de los cuales se graduó?', 12, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (568, '¿Ha realizado trabajos de investigación científica hasta presente fecha? ', 4, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (569, '¿Ha publicado su investigación científica? ', 4, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (570, 'Seleccione el tipo de foro en el que ha publicado sus investigaciones (sólo si respondió SI en la pregunta previa).  ', 2, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (571, 'Ha generado alguna patente o producto reconocido por el instituto de propiedad intelectual.  ', 4, 5, '1', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (572, '_prueba mod1', 3, 6, '0', 0, 10, '1', NULL);
+INSERT INTO `preguntas` VALUES (573, 'tabla1', 5, 6, '1', 0, 11, '1', NULL);
+INSERT INTO `preguntas` VALUES (574, 'tabla 2', 5, 1, '1', 0, 11, '1', NULL);
+INSERT INTO `preguntas` VALUES (575, 'tabla new', 5, 6, '0', 0, 11, '1', NULL);
+INSERT INTO `preguntas` VALUES (576, 'tb new', 5, 1, '0', 0, 11, '1', NULL);
+INSERT INTO `preguntas` VALUES (577, 'tb new 1', 5, 6, '1', 0, 11, '1', NULL);
+INSERT INTO `preguntas` VALUES (578, 'tabla1', 5, 6, '1', 0, 12, '1', NULL);
+INSERT INTO `preguntas` VALUES (579, 'tabla 2', 5, 1, '1', 0, 12, '1', NULL);
+INSERT INTO `preguntas` VALUES (580, 'tabla new', 5, 6, '0', 0, 12, '1', NULL);
+INSERT INTO `preguntas` VALUES (581, 'tb new', 5, 1, '0', 0, 12, '1', NULL);
+INSERT INTO `preguntas` VALUES (582, 'tb new 1', 5, 6, '1', 0, 12, '1', NULL);
+INSERT INTO `preguntas` VALUES (583, 'Tabla Columna Dominante', 5, 6, '1', 0, 13, '1', '1');
+INSERT INTO `preguntas` VALUES (584, 'Ingreso Simple', 1, 6, '1', 0, 13, '1', '0');
+INSERT INTO `preguntas` VALUES (585, 'Ingreso Multiple', 2, 6, '1', 0, 13, '1', '0');
+INSERT INTO `preguntas` VALUES (586, 'Tabla No Columna Dominante', 5, 6, '1', 0, 13, '1', '0');
+INSERT INTO `preguntas` VALUES (587, 'seleccion multiple', 3, 6, '1', 0, 13, '1', '1');
+INSERT INTO `preguntas` VALUES (588, 'Seleccion Unica', 4, 6, '1', 0, 13, '1', '1');
+INSERT INTO `preguntas` VALUES (589, 'Tabla Columna Dominante', 5, 6, '1', 0, 14, '1', '0');
+INSERT INTO `preguntas` VALUES (590, 'Ingreso Simple', 1, 6, '1', 0, 14, '1', '0');
+INSERT INTO `preguntas` VALUES (591, 'Ingreso Multiple', 2, 6, '1', 0, 14, '1', '0');
+INSERT INTO `preguntas` VALUES (592, 'Tabla No Columna Dominante', 5, 6, '1', 0, 14, '1', '0');
+INSERT INTO `preguntas` VALUES (593, 'seleccion multiple', 3, 6, '1', 0, 14, '1', '0');
+INSERT INTO `preguntas` VALUES (594, 'Seleccion Unica', 4, 6, '1', 0, 14, '1', '0');
+INSERT INTO `preguntas` VALUES (595, 'Cedula', 1, 6, '1', 0, 15, '1', '0');
+INSERT INTO `preguntas` VALUES (596, 'Tabla', 5, 6, '1', 0, 15, '1', '0');
+INSERT INTO `preguntas` VALUES (597, 'cedula', 1, 6, '1', 0, 16, '1', '0');
+INSERT INTO `preguntas` VALUES (598, 'indique su esperiencia en cursos', 5, 6, '1', 0, 16, '1', '0');
+INSERT INTO `preguntas` VALUES (599, 'CEDULA', 1, 6, '1', 0, 17, '1', '0');
+INSERT INTO `preguntas` VALUES (600, 'EXPERIENCIA DE TRABAJO', 5, 1, '1', 0, 17, '1', '0');
+INSERT INTO `preguntas` VALUES (601, 'prueba1', 3, 6, '1', 0, 17, '1', '1');
+INSERT INTO `preguntas` VALUES (602, 'test', 3, 6, '1', 0, 17, '1', '1');
+INSERT INTO `preguntas` VALUES (603, 'test3', 4, 6, '1', 0, 17, '1', '1');
 
 -- ----------------------------
 -- Table structure for preguntas_respuestas
@@ -1882,7 +1949,7 @@ CREATE TABLE `preguntas_respuestas`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_preguntas_respuestas_encuesta_titulo1_idx`(`encuesta_carreras_id`) USING BTREE,
   CONSTRAINT `fk_encuestas_carreras_id` FOREIGN KEY (`encuesta_carreras_id`) REFERENCES `carreras_encuesta` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 128 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of preguntas_respuestas
@@ -1923,18 +1990,24 @@ INSERT INTO `preguntas_respuestas` VALUES (62, '', 9, 491);
 INSERT INTO `preguntas_respuestas` VALUES (63, '[{\"nombres\":\"a\",\"apellidos\":\"a\",\"estado civil\":\"1\",\"id\":0},{\"nombres\":\"b\",\"apellidos\":\"b\",\"estado civil\":\"2\"}]', 8, 573);
 INSERT INTO `preguntas_respuestas` VALUES (64, '[]', 8, 577);
 INSERT INTO `preguntas_respuestas` VALUES (65, '[]', 8, 574);
-INSERT INTO `preguntas_respuestas` VALUES (96, '[{\"cb1\":\"a\",\"cb2\":\"y\",\"Ingreso\":\"abc\",\"checkbox\":false,\"id\":0},{\"cb1\":\"a\",\"cb2\":\"y\",\"Ingreso\":\"xyz\",\"checkbox\":true,\"id\":1}]', 12, 583);
-INSERT INTO `preguntas_respuestas` VALUES (97, '[{\"nombre\":\"kevin\",\"apellidos\":\"suarez\",\"id\":0},{\"nombre\":\"adrian\",\"apellidos\":\"cevallos\",\"id\":1}]', 12, 586);
-INSERT INTO `preguntas_respuestas` VALUES (98, '1346,1345', 12, 587);
-INSERT INTO `preguntas_respuestas` VALUES (99, '1348', 12, 588);
-INSERT INTO `preguntas_respuestas` VALUES (100, '', 12, 584);
-INSERT INTO `preguntas_respuestas` VALUES (101, '', 12, 585);
 INSERT INTO `preguntas_respuestas` VALUES (108, '[{\"cb1\":\"a\",\"cb2\":\"y\",\"Ingreso\":\"eva2\",\"checkbox\":false,\"id\":0}]', 13, 583);
 INSERT INTO `preguntas_respuestas` VALUES (109, '[{\"nombre\":\"eva2Nombre1\",\"apellidos\":\"eva2Apellidos1\",\"id\":0},{\"nombre\":\"eva2Nombre2\",\"apellidos\":\"eva2Apellidos2\",\"id\":1}]', 13, 586);
 INSERT INTO `preguntas_respuestas` VALUES (110, '1346,1345', 13, 587);
 INSERT INTO `preguntas_respuestas` VALUES (111, '1347', 13, 588);
 INSERT INTO `preguntas_respuestas` VALUES (112, '', 13, 584);
 INSERT INTO `preguntas_respuestas` VALUES (113, '', 13, 585);
+INSERT INTO `preguntas_respuestas` VALUES (114, '[{\"cb1\":\"a\",\"cb2\":\"y\",\"Ingreso\":\"abc\",\"checkbox\":false,\"id\":0,\"cbo2\":\"cb2\"},{\"cb1\":\"a\",\"cb2\":\"y\",\"Ingreso\":\"xyz\",\"checkbox\":true,\"id\":1,\"cbo2\":\"cb2\"},{\"cb1\":\"a\",\"cb2\":\"x\",\"Ingreso\":\"\",\"checkbox\":false,\"cbo2\":\"cb2\"}]', 12, 583);
+INSERT INTO `preguntas_respuestas` VALUES (115, '[{\"nombre\":\"kevin\",\"apellidos\":\"suarez\",\"id\":0},{\"nombre\":\"adrian\",\"apellidos\":\"cevallos\",\"id\":1}]', 12, 586);
+INSERT INTO `preguntas_respuestas` VALUES (116, '1346,1345', 12, 587);
+INSERT INTO `preguntas_respuestas` VALUES (117, '1348', 12, 588);
+INSERT INTO `preguntas_respuestas` VALUES (118, '', 12, 584);
+INSERT INTO `preguntas_respuestas` VALUES (119, '', 12, 585);
+INSERT INTO `preguntas_respuestas` VALUES (120, '[{\"Trabajo\":\"Obrero\",\"Lugar\":\"QUEVEDO\"},{\"Trabajo\":\"Electrico\",\"Lugar\":\"GUAYAQUIL\"},{\"Trabajo\":\"Obrero\",\"Lugar\":\"QUEVEDO\"}]', 15, 596);
+INSERT INTO `preguntas_respuestas` VALUES (121, '', 15, 595);
+INSERT INTO `preguntas_respuestas` VALUES (122, '[{\"tipo curso\":\"congreso\",\"lugar\":\"Quevedo\"},{\"tipo curso\":\"congreso\",\"lugar\":\"Quevedo\"},{\"tipo curso\":\"simposio\",\"lugar\":\"Guayaqul\"}]', 16, 598);
+INSERT INTO `preguntas_respuestas` VALUES (123, '', 16, 597);
+INSERT INTO `preguntas_respuestas` VALUES (126, '[]', 17, 596);
+INSERT INTO `preguntas_respuestas` VALUES (127, '', 17, 595);
 
 -- ----------------------------
 -- Table structure for respuestas
@@ -1948,7 +2021,7 @@ CREATE TABLE `respuestas`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `ref_preguntas_respuestas_id_idx`(`preguntas_respuestas_id`) USING BTREE,
   CONSTRAINT `ref_preguntas_respuestas_id` FOREIGN KEY (`preguntas_respuestas_id`) REFERENCES `preguntas_respuestas` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of respuestas
@@ -1971,12 +2044,15 @@ INSERT INTO `respuestas` VALUES (15, '', 61, 985);
 INSERT INTO `respuestas` VALUES (16, '', 61, 986);
 INSERT INTO `respuestas` VALUES (17, '', 62, 987);
 INSERT INTO `respuestas` VALUES (18, '', 62, 988);
-INSERT INTO `respuestas` VALUES (46, 'Ingreso Simple', 100, 0);
-INSERT INTO `respuestas` VALUES (47, 'Multiple01', 101, 1340);
-INSERT INTO `respuestas` VALUES (48, 'Multiple02', 101, 1341);
 INSERT INTO `respuestas` VALUES (52, 'eva2', 112, 0);
 INSERT INTO `respuestas` VALUES (53, 'eva2M1', 113, 1340);
 INSERT INTO `respuestas` VALUES (54, 'eva2M2', 113, 1341);
+INSERT INTO `respuestas` VALUES (55, 'Ingreso Simple', 118, 0);
+INSERT INTO `respuestas` VALUES (56, 'Multiple01', 119, 1340);
+INSERT INTO `respuestas` VALUES (57, 'Multiple02', 119, 1341);
+INSERT INTO `respuestas` VALUES (58, '1234567890', 121, 0);
+INSERT INTO `respuestas` VALUES (59, '1223456799', 123, 0);
+INSERT INTO `respuestas` VALUES (61, '234567', 127, 0);
 
 -- ----------------------------
 -- Table structure for titulo
@@ -1996,7 +2072,7 @@ CREATE TABLE `titulo`  (
   INDEX `fk_Titulo_Carreras1_idx`(`Carreras_id`) USING BTREE,
   CONSTRAINT `fk_Titulo_Carreras1` FOREIGN KEY (`Carreras_id`) REFERENCES `carreras` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Titulo_Estudiante1` FOREIGN KEY (`Estudiante_id`) REFERENCES `estudiante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of titulo
@@ -2004,6 +2080,11 @@ CREATE TABLE `titulo`  (
 INSERT INTO `titulo` VALUES (6, 3, 2, 6, '2017-10-10', '2017-10-16', 1, 1);
 INSERT INTO `titulo` VALUES (7, 8, 9, 72, '2017-02-10', '2017-10-10', 4, 2);
 INSERT INTO `titulo` VALUES (8, 9, 8.5, 76.5, '2010-10-10', '2016-02-20', 5, 1);
+INSERT INTO `titulo` VALUES (9, 8, 8, 64, '2010-10-10', '2015-10-10', 6, 1);
+INSERT INTO `titulo` VALUES (10, 8, 9, 8.5, '2010-10-10', '2015-10-10', 7, 1);
+INSERT INTO `titulo` VALUES (11, 9, 9, 9, '2010-10-10', '2015-10-10', 8, 2);
+INSERT INTO `titulo` VALUES (12, 9, 9, 9, '2010-10-10', '2015-10-10', 9, 1);
+INSERT INTO `titulo` VALUES (13, 9, 8, 8.5, '2010-10-10', '2015-10-10', 10, 2);
 
 -- ----------------------------
 -- View structure for viewencuesta
