@@ -39,7 +39,7 @@ switch ($op){
 
                 $notaPensum = $row["G"];
                 $notaTitulacion = $row["F"];
-                $promedio = $row["H"];
+                //$promedio = $row["H"];
                 $periodoInicio = $row["D"];
                 $periodoFin = $row["E"];
                 
@@ -67,6 +67,7 @@ switch ($op){
                     $titulo->setEstudiante($estudiante->getId());
                     $titulo->setNotaPensum($notaPensum);
                     $titulo->setNotaTitulacion($notaTitulacion);
+                    $promedio = (floatval($titulo->getNotaPensum()) + floatval($titulo->getNotaTitulacion())) / 2;
                     $titulo->setPromedio($promedio);
 
                     $titulo->setPeriodoInicio($periodoInicio);

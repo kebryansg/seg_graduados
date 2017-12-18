@@ -1,8 +1,55 @@
 <?php
 
 include_once '../mvc/modelo/EncuestaDaoImp.php';
+require_once '../mvc/modelo/EstudianteDaoImp.php';
+require_once '../mvc/modelo/TituloDaoImp.php';
 $op = $_POST["op"];
 switch ($op) {
+    case "insertUsuario":
+        $datos = json_decode($_POST["datos"], true);
+        $estudiante = new Estudiante();
+        $estudiante->setCedula($datos["cedula"]);
+        $estudiante->setNombres($datos["nombres"]);
+        EstudianteDaoImp::_validarEstudiante($estudiante);
+        if ($estudiante->getId() == 0) {
+            EstudianteDaoImp::_save($estudiante);
+        }
+
+        if ($estudiante->getId() > 0) {
+            $titulo = new Titulo();
+            $titulo->setEstudiante($estudiante->getId());
+            $titulo->setCarrera($datos["carrera"]);
+            $titulo->setNotaPensum($datos["notaPensum"]);
+            $titulo->setNotaTitulacion($datos["notaTitulacion"]);
+            $titulo->setPeriodoInicio($datos["periodoInicio"]);
+            $titulo->setPeriodoFin($datos["periodoFin"]);
+            $promedio = (floatval($titulo->getNotaPensum()) + floatval($titulo->getNotaTitulacion())) / 2;
+            $titulo->setPromedio($promedio);
+            if (!TituloDaoImp::_validarTitulo($titulo->getCarrera(), $estudiante->getId())) {
+                TituloDaoImp::_save($titulo);
+                if ($titulo->getId() > 0) {
+                    $response = array(
+                        'status' => True,
+                        'msj' => "Registro Exitoso.");
+                } else {
+                    $response = array(
+                        'status' => False,
+                        'msj' => "Problema registrando el Titulo.");
+                }
+            }else{
+                $response = array(
+                        'status' => False,
+                        'msj' => "Error \nTitulo ya ingresado.");
+            }
+            //TituloDaoImp::_save($titulo);
+        } else {
+            $response = array(
+                'status' => False,
+                'msj' => "Cédula ya ingresada.");
+        }
+
+        echo json_encode($response);
+        break;
     case "acceso":
         $acceso = $_POST["acceso"];
         $response = [];
