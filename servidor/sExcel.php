@@ -4,7 +4,7 @@ require_once '../resources/Classes/PHPExcel.php';
 require_once '../resources/Classes/PHPExcel/Reader/Excel2007.php';
 require_once '../files_excel/Excel_OUT.php';
 
-
+require_once '../mvc/controlador/Validation.php';
 require_once '../mvc/modelo/EstudianteDaoImp.php';
 require_once '../mvc/modelo/CarreraDaoImp.php';
 require_once '../mvc/modelo/TituloDaoImp.php';
@@ -31,7 +31,7 @@ switch ($op) {
         $sheetData = $objPHPExcel->getActiveSheet(1)->toArray(null, true, true, true);
         $pRow = 0;
         $bandera = TRUE;
-        $returnEstudiante = array();
+        $row_Problems = array();
         //while($shet = $sheetData){
         foreach ($sheetData as $row) {
             if ($pRow >= 2) {
@@ -45,49 +45,69 @@ switch ($op) {
                 $periodoInicio = $row["D"];
                 $periodoFin = $row["E"];
 
-                // Validar Que las variables principales
-                if (!isset($codCarrera) && !isset($cedulaEstudiante)) {
+                $row_formateada = array(
+                    "codCarrera" => $row["A"],
+                    "cedula" => $row["B"],
+                    "nombre" => $row["C"],
+                    "periodoInicio" => $row["D"],
+                    "periodoFin" => $row["E"],
+                    "titulacion" => $row["F"],
+                    "pensum" => $row["G"]
+                );
+                //Validar Campos
+                if (!Validation::Array_Validar($row_formateada)) {
+                    $row_formateada["estado"] = "Columnas Vacias";
+                    array_push($row_Problems, $row_formateada);
                     break;
                 }
-                /*
-                 * Valida que el estudiante no este 
-                 * Si el estudiante esta retorna el ID
-                 * Caso contrario o
-                 */
-                $estudiante = new Estudiante();
+
+                //Validar que la carrera exista
+                if (CarreraDaoImp::_validarCarrera($codCarrera)) {
+                    $row_formateada["estado"] = "Carrera Invalida";
+                    array_push($row_Problems, $row_formateada);
+                    break;
+                }
+                //Validar Fechas , Validar Notas
+                //Pendiente
+
+
+                /*$estudiante = new Estudiante();
                 $estudiante->setCedula($cedulaEstudiante);
                 EstudianteDaoImp::_validarEstudiante($estudiante);
                 $estudiante->setCedula($cedulaEstudiante);
                 $estudiante->setNombres($nombreEstudiante);
                 if ($estudiante->getId() == 0) {
                     EstudianteDaoImp::_save($estudiante);
-                }
-                else{
+                } else {
                     array_push($returnEstudiante, $estudiante);
                 }
 
-                if (CarreraDaoImp::_validarCarrera($codCarrera)) {
-                    $titulo = new Titulo();
-                    $titulo->setCarrera($codCarrera);
-                    $titulo->setEstudiante($estudiante->getId());
-                    $titulo->setNotaPensum($notaPensum);
-                    $titulo->setNotaTitulacion($notaTitulacion);
-                    $promedio = (floatval($titulo->getNotaPensum()) + floatval($titulo->getNotaTitulacion())) / 2;
-                    $titulo->setPromedio($promedio);
+                $titulo = new Titulo();
+                $titulo->setCarrera($codCarrera);
+                $titulo->setEstudiante($estudiante->getId());
+                $titulo->setNotaPensum($notaPensum);
+                $titulo->setNotaTitulacion($notaTitulacion);
+                $promedio = (floatval($titulo->getNotaPensum()) + floatval($titulo->getNotaTitulacion())) / 2;
+                $titulo->setPromedio($promedio);
 
-                    $titulo->setPeriodoInicio($periodoInicio);
-                    $titulo->setPeriodoFin($periodoFin);
-                    if (!TituloDaoImp::_validarTitulo($codCarrera, $estudiante->getId())) {
-                        TituloDaoImp::_save($titulo);
-                    }
-                }
+                $titulo->setPeriodoInicio($periodoInicio);
+                $titulo->setPeriodoFin($periodoFin);
+                if (!TituloDaoImp::_validarTitulo($codCarrera, $estudiante->getId())) {
+                    TituloDaoImp::_save($titulo);
+                }*/
             }
             $pRow++;
         }
-        $response = array(
-            'status' => 'OK',
-            'NombreFile' => $file["name"],
-            'type' => $file["type"]);
+        if (sizeof($row_Problems) > 0) {
+            $response = array(
+                'status' => FALSE,
+                'row' => $row_Problems);
+        } else {
+            $response = array(
+                'status' => 'OK',
+                'NombreFile' => $file["name"],
+                'type' => $file["type"]);
+        }
 
         echo json_encode($response);
         break;
