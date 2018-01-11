@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" href="resources/images/logo.jpg">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title >Seguimiento de Graduados</title>
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">

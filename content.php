@@ -7,6 +7,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="icon" href="resources/images/logo.jpg">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -59,7 +60,7 @@
             </div>
         </div>
         <script type="text/javascript">
-                $("#content").load("acceso/adminAcceso.php");
+                //$("#content").load("acceso/adminAcceso.php");
                 //$("#content").load("preview.html");
         </script>
     </body>

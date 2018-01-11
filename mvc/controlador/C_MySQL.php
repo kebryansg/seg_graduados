@@ -17,7 +17,7 @@ final class C_MySQL {
     }
 
     public function open() {
-        $this->mysqli = new mysqli("localhost", "root", "12345", "seg_graduados_v3");
+        $this->mysqli = new mysqli("localhost", "kbsg", "kbsg", "seg_graduados_v3");
         //Commit soft
         //$this->mysqli = new mysqli("localhost", "id2412119_root", "seg_graduados", "id2412119_seg_graduados");
         if ($this->mysqli->connect_errno) {

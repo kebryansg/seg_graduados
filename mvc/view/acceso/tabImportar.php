@@ -22,6 +22,7 @@
         <table id="RowProblems">
             <thead>
                 <tr>
+                    <th data-field="fila">Excel Fila</th>
                     <th data-field="codCarrera">Carrera</th>
                     <th data-field="cedula">Cédula</th>
                     <th data-field="nombre">Estudiante</th>
@@ -52,10 +53,11 @@
         language: 'es',
         allowedFileExtensions: ['xlsx']
 
-    }).on('fileuploaded', function (e, params) {
-        if (params.response.row.length > 0) {
-            $("#RowProblems").bootstrapTable("load", params.response.row);
-            console.log(params.response);
+    }).on('fileuploaded', function(event, data, previewId, index) {
+        console.log(data.response);
+        if (data.response.row.length > 0) {
+            $("#RowProblems").bootstrapTable("load", data.response.row);
+            
         }
         //console.log(params);
 

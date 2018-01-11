@@ -14,6 +14,10 @@ require_once '../mvc/modelo/OpcionesDaoImp.php';
 require_once '../mvc/modelo/RespuestasDaoImp.php';
 require_once '../mvc/modelo/Preguntas_RespuestasDaoImp.php';
 
+function validateDate($date, $format = 'Y-m-d') {
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) == $date;
+}
 
 $op = $_GET["op"];
 switch ($op) {
@@ -32,79 +36,100 @@ switch ($op) {
         $pRow = 0;
         $bandera = TRUE;
         $row_Problems = array();
-        //while($shet = $sheetData){
-        foreach ($sheetData as $row) {
-            if ($pRow >= 2) {
-                $codCarrera = $row["A"];
-                $cedulaEstudiante = $row["B"];
-                $nombreEstudiante = $row["C"];
+        for ($pRow = 0; $pRow <= sizeof($sheetData); $pRow++) {
+            if ($pRow > 2) {
+                /* $codCarrera = $row["A"];
+                  $cedulaEstudiante = $row["B"];
+                  $nombreEstudiante = $row["C"];
 
-                $notaPensum = $row["G"];
-                $notaTitulacion = $row["F"];
-                //$promedio = $row["H"];
-                $periodoInicio = $row["D"];
-                $periodoFin = $row["E"];
+                  $notaPensum = $row["G"];
+                  $notaTitulacion = $row["F"];
+                  //$promedio = $row["H"];
+                  $periodoInicio = $row["D"];
+                  $periodoFin = $row["E"]; */
 
                 $row_formateada = array(
-                    "codCarrera" => $row["A"],
-                    "cedula" => $row["B"],
-                    "nombre" => $row["C"],
-                    "periodoInicio" => $row["D"],
-                    "periodoFin" => $row["E"],
-                    "titulacion" => $row["F"],
-                    "pensum" => $row["G"]
+                    "codCarrera" => $sheetData[$pRow]["A"],
+                    "cedula" => $sheetData[$pRow]["B"],
+                    "nombre" => $sheetData[$pRow]["C"],
+                    "periodoInicio" => $sheetData[$pRow]["D"],
+                    "periodoFin" => $sheetData[$pRow]["E"],
+                    "titulacion" => $sheetData[$pRow]["F"],
+                    "pensum" => $sheetData[$pRow]["G"]
                 );
                 //Validar Campos
                 if (!Validation::Array_Validar($row_formateada)) {
                     $row_formateada["estado"] = "Columnas Vacias";
+                    $row_formateada["fila"] = $pRow;
                     array_push($row_Problems, $row_formateada);
-                    break;
+                    //$bandera = false;
+                    continue;
                 }
-
-                //Validar que la carrera exista
-                if (CarreraDaoImp::_validarCarrera($codCarrera)) {
+                if (!CarreraDaoImp::_validarCarrera($row_formateada["codCarrera"])) {
                     $row_formateada["estado"] = "Carrera Invalida";
+                    $row_formateada["fila"] = $pRow;
                     array_push($row_Problems, $row_formateada);
-                    break;
+                    continue;
                 }
-                //Validar Fechas , Validar Notas
-                //Pendiente
+                //Validar Fechas , 
+                if (!(validateDate($row_formateada["periodoInicio"]) && validateDate($row_formateada["periodoFin"]))) {
+                    $row_formateada["estado"] = "Fecha Invalida";
+                    $row_formateada["fila"] = $pRow;
+                    array_push($row_Problems, $row_formateada);
+                    continue;
+                }
+                //Validar Notas
+                if (!(is_float($row_formateada["titulacion"]) && is_float($row_formateada["pensum"]))) {
+                    $row_formateada["estado"] = "Nota Invalida";
+                    $row_formateada["fila"] = $pRow;
+                    array_push($row_Problems, $row_formateada);
+                    continue;
+                }
 
 
-                /*$estudiante = new Estudiante();
-                $estudiante->setCedula($cedulaEstudiante);
+
+                $estudiante = new Estudiante();
+                $estudiante->setCedula($row_formateada["cedula"]);
                 EstudianteDaoImp::_validarEstudiante($estudiante);
-                $estudiante->setCedula($cedulaEstudiante);
-                $estudiante->setNombres($nombreEstudiante);
+                $estudiante->setNombres($row_formateada["nombre"]);
                 if ($estudiante->getId() == 0) {
                     EstudianteDaoImp::_save($estudiante);
                 } else {
-                    array_push($returnEstudiante, $estudiante);
+                    //array_push($returnEstudiante, $estudiante);
+                    $row_formateada["estado"] = "Estudiante Ingresado";
+                    $row_formateada["fila"] = $pRow;
+                    array_push($row_Problems, $row_formateada);
+                    continue;
                 }
-
                 $titulo = new Titulo();
-                $titulo->setCarrera($codCarrera);
+                $titulo->setCarrera($row_formateada["codCarrera"]);
                 $titulo->setEstudiante($estudiante->getId());
-                $titulo->setNotaPensum($notaPensum);
-                $titulo->setNotaTitulacion($notaTitulacion);
+                $titulo->setNotaPensum($row_formateada["pensum"]);
+                $titulo->setNotaTitulacion($row_formateada["titulacion"]);
+                $titulo->setPeriodoInicio($row_formateada["periodoInicio"]);
+                $titulo->setPeriodoFin($row_formateada["periodoFin"]);
+
                 $promedio = (floatval($titulo->getNotaPensum()) + floatval($titulo->getNotaTitulacion())) / 2;
                 $titulo->setPromedio($promedio);
-
-                $titulo->setPeriodoInicio($periodoInicio);
-                $titulo->setPeriodoFin($periodoFin);
-                if (!TituloDaoImp::_validarTitulo($codCarrera, $estudiante->getId())) {
+                if (!TituloDaoImp::_validarTitulo($titulo->getCarrera(), $estudiante->getId())) {
                     TituloDaoImp::_save($titulo);
-                }*/
+                } else {
+                    $row_formateada["estado"] = "Estudiante ya registrado";
+                    $row_formateada["fila"] = $pRow;
+                    array_push($row_Problems, $row_formateada);
+                    continue;
+                }
             }
-            $pRow++;
         }
+        //while($shet = $sheetData){
+
         if (sizeof($row_Problems) > 0) {
             $response = array(
                 'status' => FALSE,
                 'row' => $row_Problems);
         } else {
             $response = array(
-                'status' => 'OK',
+                'status' => TRUE,
                 'NombreFile' => $file["name"],
                 'type' => $file["type"]);
         }
