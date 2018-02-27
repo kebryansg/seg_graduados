@@ -12,39 +12,39 @@ default_encuesta = {
     last: "&rarrb;"
 };
 window.events_accion = {
-    'click button[name="reporte_Encuesta"]': function(e, value, row, index){
+    'click button[name="reporte_Encuesta"]': function (e, value, row, index) {
         $("#content").load("evaluacion/reporteEvaluacion.php?id_encuesta=" + row.id);
     },
-    'click button[name="edit_encuesta"]': function(e, value, row, index){
+    'click button[name="edit_encuesta"]': function (e, value, row, index) {
         $("#modal_editEncuesta h4.modal-title").html("Modificar Encuesta");
         $("#modal_editEncuesta button[name='save']")
                 .html("Modificar")
                 .data("id", row.id);
         $("#edit_nombre").val(row.nombre);
     },
-    'click button[name="dupl_Encuesta"]': function(e, value, row, index){
+    'click button[name="dupl_Encuesta"]': function (e, value, row, index) {
         $("#dupli_nombre").val(row.nombre);
         $("#btn_newDuplicar").data("encuesta", row.id);
     },
-    'click button[name="gen_Encuesta"]': function(e, value, row, index){
-        url = "servidor/sExcel.php?op=encuesta_carrera&encuesta="+row.id;
+    'click button[name="gen_Encuesta"]': function (e, value, row, index) {
+        url = "servidor/sExcel.php?op=encuesta_carrera&encuesta=" + row.id;
         window.open(url, '_blank');
         /*$.ajax({
-            url: "servidor/sEvaluacion.php",
-            type: 'POST',
-            data: {
-                op: "file",
-                encuesta: row.id
-            }
-        });*/
+         url: "servidor/sEvaluacion.php",
+         type: 'POST',
+         data: {
+         op: "file",
+         encuesta: row.id
+         }
+         });*/
     },
-    'click button[name="list_pregunt_Encuesta"]': function(e, value, row, index){
+    'click button[name="list_pregunt_Encuesta"]': function (e, value, row, index) {
         $("#content").load("pregunta/listPreguntas.php", function () {
             getEncuesta_id(row.id);
             load_Preguntas(1);
         });
     },
-    'click button[name="del_encuesta"]': function(e, value, row, index){
+    'click button[name="del_encuesta"]': function (e, value, row, index) {
         $.ajax({
             url: "servidor/sEvaluacion.php",
             type: 'POST',
@@ -53,18 +53,20 @@ window.events_accion = {
                 id: row.id
             },
             success: function (data) {
-                load_Encuestas(1);
+                //load_Encuestas(1);
+                $("#tb_listEncuestas").bootstrapTable("refresh");
             }
         });
     },
-    'click button[name="refresh_encuesta"]': function(e, value, row, index){
+    'click button[name="refresh_encuesta"]': function (e, value, row, index) {
         $.post("servidor/sEvaluacion.php",
                 {
                     op: "refresh",
                     id: row.id
                 }, function (response) {
-                    load_Encuestas(1);
-                });
+            //load_Encuestas(1);
+            $("#tb_listEncuestas").bootstrapTable("refresh");
+        });
     }
 };
 
@@ -72,42 +74,44 @@ window.events_accion = {
 
 $(function () {
     $(".selectpicker").selectpicker();
-    $("table").bootstrapTable();
-    
-    load_Encuestas(1);  
-    
-    
-    $("#cboFacultad_init").change(function(e){
-        load_Carrera($(this).val(),"#cboCarrera_init");
+    $("table").bootstrapTable(TablePaginationDefault);
+
+    //load_Encuestas(1);  
+
+
+    $("#cboFacultad_init").change(function (e) {
+        load_Carrera($(this).val(), "#cboCarrera_init");
     });
-    
-    $("#cboCarrera_init").change(function(e){
-        load_Encuestas(1);  
+
+    $("#cboCarrera_init").change(function (e) {
+        //load_Encuestas(1);
+        $("#tb_listEncuestas").bootstrapTable("refresh");
         load_cboEncuestas();
     });
-    
-    $("#cbo_Facultad").change(function(e){
-        load_Carrera($(this).val(),"#cbo_Carrera");
+
+    $("#cbo_Facultad").change(function (e) {
+        load_Carrera($(this).val(), "#cbo_Carrera");
     });
     //load_Facultad("#cbo_Facultad");
-    
+
     load_cboEncuestas();
 
     //load_Encuestas(1);
     $("#cbk_encuestas_ocultas").change(function () {
         deshabilitada = $(this).is(":checked");
-        load_Encuestas(1);
+        $("#tb_listEncuestas").bootstrapTable("refresh");
+        //load_Encuestas(1);
     });
-    
-    $("#modal_editEncuesta").on("hidden.bs.modal",function(e){
+
+    $("#modal_editEncuesta").on("hidden.bs.modal", function (e) {
         $(this).find("input").val("");
         $(this).find(".modal-title").html("Nueva Encuesta");
         $(this).find("button[name='save']")
-                .data("id",0)
+                .data("id", 0)
                 .html("Guardar");
     });
-    
-    $("#btn_GenExcel").click(function(e){
+
+    $("#btn_GenExcel").click(function (e) {
         id = $(this).data("id");
         $.ajax({
             url: "servidor/sEvaluacion.php",
@@ -132,12 +136,13 @@ $(function () {
                 },
                 success: function (data) {
                     $('#modal_duplEncuesta').modal("toggle");
-                    load_Encuestas(1);
+                    //load_Encuestas(1);
+                    $("#tb_listEncuestas").bootstrapTable("refresh");
                 }
             });
         }
     });
-    
+
     $("#modal_editEncuesta button[name='save']").click(function () {
         if (!$.isEmptyObject($("#edit_nombre").val())) {
             $.ajax({
@@ -152,7 +157,8 @@ $(function () {
                 },
                 success: function (data) {
                     $('#modal_editEncuesta').modal("toggle");
-                    load_Encuestas(1);
+                    //load_Encuestas(1);
+                    $("#tb_listEncuestas").bootstrapTable("refresh");
                 }
             });
         }
@@ -191,6 +197,7 @@ function load_Facultad(cbo) {
         },
         success: function (response) {
             //$(cbo).html("<option value='0'>Seleccione</option>");
+            $(cbo).html("");
             $.each(response, function (i, row) {
                 option = document.createElement("option");
                 $(option).val(row.id);
@@ -203,7 +210,7 @@ function load_Facultad(cbo) {
     });
 }
 
-function load_Carrera(facultad,cbo) {
+function load_Carrera(facultad, cbo) {
     $.ajax({
         url: "servidor/sEvaluacion.php",
         type: "POST",
@@ -215,6 +222,7 @@ function load_Carrera(facultad,cbo) {
         },
         success: function (response) {
             //$(cbo).html("<option value='0'>Seleccione</option>");
+            $(cbo).html("");
             $.each(response, function (i, row) {
                 option = document.createElement("option");
                 $(option).val(row.id);
@@ -243,45 +251,66 @@ function load_cboEncuestas() {
     });
 }
 
-function load_Encuestas(pag) {
-    var top = $("#cboTop").val();
-    $.ajax({
-        type: "POST",
-        dataType: 'json',
-        url: "servidor/sEvaluacion.php",
-        //async: false,
-        data: {
+/*function paramsQ(params) {
+ console.log(params);
+ return $.extend({}, params, {
+ deshabilitada: deshabilitada,
+ carrera: $("#cboCarrera_init").selectpicker("val")
+ });
+ }*/
+
+function loadEncuesta(params) {
+    json_data = {
+        data: $.extend({}, {
             op: "list",
+            accion: "list",
             deshabilitada: deshabilitada,
-            top: top,
-            pag: ((pag - 1) * top),
-            carrera:  $("#cboCarrera_init").selectpicker("val")
-        },
-        success: function (response) {
-            $(table).bootstrapTable("load", (response.load));
-            $("#pagination-demo").twbsPagination('destroy');
-            $("#pagination-demo").twbsPagination($.extend({}, default_encuesta, {
-                startPage: pag,
-                totalPages: response.count,
-                onPageClick: function (event, page) {
-                    load_Encuestas(page);
-                }
-            }));
-        }
-    });
+            carrera: $("#cboCarrera_init").selectpicker("val")
+        }, params.data),
+        url: "servidor/sEvaluacion.php"
+    };
+    params.success(getJsonOptimizado(json_data));
 }
 
-function btn_accion(value){
+/*function load_Encuestas(pag) {
+ var top = $("#cboTop").val();
+ $.ajax({
+ type: "POST",
+ dataType: 'json',
+ url: "servidor/sEvaluacion.php",
+ //async: false,
+ data: {
+ op: "list",
+ deshabilitada: deshabilitada,
+ top: top,
+ pag: ((pag - 1) * top),
+ carrera:  $("#cboCarrera_init").selectpicker("val")
+ },
+ success: function (response) {
+ $(table).bootstrapTable("load", (response.load));
+ $("#pagination-demo").twbsPagination('destroy');
+ $("#pagination-demo").twbsPagination($.extend({}, default_encuesta, {
+ startPage: pag,
+ totalPages: response.count,
+ onPageClick: function (event, page) {
+ load_Encuestas(page);
+ }
+ }));
+ }
+ });
+ }*/
+
+function btn_accion(value) {
     estado = '<button name="del_encuesta" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Eliminar encuesta"><i class="fa fa-trash"></i></button> ';
-    if(value !== "1"){
+    if (value !== "1") {
         estado = '<button name="refresh_encuesta" class="btn btn-success btn-sm" data-toggle="tooltip" title="Reestablecer encuesta"><i class="fa fa-refresh"></i></button> ';
     }
-    return ''+
-            '<button name="edit_encuesta" data-toggle="modal" data-target="#modal_editEncuesta" class="btn btn-success btn-sm" data-toggle="tooltip" title="Editar encuesta"><i class="fa fa-edit"></i></button> '+
+    return '' +
+            '<button name="edit_encuesta" data-toggle="modal" data-target="#modal_editEncuesta" class="btn btn-success btn-sm" data-toggle="tooltip" title="Editar encuesta"><i class="fa fa-edit"></i></button> ' +
             estado +
-            '<button name="dupl_Encuesta" data-toggle="modal" data-target="#modal_duplEncuesta" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Duplicar"><i class="fa fa-files-o"></i></button> '+
-            '<button name="gen_Encuesta" class="btn btn-default btn-sm" data-toggle="tooltip" title="Generar Excel"><i class="fa fa-download"></i></button> '+
-            '<button name="reporte_Encuesta" class="btn btn-default btn-sm" data-toggle="tooltip" title="Reportes"><i class="fa fa-file"></i></button> '+
+            '<button name="dupl_Encuesta" data-toggle="modal" data-target="#modal_duplEncuesta" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Duplicar"><i class="fa fa-files-o"></i></button> ' +
+            '<button name="gen_Encuesta" class="btn btn-default btn-sm" data-toggle="tooltip" title="Generar Excel"><i class="fa fa-download"></i></button> ' +
+            '<button name="reporte_Encuesta" class="btn btn-default btn-sm" data-toggle="tooltip" title="Reportes"><i class="fa fa-file"></i></button> ' +
             '<button name="list_pregunt_Encuesta" class="btn btn-info btn-sm" data-toggle="tooltip" title="Listado de Preguntas"><i class="fa fa-align-justify"></i></button>';
 }
 

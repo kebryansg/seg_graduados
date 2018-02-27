@@ -52,39 +52,46 @@ switch ($op) {
             array_push($list_result, $encuesta);
         }
         return $list_result;
-        
+
         break;
-        
+
     case "file_carrera":
         $carrera = $_POST["carrera"];
-        
+
         break;
     case "list":
-        $top = $_POST["top"];
+        /*$top = $_POST["top"];
         $pag = $_POST["pag"];
         $deshabilitada = $_POST["deshabilitada"];
-        $carrera = $_POST["carrera"];
-        $list = EncuestaDaoImp::_list($top, $pag,$carrera,$deshabilitada); //$top
-        foreach ($list->getList() as $value) {
-            /*$estado = ($value->getEstado() == "1") ? '<button dat-id=\"' . $value->getId() . '\" name=\"del_encuesta\" class=\"btn btn-danger btn-sm\" data-toggle=\"tooltip\" title=\"Eliminar encuesta\"><i class=\"fa fa-trash\"></i></button>':
-                        '<button dat-id=\"' . $value->getId() . '\" name=\"refresh_encuesta\" class=\"btn btn-success btn-sm\" data-toggle=\"tooltip\" title=\"Reestablecer encuesta\"><i class=\"fa fa-refresh\"></i></button>';*/
+        $carrera = $_POST["carrera"];*/
+        
+        $top = (isset($_POST["limit"])) ? $_POST["limit"] : 0;
+        $pag = (isset($_POST["offset"])) ? $_POST["offset"] : 0;
+        
+        $params = array(
+            "top" => $_POST["limit"],
+            "pag" => $_POST["offset"],
+            "deshabilitada" => $_POST["deshabilitada"],
+            "carrera" => $_POST["carrera"]
+        );
+
+        //$list = EncuestaDaoImp::_list($top, $pag, $carrera, $deshabilitada); //$top
+        $list = EncuestaDaoImp::_list($params);
+        /*foreach ($list->getList() as $value) {
             $resultado = '{ "id" : ' . $value->getId() . ' , '
                     . '"nombre" : "' . $value->getNombre() . '" , '
                     . '"fecha" : "' . $value->getFecha() . '" ,'
                     . '"accion" : "' . $value->getEstado() . '" ,'
                     . '"cant" : "' . $value->getCant_preg() . '" }';
-                    /*. '"accion" : "<button dat-id=\"' . $value->getId() . '\" name=\"edit_encuesta\" data-toggle=\"modal\" data-target=\"#modal_editEncuesta\" class=\"btn btn-success btn-sm\" data-toggle=\"tooltip\" title=\"Editar encuesta\"><i class=\"fa fa-edit\"></i></button> '
-                    . ' '.$estado.' '
-                    . '<button dat-id=\"' . $value->getId() . '\" name=\"dupl_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_duplEncuesta\" class=\"btn btn-primary btn-sm\" data-toggle=\"tooltip\" title=\"Duplicar\"><i class=\"fa fa-files-o\"></i></button> '
-                    . '<button dat-id=\"' . $value->getId() . '\" name=\"gen_Encuesta\" data-toggle=\"modal\" data-target=\"#modal_genEncuesta\" class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" title=\"Generar Excel\"><i class=\"fa fa-download\"></i></button> '
-                    . '<button dat-id=\"' . $value->getId() . '\" name=\"list_pregunt_Encuesta\" class=\"btn btn-info btn-sm\" data-toggle=\"tooltip\" title=\"Listado de Preguntas\"><i class=\"fa fa-align-justify\"></i></button>" }';*/
             array_push($list_result, $resultado);
         }
         $resultado = '{ "count" : ' . ceil($list->getTotal() / $top) . ' , "load" : [' . join($list_result, ",") . '] }';
+         */
+        $resultado = json_encode($list);
         break;
     case "list_cbo":
         $carrera = $_POST["carrera"];
-        $list = EncuestaDaoImp::_list(0, 0,$carrera,"false");
+        $list = EncuestaDaoImp::_list(0, 0, $carrera, "false");
         foreach ($list->getList() as $value) {
             $resultado .= '<option value="' . $value->getId() . '">' . $value->getNombre() . '</option>';
         }

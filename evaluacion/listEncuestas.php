@@ -1,54 +1,49 @@
 <!DOCTYPE html>
 <?php
-    include_once '../mvc/modelo/CarreraDaoImp.php';
-    include_once '../mvc/modelo/EncuestaDaoImp.php';
-    //$conn = (new C_MySQL())->open();
+include_once '../mvc/modelo/CarreraDaoImp.php';
+include_once '../mvc/modelo/EncuestaDaoImp.php';
+//$conn = (new C_MySQL())->open();
 ?>
 <div class="col-md-12">
-    <div class="row">
-        <div class="pull-left">
-            <select class="selectpicker" data-width="80px" id="cboTop">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-            </select>
-            <select class="selectpicker"  id="cboFacultad_init">
-                <?php
-                    $facultads = EncuestaDaoImp::_facultad();    
-                //$carreras = CarreraDaoImp::getCarreras();
-                    foreach ($facultads as $facultad) {
-                        ?>
+    <div id="toolbar" class="pull-left">
+        <button class="btn btn-success" id="newEncuesta" data-toggle="modal" data-target="#modal_editEncuesta">Nueva Encuesta</button>
+        <select class="selectpicker"  id="cboFacultad_init">
+            <?php
+            $facultads = EncuestaDaoImp::_facultad();
+            //$carreras = CarreraDaoImp::getCarreras();
+            foreach ($facultads as $facultad) {
+                ?>
                 <option value="<?php echo $facultad["id"] ?>"><?php echo $facultad["descripcion"] ?></option>
-                        <?php
-                    }
-                ?>
-            </select>
-            <select class="selectpicker" id="cboCarrera_init">
                 <?php
-                    //$facultads = EncuestaDaoImp::_facultad();    
-                    $carreras = EncuestaDaoImp::_carrera($facultads[0]["id"]);
-                    foreach ($carreras as $carrera) {
-                        ?>
-                <option value="<?php echo $carrera["id"] ?>"><?php echo $carrera["descripcion"] ?></option>
-                        <?php
-                    }
+            }
+            ?>
+        </select>
+        <select class="selectpicker" id="cboCarrera_init">
+            <?php
+            //$facultads = EncuestaDaoImp::_facultad();    
+            $carreras = EncuestaDaoImp::_carrera($facultads[0]["id"]);
+            foreach ($carreras as $carrera) {
                 ?>
-            </select>
-        </div>
-        <div class="pull-right">
-            <button class="btn btn-success" id="newEncuesta" data-toggle="modal" data-target="#modal_editEncuesta">Nueva Encuesta</button>
-        </div>
+                <option value="<?php echo $carrera["id"] ?>"><?php echo $carrera["descripcion"] ?></option>
+                <?php
+            }
+            ?>
+        </select>
     </div>
-    <br>
     <div class="row">
-        <table data-toggle="table" id="tb_listEncuestas" data-unique-id="id">
+        <table 
+            data-toggle="table" 
+            id="tb_listEncuestas" 
+            data-unique-id="id"
+            data-toolbar="#toolbar"
+            data-ajax="loadEncuesta"
+            >
             <thead>
                 <tr>
                     <th class="col-md-1" data-align="center" data-field="id">Código</th>
                     <th  data-field="nombre">Encuestas</th>
                     <th class="col-md-1" data-align="center" data-field="fecha">F. Creación - Modificación</th>
-                    <th class="col-md-1" data-align="center" data-field="cant">Cant. Preguntas</th>
+                    <th class="col-md-1" data-align="center" data-field="total_preguntas">Cant. Preguntas</th>
                     <th class="col-md-3" data-align="center" data-events="events_accion" data-formatter="btn_accion" data-field="accion">Acción</th>
                 </tr>
 
@@ -56,9 +51,9 @@
         </table>
     </div>
     <div class="row">
-        <div class="pull-right">
+        <!--<div class="pull-right">
             <ul id="pagination-demo" class="pagination"></ul>
-        </div>
+        </div>-->
         <div class="pull-left">
             <div class="checkbox">
                 <label><input type="checkbox" id="cbk_encuestas_ocultas" >Ver encuentas deshabilitadas</label>

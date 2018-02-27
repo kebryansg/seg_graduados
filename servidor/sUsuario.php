@@ -5,6 +5,19 @@ require_once '../mvc/modelo/EstudianteDaoImp.php';
 require_once '../mvc/modelo/TituloDaoImp.php';
 $op = $_POST["op"];
 switch ($op) {
+
+    case "listEstudiantes":
+        
+        $params = array(
+            "top" => (isset($_POST["limit"])) ? $_POST["limit"] : 0,
+            "pag" => (isset($_POST["offset"])) ? $_POST["offset"] : 0,
+            "buscar" => (isset($_POST["search"])) ? $_POST["search"] : NULL
+        );
+
+        echo json_encode(EstudianteDaoImp::_list($params));
+
+        break;
+
     case "insertUsuario":
         $datos = json_decode($_POST["datos"], true);
         $estudiante = new Estudiante();
@@ -36,10 +49,10 @@ switch ($op) {
                         'status' => False,
                         'msj' => "Problema registrando el Titulo.");
                 }
-            }else{
+            } else {
                 $response = array(
-                        'status' => False,
-                        'msj' => "Error \nTitulo ya ingresado.");
+                    'status' => False,
+                    'msj' => "Error \nTitulo ya ingresado.");
             }
             //TituloDaoImp::_save($titulo);
         } else {

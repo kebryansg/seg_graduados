@@ -3,10 +3,10 @@
     <div class="col-md-12">
         <div id="exTab2" class="card">
             <ul class="nav nav-tabs">
-                <li  >
+                <li class="active" >
                     <a  href="#tabGenerar" data-toggle="tab">Generar</a>
                 </li>
-                <li class="active" >
+                <li  >
                     <a href="#tabRegistro" data-toggle="tab">Registro</a>
                 </li>
                 <li >
@@ -14,12 +14,12 @@
                 </li>
             </ul>
             <div class="tab-content ">
-                <div class="tab-pane " id="tabGenerar">
+                <div class="tab-pane active" id="tabGenerar">
                     <?php
                         include '../mvc/view/acceso/tabGenerar.php';
                     ?>
                 </div>
-                <div class="tab-pane active" id="tabRegistro">
+                <div class="tab-pane " id="tabRegistro">
                     <?php
                         include '../mvc/view/acceso/tabRegistro.php';
                     ?>

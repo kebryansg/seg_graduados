@@ -1,7 +1,33 @@
+var TablePaginationDefault = {
+    //height: 400,
+    pageSize: 5,
+    //search: true,
+    pageList: [5, 10, 15, 20],
+    cache: false,
+    showRefresh: true,
+    pagination: true,
+    sidePagination: "server"
+};
+
+function getJsonOptimizado(params) {
+    result = {};
+    $.ajax({
+        url: params.url,
+        async: false,
+        type: 'POST',
+        dataType: 'json',
+        data: params.data,
+        success: function (response) {
+            result = response;
+        }
+    });
+    return result;
+}
+
 $(function () {
     $("#content").on("keypress", ".solo-numero", function (e) {
-        var key = window.Event ? e.which : e.keyCode;
-        return (key >= 48 && key <= 57);
+        var charCode = window.Event ? e.which : e.keyCode;
+        return !(charCode > 31 && (charCode < 48 || charCode > 57));
     });
     
     $("#txtAcceso").keydown(function(e){

@@ -47,6 +47,7 @@ function load_Carrera(facultad, cbo) {
         },
         success: function (response) {
             //$(cbo).html("<option value='0'>Seleccione</option>");
+            $(cbo).html("");
             $.each(response, function (i, row) {
                 option = document.createElement("option");
                 $(option).val(row.id);

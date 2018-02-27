@@ -5,6 +5,21 @@ include_once '../mvc/controlador/entidades/Estudiante.php';
 
 class EstudianteDaoImp {
 
+    public static function _list($params) {
+        $conn = (new C_MySQL())->open();
+        $pag = ($params["top"] > 0 ) ? "limit " . $params['top'] . " offset " . $params['pag'] : "";
+        $where = ($params["buscar"] != NULL) ? " where nombres like '%" . $params["buscar"] . "%' or cedula like '%". $params["buscar"] ."%' "   : "";
+        
+        $sql = "select SQL_CALC_FOUND_ROWS * from estudiante $where $pag;";
+
+        $dts = array(
+            "rows" => C_MySQL::returnListAsoc($conn, $sql),
+            "total" => C_MySQL::row_count($conn)
+        );
+        $conn->close();
+        return $dts;
+    }
+
     public static function _genAcceso($id_titulo, $id_encuesta) {
         $conn = (new C_MySQL())->open();
         $acceso = md5($id_titulo . $id_encuesta . rand());
@@ -12,24 +27,25 @@ class EstudianteDaoImp {
         $conn->query($sql);
         $conn->close();
     }
-    
-    public static function _save($estudiante){
+
+    public static function _save($estudiante) {
         //$estudiante = new Estudiante();
         $conn = (new C_MySQL())->open();
         $sql = "";
-        if($estudiante->getId() == 0){
-            $sql = "insert into estudiante(nombres,cedula) values('".$estudiante->getNombres()."',".$estudiante->getCedula().")";
+        if ($estudiante->getId() == 0) {
+            $sql = "insert into estudiante(nombres,cedula) values('" . $estudiante->getNombres() . "'," . $estudiante->getCedula() . ")";
         }
-        if($conn->query($sql) == TRUE){
+        if ($conn->query($sql) == TRUE) {
             $estudiante->setId($conn->insert_id);
         }
         $conn->close();
         return $estudiante;
     }
-    public static function _validarEstudiante($estudiante){
+
+    public static function _validarEstudiante($estudiante) {
         $conn = (new C_MySQL())->open();
-        $sql = "select validarEstudiante('". $estudiante->getCedula() ."') as 'resultado'";
-        if($result = $conn->query($sql)){
+        $sql = "select validarEstudiante('" . $estudiante->getCedula() . "') as 'resultado'";
+        if ($result = $conn->query($sql)) {
             while ($row = $result->fetch_assoc()) {
                 $resultado = $row["resultado"];
             }
@@ -39,7 +55,6 @@ class EstudianteDaoImp {
         $conn->close();
         //return $resultado;
     }
-    
 
     // No se porque esta comparando cedula con el 'id' pero para no dañar nada XD queda ahi
     public static function _edit($id) {

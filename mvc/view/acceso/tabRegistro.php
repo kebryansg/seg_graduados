@@ -8,27 +8,27 @@ include_once '../mvc/modelo/EncuestaDaoImp.php';
     <div class="col-md-4">
         <div class="form-group ">
             <label for="" class="control-label">Cédula</label>
-            <input name="cedula" type="text" class="form-control" maxlength="10" required>
+            <input name="cedula" type="text" class="form-control solo-numero text-right" maxlength="10" required>
         </div>
     </div> 
     <div class="col-md-6">
         <div class="form-group ">
             <label for="" class="control-label">Nombres</label>
-            <input name="nombres" type="text" class="form-control" maxlength="10" required>
+            <input name="nombres" type="text" class="form-control" required>
         </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-md-2">
         <div class="form-group ">
             <label for="" class="control-label">Nota Titulación</label>
-            <input name="notaTitulacion" type="text" class="form-control" maxlength="10" required>
+            <input name="notaTitulacion" type="text" class="form-control solo-numero text-right" maxlength="2" required>
         </div>
 
     </div>
     <div class="col-md-2">
         <div class="form-group ">
             <label for="" class="control-label">Nota Pensum</label>
-            <input name="notaPensum" type="text" class="form-control" maxlength="10" required>
+            <input name="notaPensum" type="text" class="form-control solo-numero text-right" maxlength="2" required>
         </div>
     </div>
     <!--<div class="clearfix"></div>-->

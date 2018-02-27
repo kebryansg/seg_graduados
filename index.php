@@ -47,7 +47,7 @@
                 <div class="text-center" id="form-acceso">
                     <div class="form-group form-inline">
                         <label class="control-label">Clave de acceso: </label>
-                        <input type="text" class="form-control" id="txtAcceso" style="width: 200px;">
+                        <input type="password" class="form-control" id="txtAcceso" style="width: 200px;">
                         <button class="btn btn-default" id="btnAcceder">Acceder</button>
                     </div>
                 </div>

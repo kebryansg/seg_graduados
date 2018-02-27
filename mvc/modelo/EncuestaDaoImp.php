@@ -19,6 +19,7 @@ class EncuestaDaoImp {
         $conn->close();
         return $list;
     }
+
     public static function _carrera($facultad) {
         $conn = (new C_MySQL())->open();
         $list = array();
@@ -36,12 +37,12 @@ class EncuestaDaoImp {
     public static function list_file($encuesta) {
         $conn = (new C_MySQL())->open();
         $list = array();
-        /*$sql = "SELECT e.cedula, e.nombres ,f.nombre,c.nombre,e_t.id from estudiante e 
-                inner join titulo t on t.Estudiante_id = e.id
-                inner join carreras c on c.id = t.Carreras_id
-                inner join facultad f on f.id = c.Facultad_id
-                inner join encuesta_titulo e_t on e_t.Titulo_id = t.id and e_t.Encuestas_id = $encuesta and e_t.estado = 2;";*/
-        
+        /* $sql = "SELECT e.cedula, e.nombres ,f.nombre,c.nombre,e_t.id from estudiante e 
+          inner join titulo t on t.Estudiante_id = e.id
+          inner join carreras c on c.id = t.Carreras_id
+          inner join facultad f on f.id = c.Facultad_id
+          inner join encuesta_titulo e_t on e_t.Titulo_id = t.id and e_t.Encuestas_id = $encuesta and e_t.estado = 2;"; */
+
         $sql = "select * from viewfilecarrera where encuestas = $encuesta and estado = 2 ";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
@@ -82,7 +83,7 @@ class EncuestaDaoImp {
         $conn = (new C_MySQL())->open();
         $sql = "";
         if ($encuesta->getId() == 0) {
-            $sql = "insert into encuestas(nombre,fecha,carrera_id,estado) values('" . $encuesta->getNombre() . "',curdate(),". $encuesta->getCarrera() .",'1');";
+            $sql = "insert into encuestas(nombre,fecha,carrera_id,estado) values('" . $encuesta->getNombre() . "',curdate()," . $encuesta->getCarrera() . ",'1');";
         } else {
             $sql = "update encuestas set nombre = '" . $encuesta->getNombre() . "' where id = " . $encuesta->getId() . " ";
         }
@@ -90,14 +91,47 @@ class EncuestaDaoImp {
         $conn->close();
     }
 
-    public static function _list($top, $limit,$carrera, $deshabilitada) {
+    /* public static function _list($top, $limit,$carrera, $deshabilitada) {
+      $conn = (new C_MySQL())->open();
+      $list_count = new list_count();
+      $list = array();
+      $pag = ($top > 0 ) ? "limit $top offset $limit" : "";
+      $sql_2 = ($deshabilitada == "true") ? "" : "and estado = '1'";
+      $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta where carrera = $carrera $sql_2  $pag;";
+      if ($resultado = $conn->query($sql)) {
+      while ($row = $resultado->fetch_assoc()) {
+      $encuesta = new Encuesta();
+      $encuesta->setId($row["id"]);
+      $encuesta->setFecha($row["fecha"]);
+      $encuesta->setNombre($row["nombre"]);
+      $encuesta->setEstado($row["estado"]);
+      $encuesta->setCant_preg($row["total_preguntas"]);
+      array_push($list, $encuesta);
+      }
+      $resultado->close();
+      }
+      $list_count->setList($list);
+      $list_count->setTotal(C_MySQL::row_count($conn));
+      $conn->close();
+      return $list_count;
+      } */
+
+    public static function _list($params) {
         $conn = (new C_MySQL())->open();
-        $list_count = new list_count();
-        $list = array();
-        $pag = ($top > 0 ) ? "limit $top offset $limit" : "";
-        $sql_2 = ($deshabilitada == "true") ? "" : "and estado = '1'";
-        $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta where carrera = $carrera $sql_2  $pag;";
-        if ($resultado = $conn->query($sql)) {
+        $pag = ($params["top"] > 0 ) ? "limit " . $params['top'] . " offset " . $params['pag'] : "";
+        $sql_2 = ($params['deshabilitada'] == "true") ? "" : "and estado = '1'";
+        $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta where carrera = " . $params['carrera'] . " $sql_2  $pag;";
+        
+        $dts = array(
+            "rows" => C_MySQL::returnListAsoc($conn, $sql),
+            "total" => C_MySQL::row_count($conn)
+        );
+        $conn->close();
+        return $dts;
+        
+        
+        
+        /*if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
                 $encuesta = new Encuesta();
                 $encuesta->setId($row["id"]);
@@ -112,16 +146,16 @@ class EncuestaDaoImp {
         $list_count->setList($list);
         $list_count->setTotal(C_MySQL::row_count($conn));
         $conn->close();
-        return $list_count;
+        return $list_count;*/
     }
 
     public static function list_Preguntas($id_encuesta) {
         $conn = (new C_MySQL())->open();
         $list = array();
-        /*$sql = "SELECT p.id,p.enunciado,p.tipo from preguntas_respuestas p_r
-                inner join preguntas p on p.id = p_r.pregunta_id and p.estado_excel = 1
-                inner join categoria cat on cat.id = p.categoria_id 
-                where p_r.encuesta_carreras_id = $id_encuesta order by cat.order_,p.order_by;";*/
+        /* $sql = "SELECT p.id,p.enunciado,p.tipo from preguntas_respuestas p_r
+          inner join preguntas p on p.id = p_r.pregunta_id and p.estado_excel = 1
+          inner join categoria cat on cat.id = p.categoria_id
+          where p_r.encuesta_carreras_id = $id_encuesta order by cat.order_,p.order_by;"; */
         $sql = "SELECT * from viewpreguntaencuestascarrera where encuesta_carreras_id = $id_encuesta ORDER BY catOrder, pregOrder;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {

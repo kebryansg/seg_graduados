@@ -60,7 +60,7 @@
             </div>
         </div>
         <script type="text/javascript">
-                //$("#content").load("acceso/adminAcceso.php");
+                $("#content").load("acceso/adminAcceso.php");
                 //$("#content").load("preview.html");
         </script>
     </body>
