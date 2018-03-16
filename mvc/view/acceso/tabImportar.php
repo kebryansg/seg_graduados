@@ -53,14 +53,12 @@
         language: 'es',
         allowedFileExtensions: ['xlsx']
 
-    }).on('fileuploaded', function(event, data, previewId, index) {
-        console.log(data.response);
-        if (data.response.row.length > 0) {
-            $("#RowProblems").bootstrapTable("load", data.response.row);
-            
+    }).on('fileuploaded', function (event, data, previewId, index) {
+        if (!data.response.status) {
+            if (data.response.row.length > 0) {
+                $("#RowProblems").bootstrapTable("load", data.response.row);
+            }
         }
-        //console.log(params);
-
     });
 
 </script>
