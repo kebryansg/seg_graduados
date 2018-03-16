@@ -5,7 +5,7 @@ final class C_MySQL {
     protected $mysqli;
 
     function __construct() {
-        $this->open();
+        //$this->open();
     }
     public static function returnListAsoc($conn, $sql){
         $list = array();

@@ -2,7 +2,7 @@
 <script type="text/javascript" src="resources/chart/Chart.bundle.min.js"></script>
 <script type="text/javascript">
     $("#btnRegresar").click(function(){
-        $("#content").load("evaluacion/listEncuestas.php");
+        $("a[href='evaluacion/listEncuestas.php']").click();
     });
     
     window.chartColors = {

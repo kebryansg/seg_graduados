@@ -12,39 +12,31 @@ default_encuesta = {
     last: "&rarrb;"
 };
 window.events_accion = {
-    'click button[name="reporte_Encuesta"]': function (e, value, row, index) {
+    'click li[name="reporte_Encuesta"]': function (e, value, row, index) {
         $("#content").load("evaluacion/reporteEvaluacion.php?id_encuesta=" + row.id);
     },
-    'click button[name="edit_encuesta"]': function (e, value, row, index) {
+    'click li[name="edit_encuesta"]': function (e, value, row, index) {
         $("#modal_editEncuesta h4.modal-title").html("Modificar Encuesta");
         $("#modal_editEncuesta button[name='save']")
                 .html("Modificar")
                 .data("id", row.id);
         $("#edit_nombre").val(row.nombre);
     },
-    'click button[name="dupl_Encuesta"]': function (e, value, row, index) {
+    'click li[name="dupl_Encuesta"]': function (e, value, row, index) {
         $("#dupli_nombre").val(row.nombre);
         $("#btn_newDuplicar").data("encuesta", row.id);
     },
-    'click button[name="gen_Encuesta"]': function (e, value, row, index) {
+    'click li[name="gen_Encuesta"]': function (e, value, row, index) {
         url = "servidor/sExcel.php?op=encuesta_carrera&encuesta=" + row.id;
         window.open(url, '_blank');
-        /*$.ajax({
-         url: "servidor/sEvaluacion.php",
-         type: 'POST',
-         data: {
-         op: "file",
-         encuesta: row.id
-         }
-         });*/
     },
-    'click button[name="list_pregunt_Encuesta"]': function (e, value, row, index) {
+    'click li[name="list_pregunt_Encuesta"]': function (e, value, row, index) {
         $("#content").load("pregunta/listPreguntas.php", function () {
             getEncuesta_id(row.id);
             load_Preguntas(1);
         });
     },
-    'click button[name="del_encuesta"]': function (e, value, row, index) {
+    'click li[name="del_encuesta"]': function (e, value, row, index) {
         $.ajax({
             url: "servidor/sEvaluacion.php",
             type: 'POST',
@@ -58,7 +50,7 @@ window.events_accion = {
             }
         });
     },
-    'click button[name="refresh_encuesta"]': function (e, value, row, index) {
+    'click li[name="refresh_encuesta"]': function (e, value, row, index) {
         $.post("servidor/sEvaluacion.php",
                 {
                     op: "refresh",
@@ -242,7 +234,7 @@ function load_cboEncuestas() {
         async: false,
         data: {
             op: "list_cbo",
-            carrera: $("#cboCarrera_init").selectpicker("val")
+            carrera: 0
         },
         success: function (response) {
             $("#cboEncuestas").html(response);
@@ -300,6 +292,29 @@ function loadEncuesta(params) {
  });
  }*/
 
+function formatEstado(value, row, index) {
+    return (value === "0")? "DESHABILITADA" : "HABILITADA";
+}
+function btnAccion(value, row, index) {
+    estado = '<li name="del_encuesta"><a href="#"><i class="fa fa-trash"></i> Eliminar Encuesta</a></li> ';
+    if(row.estado === "0"){
+        estado = '<li name="refresh_encuesta" ><a href="#"><i class="fa fa-refresh"></i> Reestablecer Encuesta</a></li> ';
+    }
+    
+    return '<div class="btn-group" name="shows">' +
+                '<button type="button" class="btn btn-success dropdown-toggle btn-sm"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                    '<i class="fa fa-fw fa-align-justify"></i>' +
+                '</button>' +
+                '<ul class="dropdown-menu dropdown-menu-left" >' +
+                    '<li name="edit_encuesta"><a href="#" data-toggle="modal" data-target="#modal_editEncuesta"> <i class="fa fa-edit"></i> Editar Encuesta</a></li>' +
+                    estado +
+                    '<li name="dupl_Encuesta"><a href="#" data-toggle="modal" data-target="#modal_duplEncuesta"> <i class="fa fa-files-o"></i> Duplicar Encuesta</a></li>' +
+                    '<li name="gen_Encuesta"><a href="#"> <i class="fa fa-download"></i> Generar Encuesta</a></li>' +
+                    '<li name="reporte_Encuesta"><a href="#"> <i class="fa fa-file"></i> Reportes</a></li>' +
+                    '<li name="list_pregunt_Encuesta" ><a href="#"> <i class="fa fa-align-justify"></i> Listado de Preguntas</a></li>' +
+                '</ul>' +
+            '</div>';
+}
 function btn_accion(value) {
     estado = '<button name="del_encuesta" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Eliminar encuesta"><i class="fa fa-trash"></i></button> ';
     if (value !== "1") {

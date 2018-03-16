@@ -9,7 +9,8 @@
                             <div class="form-group ">
                                 <label class="control-label ">Cédula:</label>
                                 <input type="text" class="form-control" id="txt_Clave" maxlength="10">
-                                <button class="btn btn-danger" data-toggle="modal" data-target="#modalEstudiantes"><i class="fa fa-search"></i> Consultar</button>
+                                <button class="btn btn-success" data-toggle="modal" data-target="#modalEstudiantes"><i class="fa fa-search"></i> Consultar</button>
+                                <button class="btn btn-danger" type="button" id="cleanResultados" ><i class="fa fa-times"></i></button>
                                 <!--<button class="btn btn-default" id="btn_GenerarClave">Consultar</button>-->
                             </div>
                         </div>
@@ -91,4 +92,4 @@
     </div>
 </div>
 
-<script src="acceso/js/generar.js"></script>
+<script type="text/javascript" src="acceso/js/generar.js"></script>

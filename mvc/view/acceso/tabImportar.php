@@ -22,14 +22,14 @@
         <table id="RowProblems">
             <thead>
                 <tr>
-                    <th data-field="fila">Excel Fila</th>
+                    <th data-field="fila">F. Excel</th>
                     <th data-field="codCarrera">Carrera</th>
                     <th data-field="cedula">Cédula</th>
                     <th data-field="nombre">Estudiante</th>
-                    <th data-field="periodoInicio">P. Inicio</th>
-                    <th data-field="periodoFin">P. Fin</th>
-                    <th data-field="titulacion">Nota Titulación</th>
-                    <th data-field="pensum">Nota Pensum</th>
+                    <th data-field="periodoInicio" data-align="center">P. Inicio</th>
+                    <th data-field="periodoFin" data-align="center">P. Fin</th>
+                    <th data-field="titulacion" data-align="center">N. Titulación</th>
+                    <th data-field="pensum" data-align="center">N. Pensum</th>
                     <th data-field="estado">Estado</th>
                 </tr>
             </thead>

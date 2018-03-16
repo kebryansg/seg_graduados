@@ -44,7 +44,8 @@ include_once '../mvc/modelo/EncuestaDaoImp.php';
                     <th  data-field="nombre">Encuestas</th>
                     <th class="col-md-1" data-align="center" data-field="fecha">F. Creación - Modificación</th>
                     <th class="col-md-1" data-align="center" data-field="total_preguntas">Cant. Preguntas</th>
-                    <th class="col-md-3" data-align="center" data-events="events_accion" data-formatter="btn_accion" data-field="accion">Acción</th>
+                    <th class="col-md-1" data-align="center" data-field="estado" data-formatter="formatEstado">Estado</th>
+                    <th class="col-md-1" data-align="center" data-events="events_accion" data-formatter="btnAccion">Acción</th>
                 </tr>
 
             </thead>

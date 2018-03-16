@@ -69,6 +69,27 @@ $(function () {
         if (url !== "#")
             $("#content").load(url);
     });
+    
+    var dropdownMenu;
+    $(window).on('show.bs.dropdown', function (e) {
+        if (!$.isEmptyObject($(e.target).attr("name"))) {
+            dropdownMenu = $(e.target).find('.dropdown-menu');
+            $('body').append(dropdownMenu.detach());
+            var eOffset = $(e.target).offset();
+            dropdownMenu.css({
+                'display': 'block',
+                'top': eOffset.top + $(e.target).outerHeight(),
+                'left': eOffset.left + $(e.target).outerWidth() - $(dropdownMenu).width()
+            });
+        }
+    });
+    $(window).on('hide.bs.dropdown', function (e) {
+        if (!$.isEmptyObject(dropdownMenu)) {
+            $(e.target).append(dropdownMenu.detach());
+            dropdownMenu.hide();
+            dropdownMenu = null;
+        }
+    });
 
 });
 

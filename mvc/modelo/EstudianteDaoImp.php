@@ -56,19 +56,20 @@ class EstudianteDaoImp {
         //return $resultado;
     }
 
-    // No se porque esta comparando cedula con el 'id' pero para no dañar nada XD queda ahi
-    public static function _edit($id) {
-        $estudiante = new Estudiante();
+    public static function _edit($cedula) {
+        //$estudiante = new Estudiante();
         $conn = (new C_MySQL())->open();
-        $sql = "select * from estudiante where cedula = '$id';";
-        if ($resultado = $conn->query($sql)) {
+        $sql = "select * from estudiante where cedula = '$cedula';";
+        $estudiante = C_MySQL::returnListAsoc($conn, $sql);
+        
+        /*if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
                 $estudiante->setId($row["id"]);
                 $estudiante->setNombres($row["nombres"]);
                 $estudiante->setCedula($row["cedula"]);
             }
             $resultado->free();
-        }
+        }*/
         $conn->close();
         return $estudiante;
     }

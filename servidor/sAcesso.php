@@ -12,11 +12,19 @@ switch ($op) {
         break;
     case "getEstudiante":
         $estudiante = EstudianteDaoImp::_edit($_POST["id_estudiante"]);
-        if ($estudiante->getId() !== 0) {
-            $resultado = '{"id": "' . $estudiante->getId() . '" ,"nombres" : "' . strtoupper($estudiante->getNombres()) . '","cedula" : "' . $estudiante->getCedula() . '"}';
-            $data = EstudianteDaoImp::_encuestas_titulo($estudiante->getId());
+        if (count($estudiante) == 1) {
+            $resultado = ($estudiante[0]);
+            $data = EstudianteDaoImp::_encuestas_titulo($estudiante[0]["id"]);
+            $resultado = json_encode(array(
+                "status" => TRUE,
+                "estudiante" => $resultado,
+                "data" => $data
+            ));
+        }else{
+            $resultado = json_encode(array(
+                "status" => FALSE
+            ));
         }
-        $resultado = '{ "status" : ' . !($estudiante->getId() === 0) . ', "estudiante" : ' . $resultado . ' , "data" : ' . json_encode($data) . ' }';
         break;
 }
 echo $resultado;

@@ -78,15 +78,22 @@ switch ($op) {
                     array_push($row_Problems, $row_formateada);
                     continue;
                 }
-                //Validar Notas
+                //Validar Notas (Q sean Numeros)
                 if (!(is_float($row_formateada["titulacion"]) && is_float($row_formateada["pensum"]))) {
                     $row_formateada["estado"] = "Nota Invalida";
                     $row_formateada["fila"] = $pRow;
                     array_push($row_Problems, $row_formateada);
                     continue;
                 }
-
-
+                //Validar Promedios
+                $numeros = [$row_formateada["titulacion"], $row_formateada["pensum"]];
+                $promedio = array_sum($numeros) / count($numeros);
+                if ($promedio < 7) {
+                    $row_formateada["estado"] = "Promedio Menor a 7";
+                    $row_formateada["fila"] = $pRow;
+                    array_push($row_Problems, $row_formateada);
+                    continue;
+                }
 
                 $estudiante = new Estudiante();
                 $estudiante->setCedula($row_formateada["cedula"]);
@@ -94,13 +101,8 @@ switch ($op) {
                 $estudiante->setNombres($row_formateada["nombre"]);
                 if ($estudiante->getId() == 0) {
                     EstudianteDaoImp::_save($estudiante);
-                } else {
-                    //array_push($returnEstudiante, $estudiante);
-                    $row_formateada["estado"] = "Estudiante Ingresado";
-                    $row_formateada["fila"] = $pRow;
-                    array_push($row_Problems, $row_formateada);
-                    continue;
-                }
+                } 
+                
                 $titulo = new Titulo();
                 $titulo->setCarrera($row_formateada["codCarrera"]);
                 $titulo->setEstudiante($estudiante->getId());
@@ -108,13 +110,12 @@ switch ($op) {
                 $titulo->setNotaTitulacion($row_formateada["titulacion"]);
                 $titulo->setPeriodoInicio($row_formateada["periodoInicio"]);
                 $titulo->setPeriodoFin($row_formateada["periodoFin"]);
-
-                $promedio = (floatval($titulo->getNotaPensum()) + floatval($titulo->getNotaTitulacion())) / 2;
                 $titulo->setPromedio($promedio);
+                
                 if (!TituloDaoImp::_validarTitulo($titulo->getCarrera(), $estudiante->getId())) {
                     TituloDaoImp::_save($titulo);
                 } else {
-                    $row_formateada["estado"] = "Estudiante ya registrado";
+                    $row_formateada["estado"] = "Titulo Registrado";
                     $row_formateada["fila"] = $pRow;
                     array_push($row_Problems, $row_formateada);
                     continue;
@@ -126,12 +127,14 @@ switch ($op) {
         if (sizeof($row_Problems) > 0) {
             $response = array(
                 'status' => FALSE,
-                'row' => $row_Problems);
+                'row' => $row_Problems
+            );
         } else {
             $response = array(
                 'status' => TRUE,
                 'NombreFile' => $file["name"],
-                'type' => $file["type"]);
+                'type' => $file["type"]
+            );
         }
 
         echo json_encode($response);

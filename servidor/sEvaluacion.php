@@ -77,23 +77,20 @@ switch ($op) {
 
         //$list = EncuestaDaoImp::_list($top, $pag, $carrera, $deshabilitada); //$top
         $list = EncuestaDaoImp::_list($params);
-        /*foreach ($list->getList() as $value) {
-            $resultado = '{ "id" : ' . $value->getId() . ' , '
-                    . '"nombre" : "' . $value->getNombre() . '" , '
-                    . '"fecha" : "' . $value->getFecha() . '" ,'
-                    . '"accion" : "' . $value->getEstado() . '" ,'
-                    . '"cant" : "' . $value->getCant_preg() . '" }';
-            array_push($list_result, $resultado);
-        }
-        $resultado = '{ "count" : ' . ceil($list->getTotal() / $top) . ' , "load" : [' . join($list_result, ",") . '] }';
-         */
+        
         $resultado = json_encode($list);
         break;
     case "list_cbo":
-        $carrera = $_POST["carrera"];
-        $list = EncuestaDaoImp::_list(0, 0, $carrera, "false");
-        foreach ($list->getList() as $value) {
-            $resultado .= '<option value="' . $value->getId() . '">' . $value->getNombre() . '</option>';
+        $params = array(
+            "top" => 0,
+            "pag" => 0,
+            "deshabilitada" => "false",
+            "carrera" => $_POST["carrera"]
+        );
+        
+        $list = EncuestaDaoImp::_list($params);
+        foreach ($list["rows"] as $value) {
+            $resultado .= '<option value="' . $value["id"] . '">' . $value["nombre"] . '</option>';
         }
         break;
     case "save":

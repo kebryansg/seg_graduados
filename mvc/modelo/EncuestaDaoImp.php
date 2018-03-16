@@ -91,36 +91,14 @@ class EncuestaDaoImp {
         $conn->close();
     }
 
-    /* public static function _list($top, $limit,$carrera, $deshabilitada) {
-      $conn = (new C_MySQL())->open();
-      $list_count = new list_count();
-      $list = array();
-      $pag = ($top > 0 ) ? "limit $top offset $limit" : "";
-      $sql_2 = ($deshabilitada == "true") ? "" : "and estado = '1'";
-      $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta where carrera = $carrera $sql_2  $pag;";
-      if ($resultado = $conn->query($sql)) {
-      while ($row = $resultado->fetch_assoc()) {
-      $encuesta = new Encuesta();
-      $encuesta->setId($row["id"]);
-      $encuesta->setFecha($row["fecha"]);
-      $encuesta->setNombre($row["nombre"]);
-      $encuesta->setEstado($row["estado"]);
-      $encuesta->setCant_preg($row["total_preguntas"]);
-      array_push($list, $encuesta);
-      }
-      $resultado->close();
-      }
-      $list_count->setList($list);
-      $list_count->setTotal(C_MySQL::row_count($conn));
-      $conn->close();
-      return $list_count;
-      } */
 
     public static function _list($params) {
         $conn = (new C_MySQL())->open();
         $pag = ($params["top"] > 0 ) ? "limit " . $params['top'] . " offset " . $params['pag'] : "";
         $sql_2 = ($params['deshabilitada'] == "true") ? "" : "and estado = '1'";
-        $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta where carrera = " . $params['carrera'] . " $sql_2  $pag;";
+        $carrera = ($params['carrera'] == "0")? "carrera like '%'": "carrera = " . $params['carrera'];
+        
+        $sql = "select SQL_CALC_FOUND_ROWS * from viewEncuesta where $carrera  $sql_2  $pag;";
         
         $dts = array(
             "rows" => C_MySQL::returnListAsoc($conn, $sql),
@@ -131,31 +109,12 @@ class EncuestaDaoImp {
         
         
         
-        /*if ($resultado = $conn->query($sql)) {
-            while ($row = $resultado->fetch_assoc()) {
-                $encuesta = new Encuesta();
-                $encuesta->setId($row["id"]);
-                $encuesta->setFecha($row["fecha"]);
-                $encuesta->setNombre($row["nombre"]);
-                $encuesta->setEstado($row["estado"]);
-                $encuesta->setCant_preg($row["total_preguntas"]);
-                array_push($list, $encuesta);
-            }
-            $resultado->close();
-        }
-        $list_count->setList($list);
-        $list_count->setTotal(C_MySQL::row_count($conn));
-        $conn->close();
-        return $list_count;*/
     }
 
     public static function list_Preguntas($id_encuesta) {
         $conn = (new C_MySQL())->open();
         $list = array();
-        /* $sql = "SELECT p.id,p.enunciado,p.tipo from preguntas_respuestas p_r
-          inner join preguntas p on p.id = p_r.pregunta_id and p.estado_excel = 1
-          inner join categoria cat on cat.id = p.categoria_id
-          where p_r.encuesta_carreras_id = $id_encuesta order by cat.order_,p.order_by;"; */
+        
         $sql = "SELECT * from viewpreguntaencuestascarrera where encuesta_carreras_id = $id_encuesta ORDER BY catOrder, pregOrder;";
         if ($resultado = $conn->query($sql)) {
             while ($row = $resultado->fetch_assoc()) {
